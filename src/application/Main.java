@@ -20,8 +20,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Main extends Application implements Runnable {
-	@Override
-	public void start(Stage primaryStage) {
+	//@Override
+	public static void start(Stage primaryStage) {
 		try {
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root, 1200, 600);

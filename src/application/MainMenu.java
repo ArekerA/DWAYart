@@ -112,6 +112,18 @@ public abstract class MainMenu {
 		logout1.setGraphic(logout);
 		logout1.setLayoutY(36);
 		logout1.setLayoutX(primaryStage.getWidth());
+		logout1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Main.start(primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 		Duration czas = new Duration(100);
 		TranslateTransition translateTransition = new TranslateTransition(czas, iv1);
