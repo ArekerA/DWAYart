@@ -18,13 +18,13 @@ public abstract class MainMenu {
 	static void wyswietlmenu(BorderPane root, Stage primaryStage) {
 		root.getChildren().clear();
 
-		Image logodway = new Image("logo-white.png");
-		Image homebtt = new Image("home.png");
-		Image favbtt = new Image("fav.png");
-		Image bestbtt = new Image("best.png");
-		Image profilebtt = new Image("profile.png");
-		Image addbtt = new Image("add.png");
-		Image logoutbtt = new Image("logout.png");
+		Image logodway = new Image("img/logo-white.png");
+		Image homebtt = new Image("img/home.png");
+		Image favbtt = new Image("img/fav.png");
+		Image bestbtt = new Image("img/best.png");
+		Image profilebtt = new Image("img/profile.png");
+		Image addbtt = new Image("img/add.png");
+		Image logoutbtt = new Image("img/logout.png");
 
 		Point2D point = new Point2D(15, primaryStage.getHeight() * 0.13);
 		/*
@@ -117,7 +117,7 @@ public abstract class MainMenu {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Main.start(primaryStage);
+					//Main.start(primaryStage);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -12,8 +12,6 @@ public class Wyborzdjecia {
 	{
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setTitle("Select your pic...");
-		//fileChooser.showOpenDialog(primaryStage);
-		//configureFileChooser(fileChooser);
         File file = fileChooser.showOpenDialog(primaryStage);
         if (file != null) {
         	Image image=new Image("file:///"+file.getPath());

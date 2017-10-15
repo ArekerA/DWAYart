@@ -9,21 +9,21 @@ public abstract class Pomocnicza {
 	static public ArrayList<Image> obrazy = new ArrayList<Image>(0);
 
 	public static void dodajobrazy() {
-		obrazy.add(new Image("1.jpg"));
-		obrazy.add(new Image("2.jpg"));
-		obrazy.add(new Image("3.jpg"));
-		obrazy.add(new Image("4.jpg"));
-		obrazy.add(new Image("5.jpg"));
-		obrazy.add(new Image("6.jpg"));
-		obrazy.add(new Image("7.jpg"));
-		obrazy.add(new Image("8.jpg"));
-		obrazy.add(new Image("9.jpg"));
-		obrazy.add(new Image("10.jpg"));
-		obrazy.add(new Image("11.jpg"));
-		obrazy.add(new Image("12.jpg"));
-		obrazy.add(new Image("13.jpg"));
-		obrazy.add(new Image("14.jpg"));
-		obrazy.add(new Image("15.jpg"));
+		obrazy.add(new Image("img/1.jpg"));
+		obrazy.add(new Image("img/2.jpg"));
+		obrazy.add(new Image("img/3.jpg"));
+		obrazy.add(new Image("img/4.jpg"));
+		obrazy.add(new Image("img/5.jpg"));
+		obrazy.add(new Image("img/6.jpg"));
+		obrazy.add(new Image("img/7.jpg"));
+		obrazy.add(new Image("img/8.jpg"));
+		obrazy.add(new Image("img/9.jpg"));
+		obrazy.add(new Image("img/10.jpg"));
+		obrazy.add(new Image("img/11.jpg"));
+		obrazy.add(new Image("img/12.jpg"));
+		obrazy.add(new Image("img/13.jpg"));
+		obrazy.add(new Image("img/14.jpg"));
+		obrazy.add(new Image("img/15.jpg"));
 	}
 
 	public static ArrayList<Image> getObrazy() {

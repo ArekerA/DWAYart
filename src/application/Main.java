@@ -38,9 +38,9 @@ public class Main extends Application implements Runnable {
 			Rzad.przypiszzdjecia();
 			Rzad.ustalanieswiatla(primaryStage);
 
-			Image logodway = new Image("logo-white.png");
-			Image log_in = new Image("login.png");
-			Image register = new Image("register.png");
+			Image logodway = new Image("img/logo-white.png");
+			Image log_in = new Image("img/login.png");
+			Image register = new Image("img/register.png");
 
 			ImageView iv1 = new ImageView();
 			iv1.setFitHeight(165);

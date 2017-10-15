@@ -11,6 +11,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -22,10 +23,10 @@ public abstract class Rejestracja {
 	static void wyswietlmenu(BorderPane root, Stage primaryStage) {
 		root.getChildren().clear();
 		
-		Image logodway = new Image("logo-red.png");
-		Image unknow = new Image("unknow.png");
-		Image choose = new Image("choose.png");
-		Image conf = new Image("confirm.png");
+		Image logodway = new Image("img/logo-red.png");
+		Image unknow = new Image("img/unknow.png");
+		Image choose = new Image("img/choose.png");
+		Image conf = new Image("img/confirm.png");
 		
 		ImageView iv1 = new ImageView();
 		iv1.setFitHeight(34);
@@ -123,7 +124,7 @@ public abstract class Rejestracja {
 		loginarea.resize(250, 30);
 		loginarea.setLayoutY((primaryStage.getHeight()*0.15)+10);
 		loginarea.setLayoutX(15);
-		
+
 		TextArea namearea = new TextArea();
 		namearea.setPromptText("nam3");
 		namearea.resize(250, 30);
@@ -136,7 +137,7 @@ public abstract class Rejestracja {
 		password.setLayoutY((primaryStage.getHeight()*0.25)+10);
 		// password.setLayoutX(((primaryStage.getWidth()-iv1.getFitWidth())/2));
 		password.setLayoutX(15);
-		
+
 		PasswordField passwordc = new PasswordField();
 		passwordc.setPromptText("c0nfirm pa55word");
 		passwordc.resize(250, 30);
@@ -155,14 +156,15 @@ public abstract class Rejestracja {
 		wybierzplik.setLayoutX((iv2.getLayoutX()+iv2.getFitWidth()/2)-iv3.getFitWidth()/2);
 		wybierzplik.setLayoutY(iv2.getLayoutY()+iv2.getFitHeight()+40);
 		wybierzplik.setGraphic(iv3);
-		wybierzplik.setOnAction(new EventHandler<ActionEvent>() {
+		wybierzplik.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
-			public void handle(ActionEvent event) {
+			public void handle(MouseEvent event) {
 				try {
-					if(Wyborzdjecia.wyborzdysku(primaryStage)!=null)
+					Image temp=Wyborzdjecia.wyborzdysku(primaryStage);
+					if(temp!=null)
 					{
-						iv2.setImage(Wyborzdjecia.wyborzdysku(primaryStage));
+						iv2.setImage(temp);
 						root.getChildren().remove(iv2);
 						root.getChildren().add(iv2);
 					}
@@ -186,6 +188,18 @@ public abstract class Rejestracja {
 		cb.resize(250, 30);
 		cb.setLayoutY((primaryStage.getHeight()*0.65)+10);
 		cb.setLayoutX(15);
+		cb.setOnMouseReleased(new EventHandler<MouseEvent>() {
+
+			@Override
+			public void handle(MouseEvent event) {
+				try {
+					cb.resize(250, 30);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 		TranslateTransition translateTransition1 = new TranslateTransition(czas, rejestracja);
 		translateTransition1.setDelay(czas);
