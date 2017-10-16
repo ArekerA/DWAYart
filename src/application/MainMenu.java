@@ -103,6 +103,18 @@ public abstract class MainMenu {
 		profile1.setGraphic(profile);
 		profile1.setLayoutY(36);
 		profile1.setLayoutX(primaryStage.getWidth());
+		profile1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					MojProfil.mojprofil(root, primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 		Button add1 = new Button();
 		add1.setGraphic(add);
