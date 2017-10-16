@@ -17,6 +17,7 @@ public abstract class MainMenu {
 
 	static void wyswietlmenu(BorderPane root, Stage primaryStage) {
 		root.getChildren().clear();
+		Zegar.dodajzegar(primaryStage, root);
 
 		Image logodway = new Image("img/logo-white.png");
 		Image homebtt = new Image("img/home.png");
@@ -117,7 +118,8 @@ public abstract class MainMenu {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					//Main.start(primaryStage);
+					root.getChildren().clear();
+					OknoLogowania.oknologowania(primaryStage, root);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -22,6 +22,7 @@ public abstract class Rejestracja {
 
 	static void wyswietlmenu(BorderPane root, Stage primaryStage) {
 		root.getChildren().clear();
+		Zegar.dodajzegar(primaryStage, root);
 		
 		Image logodway = new Image("img/logo-red.png");
 		Image unknow = new Image("img/unknow.png");
