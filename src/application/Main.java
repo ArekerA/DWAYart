@@ -23,10 +23,8 @@ public class Main extends Application implements Runnable {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("DWAY");
-			primaryStage.setResizable(false);
-			
+			primaryStage.setResizable(false);			
 			Zegar.dodajzegar(primaryStage, root);			
-			
 			OknoLogowania.oknologowania(primaryStage,root);
 		
 		} catch (Exception e) {
