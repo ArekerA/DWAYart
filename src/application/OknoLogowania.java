@@ -25,8 +25,9 @@ public class OknoLogowania {
 		Rzad.przypiszzdjecia();
 		Rzad.ustalanieswiatla(primaryStage);
 
-		Image logodway = new Image("img/logo-white.png");
+		Image logodway = new Image("img/PK.bmp");
 		Image log_in = new Image("img/login.png");
+		
 		Image register = new Image("img/register.png");
 
 		ImageView iv1 = new ImageView();
