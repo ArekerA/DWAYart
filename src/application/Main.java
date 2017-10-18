@@ -25,8 +25,7 @@ public class Main extends Application implements Runnable {
 			primaryStage.setTitle("DWAY");
 			primaryStage.setResizable(false);
 			
-			Zegar.dodajzegar(primaryStage, root);
-			
+			Zegar.dodajzegar(primaryStage, root);			
 			
 			OknoLogowania.oknologowania(primaryStage,root);
 		
