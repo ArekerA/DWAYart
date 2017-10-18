@@ -26,7 +26,7 @@ public class Main extends Application implements Runnable {
 			primaryStage.setResizable(false);			
 			Zegar.dodajzegar(primaryStage, root);			
 			OknoLogowania.oknologowania(primaryStage,root);
-		
+		// Komentarz sssa
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
