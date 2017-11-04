@@ -16,7 +16,7 @@ import javafx.util.Duration;
 public class Main extends Application implements Runnable {
 	@Override
 	public void start(Stage primaryStage) {
-		try {
+		try {     
 			BorderPane root = new BorderPane();
 			Scene scene = new Scene(root, 1200, 600);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
@@ -25,7 +25,8 @@ public class Main extends Application implements Runnable {
 			primaryStage.setTitle("DWAY");
 			primaryStage.setResizable(false);			
 			Zegar.dodajzegar(primaryStage, root);			
-			OknoLogowania.oknologowania(primaryStage,root);
+			OknoLogowania.oknologowania(primaryStage,root); 
+			
 		// Komentarz sssa
 		} catch (Exception e) {
 			e.printStackTrace();
