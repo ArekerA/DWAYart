@@ -32,10 +32,20 @@ public abstract class MainMenu {
 		Image logoutbtt = new Image("img/logout.png");
 		
 		final VBox vb = new VBox();
-		 vb.setVisible(true);
-		 vb.setLayoutX(20);
-		    vb.setLayoutY(80);
-	        vb.setSpacing(10);
+		vb.setVisible(true);
+		vb.setLayoutX(20);
+		vb.setLayoutY(80);
+	    vb.setSpacing(10);
+	    final VBox vb1 = new VBox();
+		vb1.setVisible(true);
+		vb1.setLayoutX(primaryStage.getWidth()*0.33+20);
+		vb1.setLayoutY(80);
+	    vb1.setSpacing(10);
+	    final VBox vb2 = new VBox();
+		vb2.setVisible(true);
+		vb2.setLayoutX(primaryStage.getWidth()*0.66+20);
+		vb2.setLayoutY(80);
+	    vb2.setSpacing(10);
 		    
 		Point2D point = new Point2D(15, primaryStage.getHeight() * 0.13);
 		/*
@@ -57,7 +67,21 @@ public abstract class MainMenu {
 		}*/
 		
 		//Rzad.wyswietlanierzedu(point, vb, Rzad.ustalanieswiatla(primaryStage));
-		Rzad.wyswietlanierzedu(vb);
+		for(int i=0; i<Rzad.skalowaneivy.size(); i++)
+		{
+			if(i%3==0)
+			{
+				Rzad.wyswietlanierzedu(vb, Rzad.getSkalowaneivy().get(i));
+			}
+			else if(i%3==1)
+			{
+				Rzad.wyswietlanierzedu(vb1, Rzad.getSkalowaneivy().get(i));
+			}
+			else if(i%3==2)
+			{
+				Rzad.wyswietlanierzedu(vb2, Rzad.getSkalowaneivy().get(i));
+			}
+		}
 		ImageView iv1 = new ImageView();
 		iv1.setFitHeight(34);
 		iv1.setFitWidth(66);
@@ -242,19 +266,24 @@ public abstract class MainMenu {
 		
 		ScrollBar sc = new ScrollBar();
 		sc.setMin(0);
-	    sc.setOrientation(Orientation.HORIZONTAL);
-	    sc.resize(primaryStage.getWidth(), 50);
-	    sc.setMax(360);
-	    sc.setLayoutY(primaryStage.getHeight()-50);
+	    sc.setOrientation(Orientation.VERTICAL);
+	    sc.resize(50, primaryStage.getHeight());
+	    sc.setMax(80*Rzad.getIvy().size());
+	    sc.setLayoutY(0);
+	    sc.setLayoutX(primaryStage.getWidth()-sc.getWidth());
 	    sc.valueProperty().addListener(new ChangeListener<Number>() {
 	        public void changed(ObservableValue<? extends Number> ov,
 	            Number old_val, Number new_val) {
-	                vb.setLayoutX(-new_val.doubleValue());
+	                vb.setLayoutY(-new_val.doubleValue());
+	                vb1.setLayoutY(-new_val.doubleValue());
+	                vb2.setLayoutY(-new_val.doubleValue());
 	            }
 	    });
 	   
 
 		root.getChildren().add(vb);
+		root.getChildren().add(vb1);
+		root.getChildren().add(vb2);
 		root.getChildren().add(iv1);
 		root.getChildren().add(home1);
 		root.getChildren().add(fav1);
