@@ -68,7 +68,7 @@ public abstract class MainMenu {
 		
 		//Rzad.wyswietlanierzedu(point, vb, Rzad.ustalanieswiatla(primaryStage));
 		for(int i=0; i<Rzad.skalowaneivy.size(); i++)
-		{
+		{  
 			if(i%3==0)
 			{
 				Rzad.wyswietlanierzedu(vb, Rzad.getSkalowaneivy().get(i));
