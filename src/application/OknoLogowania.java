@@ -19,7 +19,7 @@ public class OknoLogowania {
 
 	public static void oknologowania(Stage primaryStage, BorderPane root)
 	{
-		// UWaga:
+		// UWaga: 
 
 		Pomocnicza.dodajobrazy();
 		Rzad.przypiszzdjecia();
