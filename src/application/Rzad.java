@@ -2,9 +2,15 @@ package application;
 
 import java.util.ArrayList;
 
+import com.sun.prism.paint.Color;
+
+import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public abstract class Rzad {
@@ -78,7 +84,7 @@ public abstract class Rzad {
 		return a;
 	}
 	
-	public static double[] wyswietlanierzedu(Point2D point, BorderPane root, double[] spaceandi)
+	public static double[] wyswietlanierzedu(Point2D point, VBox root, double[] spaceandi)
 	{
 		int i=0;
 		while(i<=spaceandi[1]+1)
@@ -86,11 +92,11 @@ public abstract class Rzad {
 			Rzad.getIvy().get(i).setLayoutY(point.getY());
 			if(i==0)
 			{
-				Rzad.getIvy().get(i).setLayoutX(15/2+spaceandi[0]);
+				Rzad.getIvy().get(i).setLayoutX(15/2/*+spaceandi[0]*/);
 			}
 			else
 			{
-				Rzad.getIvy().get(i).setLayoutX(Rzad.getIvy().get(i-1).getLayoutX()+Rzad.getIvy().get(i-1).getFitWidth()+spaceandi[0]);
+				Rzad.getIvy().get(i).setLayoutX(Rzad.getIvy().get(i-1).getLayoutX()+Rzad.getIvy().get(i-1).getFitWidth()/*+spaceandi[0]*/);
 			}
 			root.getChildren().add(Rzad.getIvy().get(i));
 			i++;			
@@ -98,6 +104,11 @@ public abstract class Rzad {
 		System.out.println(spaceandi[1]);
 		return spaceandi;
 	}
+	public static void wyswietlanierzedu(VBox root)
+	{
+		root.getChildren().addAll(ivy);
+	}
+	
 
 	public static ArrayList<ImageView> getIvy() {
 		return ivy;

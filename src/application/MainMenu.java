@@ -2,14 +2,18 @@ package application;
 
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
 import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -26,7 +30,13 @@ public abstract class MainMenu {
 		Image profilebtt = new Image("img/profile.png");
 		Image addbtt = new Image("img/add.png");
 		Image logoutbtt = new Image("img/logout.png");
-
+		
+		final VBox vb = new VBox();
+		 vb.setVisible(true);
+		 vb.setLayoutX(20);
+		    vb.setLayoutY(80);
+	        vb.setSpacing(10);
+		    
 		Point2D point = new Point2D(15, primaryStage.getHeight() * 0.13);
 		/*
 		int i = 0;
@@ -46,7 +56,8 @@ public abstract class MainMenu {
 			}
 		}*/
 		
-		Rzad.wyswietlanierzedu(point, root, Rzad.ustalanieswiatla(primaryStage));
+		//Rzad.wyswietlanierzedu(point, vb, Rzad.ustalanieswiatla(primaryStage));
+		Rzad.wyswietlanierzedu(vb);
 		ImageView iv1 = new ImageView();
 		iv1.setFitHeight(34);
 		iv1.setFitWidth(66);
@@ -228,7 +239,22 @@ public abstract class MainMenu {
 			ft1.setAutoReverse(true);
 			ft1.play();
 		}
+		
+		ScrollBar sc = new ScrollBar();
+		sc.setMin(0);
+	    sc.setOrientation(Orientation.HORIZONTAL);
+	    sc.resize(primaryStage.getWidth(), 50);
+	    sc.setMax(360);
+	    sc.setLayoutY(primaryStage.getHeight()-50);
+	    sc.valueProperty().addListener(new ChangeListener<Number>() {
+	        public void changed(ObservableValue<? extends Number> ov,
+	            Number old_val, Number new_val) {
+	                vb.setLayoutX(-new_val.doubleValue());
+	            }
+	    });
+	   
 
+		root.getChildren().add(vb);
 		root.getChildren().add(iv1);
 		root.getChildren().add(home1);
 		root.getChildren().add(fav1);
@@ -236,5 +262,6 @@ public abstract class MainMenu {
 		root.getChildren().add(profile1);
 		root.getChildren().add(add1);
 		root.getChildren().add(logout1);
+		root.getChildren().add(sc);
 	}
 }
