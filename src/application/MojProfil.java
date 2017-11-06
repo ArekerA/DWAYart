@@ -40,6 +40,32 @@ public class MojProfil {
 		iv2.setLayoutX(primaryStage.getWidth()-iv2.getFitWidth()-200);
 		iv2.setImage(unknow);
 		
+		Image log_in = new Image("img/login.png");
+
+		ImageView iv5 = new ImageView(log_in);
+		iv5.setFitHeight(45);
+		iv5.setFitWidth(45);
+		iv5.setLayoutY(550);
+		iv5.setLayoutX(15);
+
+		Text Back = new Text("Back");
+		Back.setStyle("-fx-font-size: 30pt;");
+		Back.setFill(Color.WHITE);
+		Back.setLayoutY(primaryStage.getHeight() * 0.90 + 10);
+		Back.setLayoutX(70);
+		
+		
+		iv5.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
+			iv5.setPickOnBounds(true);
+			root.getChildren().clear();
+			MainMenu.wyswietlmenu(root, primaryStage);
+		});
+		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
+			Back.setPickOnBounds(true);
+			root.getChildren().clear();
+			MainMenu.wyswietlmenu(root, primaryStage);
+		});
+		
 		
 		Duration czas = new Duration(100);
 		TranslateTransition translateTransition = new TranslateTransition(czas, iv1);
@@ -151,6 +177,8 @@ public class MojProfil {
 		root.getChildren().add(iv2);
 		root.getChildren().add(sex);
 		root.getChildren().add(sexarea);
+		root.getChildren().add(iv5);
+		root.getChildren().add(Back);
 		
 	}
 }

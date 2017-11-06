@@ -8,7 +8,7 @@ public abstract class Pomocnicza {
 
 	static public ArrayList<Image> obrazy = new ArrayList<Image>(0);
 
-	public static void dodajobrazy() {
+	public static void dodajobrazy() {   /// To trzeba czytaæ automatycznie z katalogu a nie tak rêcznie
 		obrazy.add(new Image("img/1.jpg"));
 		obrazy.add(new Image("img/2.jpg"));
 		obrazy.add(new Image("img/3.jpg"));

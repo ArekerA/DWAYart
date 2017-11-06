@@ -7,7 +7,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Orientation;
-import javafx.geometry.Point2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollBar;
 import javafx.scene.image.Image;
@@ -20,7 +19,7 @@ import javafx.util.Duration;
 public abstract class MainMenu {
 
 	static void wyswietlmenu(BorderPane root, Stage primaryStage) {
-		root.getChildren().clear();
+
 		Zegar.dodajzegar(primaryStage, root);
 
 		Image logodway = new Image("img/logo-white.png");
@@ -30,58 +29,34 @@ public abstract class MainMenu {
 		Image profilebtt = new Image("img/profile.png");
 		Image addbtt = new Image("img/add.png");
 		Image logoutbtt = new Image("img/logout.png");
-		
+
 		final VBox vb = new VBox();
 		vb.setVisible(true);
 		vb.setLayoutX(20);
 		vb.setLayoutY(80);
-	    vb.setSpacing(10);
-	    final VBox vb1 = new VBox();
+		vb.setSpacing(10);
+		final VBox vb1 = new VBox();
 		vb1.setVisible(true);
-		vb1.setLayoutX(primaryStage.getWidth()*0.33+20);
+		vb1.setLayoutX(primaryStage.getWidth() * 0.33 + 20);
 		vb1.setLayoutY(80);
-	    vb1.setSpacing(10);
-	    final VBox vb2 = new VBox();
+		vb1.setSpacing(10);
+		final VBox vb2 = new VBox();
 		vb2.setVisible(true);
-		vb2.setLayoutX(primaryStage.getWidth()*0.66+20);
+		vb2.setLayoutX(primaryStage.getWidth() * 0.66 + 20);
 		vb2.setLayoutY(80);
-	    vb2.setSpacing(10);
-		    
-		Point2D point = new Point2D(15, primaryStage.getHeight() * 0.13);
-		/*
-		int i = 0;
-		while (i < Rzad.getIvy().size()) {
-			Rzad.wyswietlZdjecie(point, Rzad.getIvy().get(i), root, 0, primaryStage);
-			if (Rzad.wyswietlZdjecie(point, Rzad.getIvy().get(i), root, 0, primaryStage).getX() < primaryStage
-					.getWidth()) {
-				root.getChildren().add(Rzad.getIvy().get(i));
-				// Rzad.wyswietlZdjecie(point,Rzad.getIvy().get(i),root,0,primaryStage);
-				point = Rzad.wyswietlZdjecie(point, Rzad.getIvy().get(i), root, 0, primaryStage);
-				i++;
-				System.out.println(point.getX());
-			} else {
-				i--;
-				point = new Point2D(15, point.getY() + primaryStage.getHeight() * 0.23 + 10);
-				i++;
-			}
-		}*/
-		
-		//Rzad.wyswietlanierzedu(point, vb, Rzad.ustalanieswiatla(primaryStage));
-		for(int i=0; i<Rzad.skalowaneivy.size(); i++)
-		{  
-			if(i%3==0)
-			{
+		vb2.setSpacing(10);
+
+
+		for (int i = 0; i < Rzad.skalowaneivy.size(); i++) {
+			if (i % 3 == 0) {
 				Rzad.wyswietlanierzedu(vb, Rzad.getSkalowaneivy().get(i));
-			}
-			else if(i%3==1)
-			{
+			} else if (i % 3 == 1) {
 				Rzad.wyswietlanierzedu(vb1, Rzad.getSkalowaneivy().get(i));
-			}
-			else if(i%3==2)
-			{
+			} else if (i % 3 == 2) {
 				Rzad.wyswietlanierzedu(vb2, Rzad.getSkalowaneivy().get(i));
 			}
 		}
+
 		ImageView iv1 = new ImageView();
 		iv1.setFitHeight(34);
 		iv1.setFitWidth(66);
@@ -155,6 +130,22 @@ public abstract class MainMenu {
 		add1.setGraphic(add);
 		add1.setLayoutY(36);
 		add1.setLayoutX(primaryStage.getWidth());
+		add1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					Image temp = Wyborzdjecia.wyborzdysku(primaryStage);
+					// Trzeba stworzyæ Menu osobne, w którym bêdziemy dodawaæ zdjêcie i Tagi
+					// Tu elegancko trzeba za³atwiæ zapisywanie tego pliku w miejsce bin/img/ 
+					
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
 
 		Button logout1 = new Button();
 		logout1.setGraphic(logout);
@@ -263,23 +254,23 @@ public abstract class MainMenu {
 			ft1.setAutoReverse(true);
 			ft1.play();
 		}
-		
+
 		ScrollBar sc = new ScrollBar();
-		sc.setMin(0);
-	    sc.setOrientation(Orientation.VERTICAL);
-	    sc.resize(50, primaryStage.getHeight());
-	    sc.setMax(80*Rzad.getIvy().size());
-	    sc.setLayoutY(0);
-	    sc.setLayoutX(primaryStage.getWidth()-sc.getWidth());
-	    sc.valueProperty().addListener(new ChangeListener<Number>() {
-	        public void changed(ObservableValue<? extends Number> ov,
-	            Number old_val, Number new_val) {
-	                vb.setLayoutY(-new_val.doubleValue());
-	                vb1.setLayoutY(-new_val.doubleValue());
-	                vb2.setLayoutY(-new_val.doubleValue());
-	            }
-	    });
-	   
+		sc.setMin(-100);
+		sc.setMax(100);
+		sc.setOrientation(Orientation.VERTICAL);
+		sc.resize(25, primaryStage.getHeight());
+		sc.setMax(80 * Rzad.getIvy().size());
+		sc.setLayoutY(0);
+		sc.setLayoutX(primaryStage.getWidth() - sc.getWidth());
+		sc.valueProperty().addListener(new ChangeListener<Number>() {
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				vb.setLayoutY(-new_val.doubleValue());
+				vb1.setLayoutY(-new_val.doubleValue());
+				vb2.setLayoutY(-new_val.doubleValue());
+				
+			}
+		});
 
 		root.getChildren().add(vb);
 		root.getChildren().add(vb1);

@@ -16,9 +16,11 @@ public class Main extends Application implements Runnable {
 			primaryStage.setScene(scene);
 			primaryStage.show();
 			primaryStage.setTitle("DWAY");
-			primaryStage.setResizable(false);			
-			Zegar.dodajzegar(primaryStage, root);			
+			primaryStage.setResizable(false);		
+			Pomocnicza.dodajobrazy();
+			Rzad.przypiszzdjecia();
 			OknoLogowania.oknologowania(primaryStage,root); 
+		
 			
 		// Komentarz sssa
 		} catch (Exception e) {
@@ -34,12 +36,6 @@ public class Main extends Application implements Runnable {
 	public void run() {
 		while (true) {
 			System.out.println("dziala");
-			try {
-				// usypiamy w¹tek na 100 milisekund
-				Thread.sleep(3500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 	}
 }

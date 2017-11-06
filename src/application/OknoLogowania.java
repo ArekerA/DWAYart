@@ -17,13 +17,13 @@ import javafx.util.Duration;
 
 public class OknoLogowania {
 
+	
+
+	
 	public static void oknologowania(Stage primaryStage, BorderPane root)
 	{
 		// UWaga: 
-
-		Pomocnicza.dodajobrazy();
-		Rzad.przypiszzdjecia();
-
+		Zegar.dodajzegar(primaryStage, root);
 		Image logodway = new Image("img/logo-white.png");
 		Image log_in = new Image("img/login.png");		
 		Image register = new Image("img/register.png");
@@ -125,12 +125,13 @@ public class OknoLogowania {
 		// password.setLayoutX(((primaryStage.getWidth()-iv1.getFitWidth())/2));
 		password.setLayoutX(primaryStage.getWidth());
 		password.resize(iv1.getFitWidth(), 30);
+		
 		TranslateTransition translateTransition2 = new TranslateTransition(czas, password);
 		translateTransition2.setByX(-((primaryStage.getWidth() - iv1.getFitWidth()) / 2) - password.getWidth());
 		translateTransition2.setAutoReverse(false);
 		translateTransition2.play();
 
-		FadeTransition ft = new FadeTransition(czas, zalogujsie);
+	   FadeTransition ft = new FadeTransition(czas, zalogujsie);
 		ft.setFromValue(0);
 		ft.setToValue(1);
 		ft.setAutoReverse(true);
@@ -165,7 +166,6 @@ public class OknoLogowania {
 		root.getChildren().add(zalogujsie);
 		root.getChildren().add(sig_in);
 		root.getChildren().add(register_text);
-
 		root.getChildren().add(zaresie);
 		root.getChildren().add(login);
 		root.getChildren().add(password);
