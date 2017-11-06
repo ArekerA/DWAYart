@@ -25,7 +25,7 @@ public abstract class Rzad {
 	public static void dodajdoskalowanych(ImageView iv, int i)
 	{
 		iv.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj			
-			PodgladZdjecia.pokliku(i);	
+		PodgladZdjecia.pokliku(i);	
 		});
 		iv.setOnMouseEntered((MouseEvent e) -> { // Po najechaniu wykonaj
 			String musicFile = "sound.wav";     // For example

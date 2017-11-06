@@ -29,6 +29,7 @@ public abstract class Rejestracja {
 		Image choose = new Image("img/choose.png");
 		Image conf = new Image("img/confirm.png");
 		
+		
 		ImageView iv1 = new ImageView();
 		iv1.setFitHeight(34);
 		iv1.setFitWidth(66);
@@ -56,6 +57,23 @@ public abstract class Rejestracja {
 		/*iv3.setLayoutY(primaryStage.getHeight()*0.15);
 		iv3.setLayoutX(primaryStage.getWidth()-iv2.getFitWidth()-200);*/
 		iv4.setImage(conf);
+		
+		Image log_in = new Image("img/login.png");	
+		
+		ImageView iv5 = new ImageView(log_in);
+		iv5.setFitHeight(45);
+		iv5.setFitWidth(45);
+		iv5.setLayoutY(550);
+		iv5.setLayoutX(15);
+		
+
+		Text Back = new Text("Back");
+		Back.setStyle("-fx-font-size: 30pt;");
+		Back.setFill(Color.WHITE);
+		Back.setLayoutY(primaryStage.getHeight()*0.90+10);
+		Back.setLayoutX(70);
+		
+		
 		
 		Duration czas = new Duration(100);
 		TranslateTransition translateTransition = new TranslateTransition(czas, iv1);
@@ -177,6 +195,18 @@ public abstract class Rejestracja {
 			}
 		});
 		
+		iv5.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj		
+			iv5.setPickOnBounds(true);
+			root.getChildren().clear();
+			OknoLogowania.oknologowania(primaryStage, root);	
+			});
+		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj		
+			Back.setPickOnBounds(true);
+			root.getChildren().clear();
+			OknoLogowania.oknologowania(primaryStage, root);	
+			});
+		
+		
 		Button confirmdata=new Button("Wybierz Plik");
 		//wybierzplik.resize(primaryStage.getWidth()/5,primaryStage.getHeight()/10);
 		confirmdata.setLayoutX(265-iv4.getFitWidth());
@@ -245,6 +275,8 @@ public abstract class Rejestracja {
 		root.getChildren().add(cb);
 		root.getChildren().add(confirm);
 		root.getChildren().add(confirmdata);
+		root.getChildren().add(iv5);
+		root.getChildren().add(Back);
 		
 	}
 }

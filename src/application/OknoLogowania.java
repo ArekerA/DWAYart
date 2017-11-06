@@ -59,7 +59,7 @@ public class OknoLogowania {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					System.out.println("test");
+					root.getChildren().clear();
 					MainMenu.wyswietlmenu(root, primaryStage);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
@@ -78,6 +78,7 @@ public class OknoLogowania {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
+					root.getChildren().clear();
 					Rejestracja.wyswietlmenu(root, primaryStage);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block

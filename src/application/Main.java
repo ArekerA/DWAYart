@@ -1,17 +1,10 @@
 package application;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
-import javafx.animation.Animation;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.util.Duration;
+
 
 public class Main extends Application implements Runnable {
 	@Override
