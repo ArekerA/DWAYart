@@ -1,5 +1,6 @@
 package application;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import javafx.scene.Scene;
@@ -7,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.stage.Stage;
 
 public abstract class Rzad {
@@ -19,6 +22,20 @@ public abstract class Rzad {
 		return skalowaneivy;
 	}
 
+	public static void dodajdoskalowanych(ImageView iv, int i)
+	{
+		iv.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj			
+			PodgladZdjecia.pokliku(i);	
+		});
+		iv.setOnMouseEntered((MouseEvent e) -> { // Po najechaniu wykonaj
+			String musicFile = "sound.wav";     // For example
+			Media sound = new Media(new File(musicFile).toURI().toString());
+			MediaPlayer mediaPlayer = new MediaPlayer(sound);
+			mediaPlayer.play();
+		});
+		skalowaneivy.add(iv);
+	}
+	
 	public static void setSkalowaneivy(ArrayList<ImageView> skalowaneivy) {
 		Rzad.skalowaneivy = skalowaneivy;
 	}
@@ -32,16 +49,18 @@ public abstract class Rzad {
 			iv.setImage(Pomocnicza.getObrazy().get(i));
 			iv.setFitWidth(330);
 			skala=Pomocnicza.getObrazy().get(i).getWidth()/300;
-			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight()/skala);
-			skalowaneivy.add(iv);
+			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight()/skala);			
+			dodajdoskalowanych(iv, i);
 		}
 	}
 	public static void przypiszzdjecia() {
 		for (int i = 0; i < Pomocnicza.getObrazy().size(); i++) {
+			int k=i;
 			ImageView iv = new ImageView();
 			iv.setImage(Pomocnicza.getObrazy().get(i));
 			iv.setFitWidth(Pomocnicza.getObrazy().get(i).getWidth());
 			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight());
+			
 			ivy.add(iv);			
 			ivy.get(i).setPickOnBounds(true); // Przeoczystoœæ obrazka
 			ivy.get(i).setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
@@ -50,7 +69,7 @@ public abstract class Rzad {
 				Scene scene = new Scene(root, iv.getFitWidth(), iv.getFitHeight());
 				primaryStage.setScene(scene);
 				primaryStage.show();
-				root.getChildren().add(iv);
+				root.getChildren().add(ivy.get(k));
 			});
 			
 	}
