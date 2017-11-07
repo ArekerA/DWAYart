@@ -29,7 +29,15 @@ public abstract class MainMenu {
 		Image profilebtt = new Image("img/profile.png");
 		Image addbtt = new Image("img/add.png");
 		Image logoutbtt = new Image("img/logout.png");
+		Image menu = new Image("img/menu.jpg");
 
+		ImageView iv6 = new ImageView();
+		
+		iv6.setLayoutY(0);
+		iv6.setLayoutX(0);
+		iv6.setImage(menu);
+		
+		
 		final VBox vb = new VBox();
 		vb.setVisible(true);
 		vb.setLayoutX(20);
@@ -272,11 +280,13 @@ public abstract class MainMenu {
 				vb1.setLayoutY(-new_val.doubleValue());
 				vb2.setLayoutY(-new_val.doubleValue());
 				int i=0;
-				while(i!=-1)
+				
+				// O Panie kto Panu tak spierdoli³ hahaha :D
+				/*while(i!=-1)
 				{
 					if(!vb.getChildren().get(i).equals(null))
 					{
-						System.out.println(vb.getChildren().get(i).getLocalToSceneTransform().getTy());
+					
 						if(!vb.getChildren().get(i+1).equals(null))
 						{
 							if(vb.getChildren().get(i).getLayoutY()>-69)
@@ -286,7 +296,7 @@ public abstract class MainMenu {
 						vb.getChildren().get(i).setOpacity(vb.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
 						if(!vb1.getChildren().get(i).equals(null))
 						{
-							System.out.println(vb1.getChildren().get(i).getLocalToSceneTransform().getTy());
+							
 							if(!vb1.getChildren().get(i+1).equals(null))
 							{
 								if(vb1.getChildren().get(i).getLayoutY()>-69)
@@ -296,7 +306,7 @@ public abstract class MainMenu {
 							vb1.getChildren().get(i).setOpacity(vb1.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
 							if(!vb2.getChildren().get(i).equals(null))
 							{
-								System.out.println(vb2.getChildren().get(i).getLocalToSceneTransform().getTy());
+								
 								if(!vb2.getChildren().get(i+1).equals(null))
 								{
 									if(vb2.getChildren().get(i).getLayoutY()>-69)
@@ -312,14 +322,15 @@ public abstract class MainMenu {
 					{
 						i=-1;
 					}
-				}
+				}*/
 				
 			}
 		});
-
+	
 		root.getChildren().add(vb);
 		root.getChildren().add(vb1);
 		root.getChildren().add(vb2);
+		root.getChildren().add(iv6);
 		root.getChildren().add(iv1);
 		root.getChildren().add(home1);
 		root.getChildren().add(fav1);
@@ -328,5 +339,6 @@ public abstract class MainMenu {
 		root.getChildren().add(add1);
 		root.getChildren().add(logout1);
 		root.getChildren().add(sc);
+	
 	}
 }
