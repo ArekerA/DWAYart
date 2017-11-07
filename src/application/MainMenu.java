@@ -30,13 +30,6 @@ public abstract class MainMenu {
 		Image addbtt = new Image("img/add.png");
 		Image logoutbtt = new Image("img/logout.png");
 		Image menu = new Image("img/menu.jpg");
-
-		ImageView iv6 = new ImageView();
-		
-		iv6.setLayoutY(0);
-		iv6.setLayoutX(0);
-		iv6.setImage(menu);
-		
 		
 		final VBox vb = new VBox();
 		vb.setVisible(true);
@@ -101,6 +94,12 @@ public abstract class MainMenu {
 		logout.setImage(logoutbtt);
 		logout.setFitWidth(64);
 		logout.setFitHeight(64);
+		
+		ImageView iv6 = new ImageView();
+		iv6.setLayoutY(0);
+		iv6.setLayoutX(0);
+		iv6.setImage(menu);
+		
 
 		Button home1 = new Button();
 		home1.setGraphic(home);
