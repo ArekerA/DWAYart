@@ -99,7 +99,7 @@ public abstract class MainMenu {
 		iv6.setLayoutY(0);
 		iv6.setLayoutX(0);
 		iv6.setImage(menu);
-		
+		//
 
 		Button home1 = new Button();
 		home1.setGraphic(home);
