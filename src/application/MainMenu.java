@@ -255,6 +255,7 @@ public abstract class MainMenu {
 			ft1.play();
 		}
 
+		
 		ScrollBar sc = new ScrollBar();
 		sc.setMin(-100);
 		sc.setMax(100);
@@ -265,9 +266,53 @@ public abstract class MainMenu {
 		sc.setLayoutX(primaryStage.getWidth() - sc.getWidth());
 		sc.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-				vb.setLayoutY(-new_val.doubleValue());
+				
+				
+				vb.setLayoutY(-new_val.doubleValue());				
 				vb1.setLayoutY(-new_val.doubleValue());
 				vb2.setLayoutY(-new_val.doubleValue());
+				int i=0;
+				while(i!=-1)
+				{
+					if(!vb.getChildren().get(i).equals(null))
+					{
+						System.out.println(vb.getChildren().get(i).getLocalToSceneTransform().getTy());
+						if(!vb.getChildren().get(i+1).equals(null))
+						{
+							if(vb.getChildren().get(i).getLayoutY()>-69)
+							vb.getChildren().get(i).setOpacity(((vb.getChildren().get(i).getLocalToSceneTransform().getTy()+(vb.getChildren().get(i+1).getLayoutY()-vb.getChildren().get(i).getLayoutY())/2)-70)*0.008);
+						}
+						else if(vb.getChildren().get(i).getLayoutY()>-69)
+						vb.getChildren().get(i).setOpacity(vb.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
+						if(!vb1.getChildren().get(i).equals(null))
+						{
+							System.out.println(vb1.getChildren().get(i).getLocalToSceneTransform().getTy());
+							if(!vb1.getChildren().get(i+1).equals(null))
+							{
+								if(vb1.getChildren().get(i).getLayoutY()>-69)
+								vb1.getChildren().get(i).setOpacity(((vb1.getChildren().get(i).getLocalToSceneTransform().getTy()+(vb1.getChildren().get(i+1).getLayoutY()-vb1.getChildren().get(i).getLayoutY())/2)-70)*0.008);
+							}
+							else if(vb1.getChildren().get(i).getLayoutY()>-69)
+							vb1.getChildren().get(i).setOpacity(vb1.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
+							if(!vb2.getChildren().get(i).equals(null))
+							{
+								System.out.println(vb2.getChildren().get(i).getLocalToSceneTransform().getTy());
+								if(!vb2.getChildren().get(i+1).equals(null))
+								{
+									if(vb2.getChildren().get(i).getLayoutY()>-69)
+									vb2.getChildren().get(i).setOpacity(((vb2.getChildren().get(i).getLocalToSceneTransform().getTy()+(vb2.getChildren().get(i+1).getLayoutY()-vb2.getChildren().get(i).getLayoutY())/2)-70)*0.008);
+								}
+								else if(vb2.getChildren().get(i).getLayoutY()>-69)
+								vb2.getChildren().get(i).setOpacity(vb2.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
+							}
+						}
+						i++;
+					}
+					else
+					{
+						i=-1;
+					}
+				}
 				
 			}
 		});
