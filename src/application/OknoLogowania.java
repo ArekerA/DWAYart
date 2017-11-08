@@ -17,16 +17,12 @@ import javafx.util.Duration;
 
 public class OknoLogowania {
 
+	public static void oknologowania(Stage primaryStage, BorderPane root) {
 	
-
-	
-	public static void oknologowania(Stage primaryStage, BorderPane root)
-	{
-		// UWaga: 
 		Zegar.dodajzegar(primaryStage, root);
+
+		////////// IMAGE VIEW
 		Image logodway = new Image("img/logo-white.png");
-		Image log_in = new Image("img/login.png");		
-		Image register = new Image("img/register.png");
 
 		ImageView iv1 = new ImageView();
 		iv1.setFitHeight(165);
@@ -35,6 +31,8 @@ public class OknoLogowania {
 		iv1.setLayoutX(((primaryStage.getWidth() - iv1.getFitWidth()) / 2));
 		iv1.setImage(logodway);
 
+		Image log_in = new Image("img/login.png");
+
 		ImageView iv2 = new ImageView();
 		iv2.setImage(log_in);
 		iv2.setFitHeight(45);
@@ -42,51 +40,16 @@ public class OknoLogowania {
 		iv2.setLayoutY(primaryStage.getHeight() - 250);
 		iv2.setLayoutX(iv1.getLayoutX());
 
+		Image register = new Image("img/register.png");
+
 		ImageView iv3 = new ImageView();
 		iv3.setImage(register);
 		iv3.setFitHeight(45);
 		iv3.setFitWidth(45);
 		iv3.setLayoutY(primaryStage.getHeight() - 200);
 		iv3.setLayoutX((iv1.getLayoutX() + iv1.getFitWidth()) - iv3.getFitWidth());
-
-		Button zalogujsie = new Button();
-		zalogujsie.setGraphic(iv2);
-		zalogujsie.resize(45, 45);
-		zalogujsie.setLayoutY(primaryStage.getHeight() - 250);
-		zalogujsie.setLayoutX(iv1.getLayoutX());
-		zalogujsie.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					root.getChildren().clear();
-					MainMenu.wyswietlmenu(root, primaryStage);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
 		
-		Button zaresie = new Button();
-		zaresie.setGraphic(iv3);
-		zaresie.resize(45, 45);
-		zaresie.setLayoutY(primaryStage.getHeight() - 200);
-		zaresie.setLayoutX((iv1.getLayoutX() + iv1.getFitWidth()) - iv3.getFitWidth());
-		zaresie.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				try {
-					root.getChildren().clear();
-					Rejestracja.wyswietlmenu(root, primaryStage);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-
+		/////////// TEXT
 		Text sig_in = new Text("sign in...");
 		sig_in.setStyle("-fx-font-size: 30pt;");
 		sig_in.setFill(Color.WHITE);
@@ -100,38 +63,78 @@ public class OknoLogowania {
 		register_text.resize(iv1.getFitWidth() - iv2.getFitWidth() - 25, iv2.getFitHeight());
 		register_text.setLayoutY(primaryStage.getHeight() - 210 + iv3.getFitHeight());
 		register_text.setLayoutX(sig_in.getLayoutX() + 10);
+		
+		////////// TEXT AREA
+		TextArea login = new TextArea();
+		login.setPromptText("l0gin");
+		login.resize(iv1.getFitWidth(), 30);
+		login.setLayoutY(((primaryStage.getHeight() - iv1.getFitHeight()) / 2));
+		login.setLayoutX(0 - login.getWidth());
 
+		PasswordField password = new PasswordField();
+		password.setPromptText("pa55word");
+		password.setLayoutY(((primaryStage.getHeight() - iv1.getFitHeight()) / 2) + 50);
+		password.setLayoutX(primaryStage.getWidth());
+		password.resize(iv1.getFitWidth(), 30);
+
+		/////////// BUTTONY
+		Button zalogujsie = new Button();
+		zalogujsie.setGraphic(iv2);
+		zalogujsie.resize(45, 45);
+		zalogujsie.setLayoutY(primaryStage.getHeight() - 250);
+		zalogujsie.setLayoutX(iv1.getLayoutX());
+
+		Button zaresie = new Button();
+		zaresie.setGraphic(iv3);
+		zaresie.resize(45, 45);
+		zaresie.setLayoutY(primaryStage.getHeight() - 200);
+		zaresie.setLayoutX((iv1.getLayoutX() + iv1.getFitWidth()) - iv3.getFitWidth());
+
+		/////////// Wykonanie
+		zalogujsie.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					root.getChildren().clear();
+					MainMenu.wyswietlmenu(root, primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
+		zaresie.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					root.getChildren().clear();
+					Rejestracja.wyswietlmenu(root, primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
+		////////// ANIMACJE
 		Duration czas = new Duration(2000);
 		TranslateTransition translateTransition = new TranslateTransition(czas, iv1);
 		translateTransition.setByY(-((primaryStage.getHeight() - iv1.getFitHeight()) / 2));
 		translateTransition.setAutoReverse(false);
 		translateTransition.play();
 
-		TextArea login = new TextArea();
-		login.setPromptText("l0gin");
-		login.resize(iv1.getFitWidth(), 30);
-		login.setLayoutY(((primaryStage.getHeight() - iv1.getFitHeight()) / 2));
-		// login.setLayoutX(((primaryStage.getWidth()-iv1.getFitWidth())/2));
-		login.setLayoutX(0 - login.getWidth());
-		// login.setLayoutY(primaryStage.getHeight());
 		TranslateTransition translateTransition1 = new TranslateTransition(czas, login);
 		translateTransition1.setByX(((primaryStage.getWidth() - iv1.getFitWidth()) / 2) + login.getWidth());
 		translateTransition1.setAutoReverse(false);
 		translateTransition1.play();
 
-		PasswordField password = new PasswordField();
-		password.setPromptText("pa55word");
-		password.setLayoutY(((primaryStage.getHeight() - iv1.getFitHeight()) / 2) + 50);
-		// password.setLayoutX(((primaryStage.getWidth()-iv1.getFitWidth())/2));
-		password.setLayoutX(primaryStage.getWidth());
-		password.resize(iv1.getFitWidth(), 30);
-		
 		TranslateTransition translateTransition2 = new TranslateTransition(czas, password);
 		translateTransition2.setByX(-((primaryStage.getWidth() - iv1.getFitWidth()) / 2) - password.getWidth());
 		translateTransition2.setAutoReverse(false);
 		translateTransition2.play();
 
-	   FadeTransition ft = new FadeTransition(czas, zalogujsie);
+		FadeTransition ft = new FadeTransition(czas, zalogujsie);
 		ft.setFromValue(0);
 		ft.setToValue(1);
 		ft.setAutoReverse(true);

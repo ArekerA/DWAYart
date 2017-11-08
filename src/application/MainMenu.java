@@ -29,8 +29,8 @@ public abstract class MainMenu {
 		Image profilebtt = new Image("img/profile.png");
 		Image addbtt = new Image("img/add.png");
 		Image logoutbtt = new Image("img/logout.png");
-		Image menu = new Image("img/menu.jpg");
-		
+		Image menu = new Image("img/menu2.png");
+
 		final VBox vb = new VBox();
 		vb.setVisible(true);
 		vb.setLayoutX(20);
@@ -46,7 +46,6 @@ public abstract class MainMenu {
 		vb2.setLayoutX(primaryStage.getWidth() * 0.66 + 20);
 		vb2.setLayoutY(80);
 		vb2.setSpacing(10);
-
 
 		for (int i = 0; i < Rzad.skalowaneivy.size(); i++) {
 			if (i % 3 == 0) {
@@ -94,11 +93,12 @@ public abstract class MainMenu {
 		logout.setImage(logoutbtt);
 		logout.setFitWidth(64);
 		logout.setFitHeight(64);
-		
+
 		ImageView iv6 = new ImageView();
-		iv6.setLayoutY(0);
+		iv6.setLayoutY(-25);
 		iv6.setLayoutX(0);
 		iv6.setImage(menu);
+
 		//
 
 		Button home1 = new Button();
@@ -138,21 +138,21 @@ public abstract class MainMenu {
 		add1.setLayoutY(36);
 		add1.setLayoutX(primaryStage.getWidth());
 		add1.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					Image temp = Wyborzdjecia.wyborzdysku(primaryStage);
-					// Trzeba stworzyæ Menu osobne, w którym bêdziemy dodawaæ zdjêcie i Tagi
-					// Tu elegancko trzeba za³atwiæ zapisywanie tego pliku w miejsce bin/img/ 
-					
+					root.getChildren().clear();
+					dodajzdjecie.menudodawania(root, primaryStage);
+
+					// Tu lub w dodajzdjecie trzeba elegancko za³atwiæ zapisywanie tego pliku w
+					// miejsce bin/img/
+
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
 		});
-		
 
 		Button logout1 = new Button();
 		logout1.setGraphic(logout);
@@ -262,7 +262,6 @@ public abstract class MainMenu {
 			ft1.play();
 		}
 
-		
 		ScrollBar sc = new ScrollBar();
 		sc.setMin(-100);
 		sc.setMax(100);
@@ -273,59 +272,49 @@ public abstract class MainMenu {
 		sc.setLayoutX(primaryStage.getWidth() - sc.getWidth());
 		sc.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
-				
-				
-				vb.setLayoutY(-new_val.doubleValue());				
+
+				vb.setLayoutY(-new_val.doubleValue());
 				vb1.setLayoutY(-new_val.doubleValue());
 				vb2.setLayoutY(-new_val.doubleValue());
-				int i=0;
-				
+				int i = 0;
+
 				// O Panie kto Panu tak spierdoli³ hahaha :D
-				/*while(i!=-1)
-				{
-					if(!vb.getChildren().get(i).equals(null))
-					{
-					
-						if(!vb.getChildren().get(i+1).equals(null))
-						{
-							if(vb.getChildren().get(i).getLayoutY()>-69)
-							vb.getChildren().get(i).setOpacity(((vb.getChildren().get(i).getLocalToSceneTransform().getTy()+(vb.getChildren().get(i+1).getLayoutY()-vb.getChildren().get(i).getLayoutY())/2)-70)*0.008);
-						}
-						else if(vb.getChildren().get(i).getLayoutY()>-69)
-						vb.getChildren().get(i).setOpacity(vb.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
-						if(!vb1.getChildren().get(i).equals(null))
-						{
-							
-							if(!vb1.getChildren().get(i+1).equals(null))
-							{
-								if(vb1.getChildren().get(i).getLayoutY()>-69)
-								vb1.getChildren().get(i).setOpacity(((vb1.getChildren().get(i).getLocalToSceneTransform().getTy()+(vb1.getChildren().get(i+1).getLayoutY()-vb1.getChildren().get(i).getLayoutY())/2)-70)*0.008);
-							}
-							else if(vb1.getChildren().get(i).getLayoutY()>-69)
-							vb1.getChildren().get(i).setOpacity(vb1.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
-							if(!vb2.getChildren().get(i).equals(null))
-							{
-								
-								if(!vb2.getChildren().get(i+1).equals(null))
-								{
-									if(vb2.getChildren().get(i).getLayoutY()>-69)
-									vb2.getChildren().get(i).setOpacity(((vb2.getChildren().get(i).getLocalToSceneTransform().getTy()+(vb2.getChildren().get(i+1).getLayoutY()-vb2.getChildren().get(i).getLayoutY())/2)-70)*0.008);
-								}
-								else if(vb2.getChildren().get(i).getLayoutY()>-69)
-								vb2.getChildren().get(i).setOpacity(vb2.getChildren().get(i).getLocalToSceneTransform().getTy()*0.008);
-							}
-						}
-						i++;
-					}
-					else
-					{
-						i=-1;
-					}
-				}*/
-				
+				/*
+				 * while(i!=-1) { if(!vb.getChildren().get(i).equals(null)) {
+				 * 
+				 * if(!vb.getChildren().get(i+1).equals(null)) {
+				 * if(vb.getChildren().get(i).getLayoutY()>-69)
+				 * vb.getChildren().get(i).setOpacity(((vb.getChildren().get(i).
+				 * getLocalToSceneTransform().getTy()+(vb.getChildren().get(i+1).getLayoutY()-vb
+				 * .getChildren().get(i).getLayoutY())/2)-70)*0.008); } else
+				 * if(vb.getChildren().get(i).getLayoutY()>-69)
+				 * vb.getChildren().get(i).setOpacity(vb.getChildren().get(i).
+				 * getLocalToSceneTransform().getTy()*0.008);
+				 * if(!vb1.getChildren().get(i).equals(null)) {
+				 * 
+				 * if(!vb1.getChildren().get(i+1).equals(null)) {
+				 * if(vb1.getChildren().get(i).getLayoutY()>-69)
+				 * vb1.getChildren().get(i).setOpacity(((vb1.getChildren().get(i).
+				 * getLocalToSceneTransform().getTy()+(vb1.getChildren().get(i+1).getLayoutY()-
+				 * vb1.getChildren().get(i).getLayoutY())/2)-70)*0.008); } else
+				 * if(vb1.getChildren().get(i).getLayoutY()>-69)
+				 * vb1.getChildren().get(i).setOpacity(vb1.getChildren().get(i).
+				 * getLocalToSceneTransform().getTy()*0.008);
+				 * if(!vb2.getChildren().get(i).equals(null)) {
+				 * 
+				 * if(!vb2.getChildren().get(i+1).equals(null)) {
+				 * if(vb2.getChildren().get(i).getLayoutY()>-69)
+				 * vb2.getChildren().get(i).setOpacity(((vb2.getChildren().get(i).
+				 * getLocalToSceneTransform().getTy()+(vb2.getChildren().get(i+1).getLayoutY()-
+				 * vb2.getChildren().get(i).getLayoutY())/2)-70)*0.008); } else
+				 * if(vb2.getChildren().get(i).getLayoutY()>-69)
+				 * vb2.getChildren().get(i).setOpacity(vb2.getChildren().get(i).
+				 * getLocalToSceneTransform().getTy()*0.008); } } i++; } else { i=-1; } }
+				 */
+
 			}
 		});
-	
+
 		root.getChildren().add(vb);
 		root.getChildren().add(vb1);
 		root.getChildren().add(vb2);
@@ -338,6 +327,6 @@ public abstract class MainMenu {
 		root.getChildren().add(add1);
 		root.getChildren().add(logout1);
 		root.getChildren().add(sc);
-	
+
 	}
 }

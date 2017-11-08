@@ -28,6 +28,7 @@ public abstract class Rejestracja {
 		Image choose = new Image("img/choose.png");
 		Image conf = new Image("img/confirm.png");
 
+		//////////////// IMAGE VIEW
 		ImageView iv1 = new ImageView();
 		iv1.setFitHeight(34);
 		iv1.setFitWidth(66);
@@ -59,18 +60,18 @@ public abstract class Rejestracja {
 		iv5.setFitWidth(45);
 		iv5.setLayoutY(550);
 		iv5.setLayoutX(15);
-
-		Text Back = new Text("Back");
+		//////////////// TEXT
+		Text Back = new Text("    Back");
 		Back.setStyle("-fx-font-size: 30pt;");
 		Back.setFill(Color.WHITE);
 		Back.setLayoutY(primaryStage.getHeight() * 0.90 + 10);
-		Back.setLayoutX(70);
+		Back.setLayoutX(14);
 
-		Duration czas = new Duration(100);
-		TranslateTransition translateTransition = new TranslateTransition(czas, iv1);
-		translateTransition.setByX(-primaryStage.getWidth() + 10);
-		translateTransition.setAutoReverse(false);
-		translateTransition.play();
+		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
+			Back.setPickOnBounds(true);
+			root.getChildren().clear();
+			OknoLogowania.oknologowania(primaryStage, root);
+		});
 
 		Text rejestracja = new Text("Type informations...");
 		rejestracja.setStyle("-fx-font-size: 30pt;");
@@ -119,7 +120,7 @@ public abstract class Rejestracja {
 		confirm.setFill(Color.WHITE);
 		confirm.setLayoutY(primaryStage.getHeight() * 0.80 + 10);
 		confirm.setLayoutX(15);
-
+		//////////// POLA
 		TextArea loginarea = new TextArea();
 		loginarea.setPromptText("l0gin");
 		loginarea.resize(250, 30);
@@ -149,7 +150,7 @@ public abstract class Rejestracja {
 		mailarea.resize(250, 30);
 		mailarea.setLayoutY((primaryStage.getHeight() * 0.45) + 10);
 		mailarea.setLayoutX(15);
-
+		////////////// BUTTONS
 		Button wybierzplik = new Button("Wybierz Plik");
 		wybierzplik.setLayoutX((iv2.getLayoutX() + iv2.getFitWidth() / 2) - iv3.getFitWidth() / 2);
 		wybierzplik.setLayoutY(iv2.getLayoutY() + iv2.getFitHeight() + 40);
@@ -173,17 +174,6 @@ public abstract class Rejestracja {
 			}
 		});
 
-		iv5.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
-			iv5.setPickOnBounds(true);
-			root.getChildren().clear();
-			OknoLogowania.oknologowania(primaryStage, root);
-		});
-		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
-			Back.setPickOnBounds(true);
-			root.getChildren().clear();
-			OknoLogowania.oknologowania(primaryStage, root);
-		});
-
 		Button confirmdata = new Button("Wybierz Plik");
 		confirmdata.setLayoutX(265 - iv4.getFitWidth());
 		confirmdata.setLayoutY(primaryStage.getHeight() * 0.8);
@@ -205,6 +195,12 @@ public abstract class Rejestracja {
 				}
 			}
 		});
+		///////////// animacja
+		Duration czas = new Duration(100);
+		TranslateTransition translateTransition = new TranslateTransition(czas, iv1);
+		translateTransition.setByX(-primaryStage.getWidth() + 10);
+		translateTransition.setAutoReverse(false);
+		translateTransition.play();
 
 		TranslateTransition translateTransition1 = new TranslateTransition(czas, rejestracja);
 		translateTransition1.setDelay(czas);
@@ -218,7 +214,7 @@ public abstract class Rejestracja {
 		ft.setToValue(1);
 		ft.setAutoReverse(true);
 		ft.play();
-
+		//////////// root
 		root.getChildren().add(iv1);
 		root.getChildren().add(password_text);
 		root.getChildren().add(password_text2);

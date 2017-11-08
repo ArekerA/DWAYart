@@ -13,34 +13,27 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Zegar {
-	
-	public static void dodajzegar(Stage primaryStage, BorderPane root)
-	{
-		//long endTime = 300;
+
+	public static void dodajzegar(Stage primaryStage, BorderPane root) {
+		// long endTime = 300;
 		Label timeLabel = new Label();
-		DateFormat timeFormat = new SimpleDateFormat( "HH:mm:ss" );
-		final Timeline timeline = new Timeline(
-		    new KeyFrame(
-		        Duration.millis( 500 ),
-		        event -> {
-		            final long diff =System.currentTimeMillis();
-		            if ( diff < 0 ) {
-		            //  timeLabel.setText( "00:00:00" );
-		                timeLabel.setText( timeFormat.format( 0 ) );
-		            } else {
-		                timeLabel.setText( timeFormat.format( diff ) );
-		            }
-		        }
-		    )
-		);
-		timeline.setCycleCount( Animation.INDEFINITE );
+		DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		final Timeline timeline = new Timeline(new KeyFrame(Duration.millis(500), event -> {
+			final long diff = System.currentTimeMillis();
+			if (diff < 0) {
+				// timeLabel.setText( "00:00:00" );
+				timeLabel.setText(timeFormat.format(0));
+			} else {
+				timeLabel.setText(timeFormat.format(diff));
+			}
+		}));
+		timeline.setCycleCount(Animation.INDEFINITE);
 		timeLabel.resize(200, 200);
 		timeLabel.setTextFill(Color.WHITE);
 		timeLabel.setStyle("-fx-font-size: 20pt;");
-		timeLabel.setLayoutX(primaryStage.getWidth()-160);
+		timeLabel.setLayoutX(primaryStage.getWidth() - 160);
 		timeLabel.setLayoutY(-70);
-		
-		
+
 		timeline.play();
 		root.getChildren().add(timeLabel);
 	}

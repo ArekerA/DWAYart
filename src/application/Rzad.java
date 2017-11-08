@@ -48,7 +48,7 @@ public abstract class Rzad {
 			ImageView iv = new ImageView();
 			iv.setImage(Pomocnicza.getObrazy().get(i));
 			iv.setFitWidth(330);
-			skala=Pomocnicza.getObrazy().get(i).getWidth()/300;
+			skala=Pomocnicza.getObrazy().get(i).getWidth()/330;
 			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight()/skala);			
 			dodajdoskalowanych(iv, i);
 		}
