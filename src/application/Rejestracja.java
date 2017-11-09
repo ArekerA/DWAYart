@@ -67,12 +67,6 @@ public abstract class Rejestracja {
 		Back.setLayoutY(primaryStage.getHeight() * 0.90 + 10);
 		Back.setLayoutX(14);
 
-		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
-			Back.setPickOnBounds(true);
-			root.getChildren().clear();
-			OknoLogowania.oknologowania(primaryStage, root);
-		});
-
 		Text rejestracja = new Text("Type informations...");
 		rejestracja.setStyle("-fx-font-size: 30pt;");
 		rejestracja.setFill(Color.WHITE);
@@ -115,11 +109,24 @@ public abstract class Rejestracja {
 		sex.setLayoutY(primaryStage.getHeight() * 0.65);
 		sex.setLayoutX(15);
 
-		Text confirm = new Text("Confirm");
+		Text pom1 = new Text("Wypelnij wszystkie pola!!!");
+		pom1.setStyle("-fx-font-size: 25pt;");
+		pom1.setFill(Color.RED);
+		pom1.setLayoutY(primaryStage.getHeight() * 0.80 + 10);
+		pom1.setLayoutX(320);
+
+		Text pom2 = new Text("Hasla musza byc takie same!!");
+		pom2.setStyle("-fx-font-size: 25pt;");
+		pom2.setFill(Color.RED);
+		pom2.setLayoutY(primaryStage.getHeight() * 0.90 + 10);
+		pom2.setLayoutX(320);
+
+		Text confirm = new Text("Confirm     ");
 		confirm.setStyle("-fx-font-size: 30pt;");
 		confirm.setFill(Color.WHITE);
 		confirm.setLayoutY(primaryStage.getHeight() * 0.80 + 10);
 		confirm.setLayoutX(15);
+
 		//////////// POLA
 		TextArea loginarea = new TextArea();
 		loginarea.setPromptText("l0gin");
@@ -156,7 +163,6 @@ public abstract class Rejestracja {
 		wybierzplik.setLayoutY(iv2.getLayoutY() + iv2.getFitHeight() + 40);
 		wybierzplik.setGraphic(iv3);
 		wybierzplik.setOnMouseClicked(new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {
 				try {
@@ -184,7 +190,6 @@ public abstract class Rejestracja {
 		cb.setLayoutY((primaryStage.getHeight() * 0.65) + 10);
 		cb.setLayoutX(15);
 		cb.setOnMouseReleased(new EventHandler<MouseEvent>() {
-
 			@Override
 			public void handle(MouseEvent event) {
 				try {
@@ -195,6 +200,43 @@ public abstract class Rejestracja {
 				}
 			}
 		});
+		////////////// Wykonanie
+
+
+		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
+			Back.setPickOnBounds(true);
+			root.getChildren().clear();
+			OknoLogowania.oknologowania(primaryStage, root);
+		});
+		
+		confirm.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
+			root.getChildren().remove(pom1);
+			root.getChildren().remove(pom2);
+			confirm.setPickOnBounds(true);
+			if (cb.getValue() == null || loginarea.getText().trim().isEmpty() == true
+					|| namearea.getText().trim().isEmpty() == true || password.getText().trim().isEmpty() == true // czy okna wype³nione
+					|| passwordc.getText().trim().isEmpty() == true || mailarea.getText().trim().isEmpty() == true) {
+				root.getChildren().add(pom1);
+			}
+
+			if (!password.getText().equals(passwordc.getText())) // Has³a takie same
+			{
+				System.out.println(password.getText());
+				System.out.println(passwordc.getText());
+				root.getChildren().add(pom2);
+			}
+
+			if (loginarea.getText().trim().isEmpty() == false && namearea.getText().trim().isEmpty() == false
+					&& password.getText().trim().isEmpty() == false && passwordc.getText().trim().isEmpty() == false
+					&& mailarea.getText().trim().isEmpty() == false && cb.getValue() != null
+					&& password.getText().equals(passwordc.getText())) {
+
+				/// Przekazanie danych do serwera Czarodzieja
+				root.getChildren().clear();
+				OknoLogowania.oknologowania(primaryStage, root);
+			}
+		});
+
 		///////////// animacja
 		Duration czas = new Duration(100);
 		TranslateTransition translateTransition = new TranslateTransition(czas, iv1);
@@ -231,9 +273,9 @@ public abstract class Rejestracja {
 		root.getChildren().add(wybierzplik);
 		root.getChildren().add(sex);
 		root.getChildren().add(cb);
-		root.getChildren().add(confirm);
 		root.getChildren().add(confirmdata);
 		root.getChildren().add(iv5);
+		root.getChildren().add(confirm);
 		root.getChildren().add(Back);
 
 	}

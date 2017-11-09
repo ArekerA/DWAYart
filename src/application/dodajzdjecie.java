@@ -1,5 +1,12 @@
 package application;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -40,37 +47,6 @@ public class dodajzdjecie {
 		iv3.setImage(choose);
 		iv3.setLayoutX(887);
 		iv3.setLayoutY(400);
-
-		iv3.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
-			Image temp = null;
-			temp = Wyborzdjecia.wyborzdysku(primaryStage);
-			iv3.setPickOnBounds(true);
-			if (temp != null) {
-				root.getChildren().remove(iv2);
-				iv2.setImage(temp);
-
-				if (temp.getHeight() >= temp.getWidth()) // Sprawdzamy czy zdjêcie jest szersze czy wy¿sze i w
-															// zale¿noœci od tego ustawiamy i przystosowujemy
-				{
-					double k;
-					iv2.setFitHeight(250);
-					k = temp.getHeight() / 250;
-					iv2.setFitWidth(temp.getWidth() / k);
-					iv2.setLayoutY(130);
-					iv2.setLayoutX(912 - iv2.getFitWidth() / 2);
-				} else {
-					double k;
-					iv2.setFitWidth(375);
-					k = temp.getWidth() / 375;
-					iv2.setFitHeight(temp.getHeight() / k);
-					iv2.setLayoutX(725);
-					iv2.setLayoutY(225 - iv2.getFitHeight() / 2);
-				}
-
-				root.getChildren().add(iv2);
-			}
-
-		});
 
 		Image conf = new Image("img/confirm.png");
 
@@ -180,6 +156,37 @@ public class dodajzdjecie {
 			root.getChildren().clear();
 			MainMenu.wyswietlmenu(root, primaryStage);
 		});
+		
+		iv3.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
+			Image temp = null;
+			temp = Wyborzdjecia.wyborzdysku(primaryStage);
+			iv3.setPickOnBounds(true);
+			if (temp != null) {
+				root.getChildren().remove(iv2);
+				iv2.setImage(temp);
+
+				if (temp.getHeight() >= temp.getWidth()) // Sprawdzamy czy zdjêcie jest szersze czy wy¿sze i w
+															// zale¿noœci od tego ustawiamy i przystosowujemy
+				{
+					double k;
+					iv2.setFitHeight(250);
+					k = temp.getHeight() / 250;
+					iv2.setFitWidth(temp.getWidth() / k);
+					iv2.setLayoutY(130);
+					iv2.setLayoutX(912 - iv2.getFitWidth() / 2);
+				} else {
+					double k;
+					iv2.setFitWidth(375);
+					k = temp.getWidth() / 375;
+					iv2.setFitHeight(temp.getHeight() / k);
+					iv2.setLayoutX(725);
+					iv2.setLayoutY(225 - iv2.getFitHeight() / 2);
+				}
+
+				root.getChildren().add(iv2);
+			}
+
+		});
 
 		confirm.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
 			root.getChildren().remove(pom1);
@@ -202,7 +209,8 @@ public class dodajzdjecie {
 
 			if (tt2.getText().trim().isEmpty() == false && tt1.getText().trim().isEmpty() == false
 					&& tt3.getText().trim().isEmpty() == false && iv2.getImage() != unknow) {
-
+				
+				
 				////// Tu Zapis zdjêcia bedzie potrzebny + info z textarea
 
 				root.getChildren().clear();
