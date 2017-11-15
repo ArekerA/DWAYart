@@ -200,12 +200,14 @@ public abstract class Rejestracja {
 				}
 			}
 		});
-		////////////// Wykonanie
+		//////////////// Wykonanie
 
 
 		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
 			Back.setPickOnBounds(true);
+			
 			root.getChildren().clear();
+			
 			OknoLogowania.oknologowania(primaryStage, root);
 		});
 		
