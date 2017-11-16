@@ -270,7 +270,11 @@ public abstract class Rejestracja {
 					e1.printStackTrace();
 				}
 			    //Przes³anie sprawdzaj¹cej wiadomoœci na serwer:
-		        Output.println("Klient: Siema Heniu!");
+		        Output.println("Rejestracja");
+		        Output.println(namearea.getText().trim());
+		        Output.println(passwordc.getText().trim());
+		        Output.println(mailarea.getText().trim());
+		        Output.println(cb.getValue());
 
 		     
 		        // Zamkniêcie po³¹czenia ze strony klienta

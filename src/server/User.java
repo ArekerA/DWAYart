@@ -1,5 +1,6 @@
 package server;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import javafx.scene.image.Image;
@@ -11,6 +12,8 @@ public class User {
 	Date dob = new Date();
 	int age;
 	Image profilephoto;
+	
+	static ArrayList<User> userzy=new ArrayList<User>();
 
 	public Image getProfilephoto() {
 		return profilephoto;
@@ -20,11 +23,10 @@ public class User {
 		this.profilephoto = profilephoto;
 	}
 
-	public User(String login, String password, String name, Date dob) {
+	public User(String login, String password) {
 		this.login = login;
 		this.password = password;
-		this.name = name;
-		this.dob = dob;
+		userzy.add(this);
 	}
 
 	public String getLogin() {

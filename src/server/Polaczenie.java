@@ -10,6 +10,7 @@ public class Polaczenie implements Runnable{
 	@Override
 	public void run() {
 		ServerSocket ss = null;
+		String doswitcha=null;
 		
 		try {
 			ss = new ServerSocket(1324);
@@ -20,7 +21,20 @@ public class Polaczenie implements Runnable{
 		try {
 			Socket przychodzace=ss.accept();
 			Scanner in=new Scanner(przychodzace.getInputStream());
-			System.out.println("Odpowiadam z servera "+in.nextLine());
+			doswitcha=in.nextLine();
+			switch(doswitcha)
+					{
+			case "Rejestracja":
+			{
+				User user=new User(in.nextLine(), in.nextLine());
+				System.out.println("Wszyscy u¿ytkownicy:");
+				System.out.println(User.userzy.toString());
+			}
+			default:
+			{
+				break;
+			}
+					}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
