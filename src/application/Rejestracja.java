@@ -1,5 +1,13 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.util.Scanner;
+
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
@@ -232,7 +240,50 @@ public abstract class Rejestracja {
 					&& password.getText().trim().isEmpty() == false && passwordc.getText().trim().isEmpty() == false
 					&& mailarea.getText().trim().isEmpty() == false && cb.getValue() != null
 					&& password.getText().equals(passwordc.getText())) {
+				
+				Socket socket=new Socket();
+				InetSocketAddress sa=new InetSocketAddress("127.0.0.1", 1324);
+				BufferedReader Input = null;
+				PrintStream Output = null;
+				try {
+					socket.connect(sa);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					System.out.println("Nie moge sie polaczyc, ale dlaczego?");
+				}
+				try {
+					Scanner in=new Scanner(socket.getInputStream(), "UTF-8");
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				try {
+					Input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} //odczyt
+			    try {
+					Output = new PrintStream(socket.getOutputStream());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			    //Przes³anie sprawdzaj¹cej wiadomoœci na serwer:
+		        Output.println("Klient: Siema Heniu!");
 
+		     
+		        // Zamkniêcie po³¹czenia ze strony klienta
+		        try {
+					socket.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		        System.out.println("Klient - Od³¹czony");
+			  
+				
+				
 				/// Przekazanie danych do serwera Czarodzieja
 				root.getChildren().clear();
 				OknoLogowania.oknologowania(primaryStage, root);
