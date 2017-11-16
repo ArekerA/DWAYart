@@ -1,9 +1,13 @@
 package application;
 
+import java.io.IOException;
+
+import client.Client;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import server.Server;
 //
 
 public class Main extends Application implements Runnable {
@@ -26,7 +30,9 @@ public class Main extends Application implements Runnable {
 		}
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException, InterruptedException {
+		Server.main(args);
+		Client.main(args);
 		launch(args);
 	}
 
