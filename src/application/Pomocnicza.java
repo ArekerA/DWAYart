@@ -9,7 +9,7 @@ public abstract class Pomocnicza {
 	static public ArrayList<Image> obrazy = new ArrayList<Image>(0);
 
 	public static void dodajobrazy() {   /// To trzeba czytaæ automatycznie z katalogu a nie tak rêcznie
-		obrazy.add(new Image("img/1.jpg"));
+		obrazy.add(new Image("https://orig00.deviantart.net/78a0/f/2017/309/7/9/19s_by_wlop-dbsw09i.jpg"));
 		obrazy.add(new Image("img/2.jpg"));
 		obrazy.add(new Image("img/3.jpg"));
 		obrazy.add(new Image("img/4.jpg"));
