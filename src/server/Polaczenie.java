@@ -28,7 +28,8 @@ public class Polaczenie implements Runnable{
 			{
 				User user=new User(in.nextLine(), in.nextLine());
 				System.out.println("Wszyscy u¿ytkownicy:");
-				System.out.println(User.userzy.toString());
+				System.out.println(User.userzy.size());
+				in.close();
 			}
 			default:
 			{
