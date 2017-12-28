@@ -24,6 +24,11 @@ public abstract class Pomocnicza {
 		obrazy.add(new Image("img/13.jpg"));
 		obrazy.add(new Image("img/14.jpg"));
 		obrazy.add(new Image("img/15.jpg"));
+		/*
+		obrazy.add(new Image("http://localhost/img/0.jpg"));
+		obrazy.add(new Image("http://localhost/img/6.gif"));
+		obrazy.add(new Image("http://localhost/img/7.png"));
+		*/
 	}
 
 	public static ArrayList<Image> getObrazy() {
