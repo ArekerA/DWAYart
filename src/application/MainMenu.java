@@ -1,5 +1,6 @@
 package application;
 
+import data.SuperUser;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
@@ -20,7 +21,6 @@ public abstract class MainMenu {
 
 	static void wyswietlmenu(BorderPane root, Stage primaryStage) {
 
-		Zegar.dodajzegar(primaryStage, root);
 
 		Image logodway = new Image("img/logo-white.png");
 		Image homebtt = new Image("img/home.png");
@@ -255,7 +255,7 @@ public abstract class MainMenu {
 		});
 
 		for (int i1 = 0; i1 < Rzad.getIvy().size(); i1++) {
-			FadeTransition ft1 = new FadeTransition(czas, Rzad.getIvy().get(i1));
+			FadeTransition ft1 = new FadeTransition(czas, Rzad.getSkalowaneivy().get(i1));
 			ft1.setFromValue(0);
 			ft1.setToValue(1);
 			ft1.setAutoReverse(true);
@@ -328,5 +328,6 @@ public abstract class MainMenu {
 		root.getChildren().add(logout1);
 		root.getChildren().add(sc);
 
+		Zegar.dodajzegar(primaryStage, root);
 	}
 }

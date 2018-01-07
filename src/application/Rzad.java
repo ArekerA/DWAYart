@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
 
 public abstract class Rzad {
 
-	public static ArrayList<ImageView> ivy = new ArrayList<ImageView>();
+	public static ArrayList<Image> ivy = new ArrayList<Image>();
 	public static ArrayList<ImageView> skalowaneivy = new ArrayList<ImageView>();
 
 
@@ -23,7 +24,8 @@ public abstract class Rzad {
 	}
 
 	public static void dodajdoskalowanych(ImageView iv, int i)
-	{
+	{			
+		
 		iv.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj			
 		PodgladZdjecia.pokliku(i);	
 		});
@@ -56,21 +58,9 @@ public abstract class Rzad {
 	public static void przypiszzdjecia() {
 		for (int i = 0; i < Pomocnicza.getObrazy().size(); i++) {
 			int k=i;
-			ImageView iv = new ImageView();
-			iv.setImage(Pomocnicza.getObrazy().get(i));
-			iv.setFitWidth(Pomocnicza.getObrazy().get(i).getWidth());
-			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight());
+			Image iv = Pomocnicza.getObrazy().get(i);
 			
-			ivy.add(iv);			
-			ivy.get(i).setPickOnBounds(true); // Przeoczystoœæ obrazka
-			ivy.get(i).setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
-				Stage primaryStage=new Stage();
-				BorderPane root = new BorderPane();
-				Scene scene = new Scene(root, iv.getFitWidth(), iv.getFitHeight());
-				primaryStage.setScene(scene);
-				primaryStage.show();
-				root.getChildren().add(ivy.get(k));
-			});
+			ivy.add(iv);
 			
 	}
 
@@ -82,11 +72,11 @@ public abstract class Rzad {
 	}
 	
 
-	public static ArrayList<ImageView> getIvy() {
+	public static ArrayList<Image> getIvy() {
 		return ivy;
 	}
 
-	public static void setIvy(ArrayList<ImageView> ivy) {
+	public static void setIvy(ArrayList<Image> ivy) {
 		Rzad.ivy = ivy;
 	}
 

@@ -1,5 +1,15 @@
 package application;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.security.MessageDigest;
+
+import data.SuperUser;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
@@ -7,6 +17,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -64,8 +75,16 @@ public class OknoLogowania {
 		register_text.setLayoutY(primaryStage.getHeight() - 210 + iv3.getFitHeight());
 		register_text.setLayoutX(sig_in.getLayoutX() + 10);
 		
+		Text error = new Text("error w chuj");
+		error.setStyle("-fx-font-size: 30pt;");
+		error.setFill(Color.WHITE);
+		error.resize(iv1.getFitWidth() - iv2.getFitWidth() - 25, iv2.getFitHeight());
+		error.setLayoutY(primaryStage.getHeight() - 150 + iv2.getFitHeight());
+		error.setLayoutX((iv2.getLayoutX() + iv2.getFitWidth() + 10));
+		error.setVisible(false);
+		
 		////////// TEXT AREA
-		TextArea login = new TextArea();
+		TextField login = new TextField();
 		login.setPromptText("l0gin");
 		login.resize(iv1.getFitWidth(), 30);
 		login.setLayoutY(((primaryStage.getHeight() - iv1.getFitHeight()) / 2));
@@ -95,8 +114,41 @@ public class OknoLogowania {
 			@Override
 			public void handle(ActionEvent event) {
 				try {
-					root.getChildren().clear();
-					MainMenu.wyswietlmenu(root, primaryStage);
+					try {
+						int port = 752;
+						
+						Socket socket = new Socket("127.0.0.1", port);
+						PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+						BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+						
+						String str = "login,"+login.getText()+","+sha256(password.getText());
+						
+						socket.setTcpNoDelay(true);
+						out.println(str);
+						out.flush();
+						
+						System.out.println("rozpoczynam odbiór");
+						InputStream inputStream = socket.getInputStream();
+						ObjectInputStream objInputStream = null;
+						objInputStream = new ObjectInputStream(inputStream);
+						
+			            Static.user = (SuperUser) objInputStream.readObject();
+			            
+						System.out.println("kończę odbiór");
+						socket.close();
+					} catch (Exception e) {
+						System.err.println(e);
+					}
+					if(Static.user != null)
+					{
+						error.setVisible(false);
+						root.getChildren().clear();
+						MainMenu.wyswietlmenu(root, primaryStage);
+					}
+					else
+					{
+						error.setVisible(true);
+					}
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -172,6 +224,23 @@ public class OknoLogowania {
 		root.getChildren().add(zaresie);
 		root.getChildren().add(login);
 		root.getChildren().add(password);
+		root.getChildren().add(error);
 
+	}
+	public static String sha256(String base) {
+	    try{
+	        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	        byte[] hash = digest.digest(base.getBytes("UTF-8"));
+	        StringBuffer hexString = new StringBuffer();
+	        for (int i = 0; i < hash.length; i++) {
+	            String hex = Integer.toHexString(0xff & hash[i]);
+	            if(hex.length() == 1) hexString.append('0');
+	            hexString.append(hex);
+	        }
+
+	        return hexString.toString();
+	    } catch(Exception ex){
+	       throw new RuntimeException(ex);
+	    }
 	}
 }

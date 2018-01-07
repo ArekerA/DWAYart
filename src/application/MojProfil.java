@@ -1,5 +1,7 @@
 package application;
 
+import data.SuperUser;
+import data.User;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.scene.image.Image;
@@ -27,8 +29,8 @@ public class MojProfil {
 		iv1.setLayoutX(primaryStage.getWidth());
 		iv1.setImage(logodway);
 
-		Image unknow = new Image("img/unknow.png");
-
+		Image unknow = new Image("http://127.0.0.1/img/avatars/"+Static.user.getId()+"."+((Static.user.getType())==1?"jpg":(Static.user.getType())==2?"bmp":(Static.user.getType())==3?"gif":(Static.user.getType())==4?"png":(Static.user.getType())==5?"wbmp":"jpeg"));
+		System.out.println("http://127.0.0.1/img/avatars/"+Static.user.getId()+"."+((Static.user.getType())==1?"jpg":(Static.user.getType())==2?"bmp":(Static.user.getType())==3?"gif":(Static.user.getType())==4?"png":(Static.user.getType())==5?"wbmp":"jpeg"));
 		ImageView iv2 = new ImageView();
 		iv2.setFitHeight(primaryStage.getHeight() / 2);
 		iv2.setFitWidth(primaryStage.getHeight() / 2);
@@ -50,7 +52,7 @@ public class MojProfil {
 		Back.setLayoutY(primaryStage.getHeight() * 0.90 + 10);
 		Back.setLayoutX(14);
 
-		Text rejestracja = new Text("Welcome XYZ");
+		Text rejestracja = new Text("Welcome "+Static.user.getName());
 		rejestracja.setStyle("-fx-font-size: 30pt;");
 		rejestracja.setFill(Color.WHITE);
 		// login_text.resize(iv1.getFitWidth() - iv2.getFitWidth() - 25,
@@ -87,34 +89,30 @@ public class MojProfil {
 		sex.setLayoutY(primaryStage.getHeight() * 0.45);
 		sex.setLayoutX(15);
 
-		Text loginarea = new Text();
+		Text loginarea = new Text(Static.user.getLogin());
 		loginarea.setStyle("-fx-font-size: 22pt;");
 		loginarea.setFill(Color.WHITE);
-		loginarea.setText("l0gin");
 		loginarea.resize(250, 30);
 		loginarea.setLayoutY((primaryStage.getHeight() * 0.15) + 30);
 		loginarea.setLayoutX(15);
 
-		Text namearea = new Text();
+		Text namearea = new Text(Static.user.getName());
 		namearea.setStyle("-fx-font-size: 22pt;");
 		namearea.setFill(Color.WHITE);
-		namearea.setText("nam3");
 		namearea.resize(250, 30);
 		namearea.setLayoutY((primaryStage.getHeight() * 0.35) + 30);
 		namearea.setLayoutX(15);
 
-		Text mailarea = new Text();
-		mailarea.setText("emai1@address.com");
+		Text mailarea = new Text(Static.user.getEmail());
 		mailarea.setFill(Color.WHITE);
 		mailarea.setStyle("-fx-font-size: 22pt;");
 		mailarea.resize(250, 30);
 		mailarea.setLayoutY((primaryStage.getHeight() * 0.25) + 30);
 		mailarea.setLayoutX(15);
 
-		Text sexarea = new Text();
+		Text sexarea = new Text(Static.user.getSex()==1?"men":Static.user.getSex()==2?"women":"none");
 		sexarea.setStyle("-fx-font-size: 22pt;");
 		sexarea.setFill(Color.WHITE);
-		sexarea.setText("sex");
 		sexarea.resize(250, 30);
 		sexarea.setLayoutY((primaryStage.getHeight() * 0.45) + 30);
 		sexarea.setLayoutX(15);

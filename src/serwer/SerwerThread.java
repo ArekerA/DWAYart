@@ -54,6 +54,12 @@ public class SerwerThread extends Thread {
 		            objOutputStream.flush();
 					System.out.println("kończę getPicture");
 					break;
+				case "getPicturesFav":
+					System.out.println("zaczynam getPicture");
+			        objOutputStream.writeObject(JDBC.getPictures(Integer.parseInt(data[1]),Integer.parseInt(data[2]),Integer.parseInt(data[3])));
+		            objOutputStream.flush();
+					System.out.println("kończę getPicture");
+					break;
 				case "getComents":
 					System.out.println("zaczynam getComents");
 			        objOutputStream.writeObject(JDBC.getComents(Integer.parseInt(data[1])));

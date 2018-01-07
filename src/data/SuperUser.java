@@ -8,5 +8,8 @@ public class SuperUser extends User implements Serializable{
 		super(id, name, email, sex, type);
 		this.login = login;
 	}
+	public String getLogin() {
+		return login;
+	}
 
 }
