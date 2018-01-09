@@ -16,8 +16,10 @@ import javafx.stage.Stage;
 public class PodgladZdjecia {
 
 	public static void pokliku(int i) {
+		
 		Stage primaryStage = new Stage();
 		BorderPane root = new BorderPane();
+		primaryStage.setResizable(false);
 
 		ImageView iv = new ImageView(Rzad.ivy.get(i));
 		iv.setFitWidth(500/iv.getImage().getHeight()*iv.getImage().getWidth());
@@ -25,7 +27,7 @@ public class PodgladZdjecia {
 		iv.setPreserveRatio(true);
 		iv.setLayoutX(20);
 		iv.setLayoutY(20);
-		root.getChildren().add(iv);
+		
 
 		Text title = new Text("Title");
 		title.setText("Tekst");
@@ -38,6 +40,8 @@ public class PodgladZdjecia {
 		Reflection r = new Reflection();
 		r.setFraction(0.7f);		 
 		title.setEffect(r);
+		title.setVisible(false);
+
 		
 		Text desc = new Text("Desc");
 		desc.setText("To jest króciutki opis obrazeczka na którym siê znajdujemy");
@@ -51,11 +55,12 @@ public class PodgladZdjecia {
 		desc.setTextAlignment(TextAlignment.JUSTIFY);
 		desc.setWrappingWidth(iv.getFitWidth()-20);
 		desc.setEffect(r);
+		desc.setVisible(false);
 		
 		Text kom = new Text("Coments");
 		kom.setText("Coments:");
 		kom.setLayoutX(iv.getFitWidth()+30);
-		kom.setLayoutY(50);
+		kom.setLayoutY(80);
 		kom.setStyle("-fx-font-size: 30pt;");
 		kom.setFill(Color.WHITE);
 		
@@ -63,7 +68,7 @@ public class PodgladZdjecia {
 		final ScrollPane sp = new ScrollPane();
 		sp.setVmax(440);
         sp.setLayoutX(iv.getFitWidth()+30);
-        sp.setLayoutY(70);
+        sp.setLayoutY(110);
         sp.setVisible(true);
 		sp.resize(390, 430);
 		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
@@ -74,26 +79,60 @@ public class PodgladZdjecia {
             }
         });*/
 		
-		root.getChildren().add(kom);
-		root.getChildren().add(sp);
+	
 		
 		
 		iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				iv.setOpacity(0.3);
-				root.getChildren().add(title);
-				root.getChildren().add(desc);
+				title.setVisible(true);
+				desc.setVisible(true);
 				iv.toBack();
-
 			}
 		});
 
 		iv.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				iv.setOpacity(1);
+				title.setVisible(false);
+				desc.setVisible(false);
 				iv.toFront();
-				root.getChildren().add(title);
-				root.getChildren().remove(desc);
+			}
+		});
+		
+		title.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				iv.setOpacity(0.3);
+				title.setVisible(true);
+				desc.setVisible(true);
+				iv.toBack();
+			}
+		});
+
+		title.setOnMouseExited(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				iv.setOpacity(1);
+				title.setVisible(false);
+				desc.setVisible(false);
+				iv.toFront();
+			}
+		});
+		
+		desc.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				iv.setOpacity(0.3);
+				title.setVisible(true);
+				desc.setVisible(true);
+				iv.toBack();
+							}
+		});
+
+		desc.setOnMouseExited(new EventHandler<MouseEvent>() {
+			public void handle(MouseEvent me) {
+				iv.setOpacity(1);
+				title.setVisible(false);
+				desc.setVisible(false);
+				iv.toFront();
 			}
 		});
 
@@ -101,5 +140,11 @@ public class PodgladZdjecia {
 		scene.getStylesheets().add("application/window.css");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
+		root.getChildren().add(iv);
+		root.getChildren().add(title);
+		root.getChildren().add(desc);
+		root.getChildren().add(kom);
+		root.getChildren().add(sp);
 	}
 }

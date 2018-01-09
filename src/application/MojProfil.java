@@ -45,6 +45,7 @@ public class MojProfil {
 		iv5.setFitWidth(45);
 		iv5.setLayoutY(550);
 		iv5.setLayoutX(15);
+		
 		///////////// TEXT
 		Text Back = new Text("    Back");
 		Back.setStyle("-fx-font-size: 30pt;");
@@ -91,31 +92,31 @@ public class MojProfil {
 
 		Text loginarea = new Text(Static.user.getLogin());
 		loginarea.setStyle("-fx-font-size: 22pt;");
-		loginarea.setFill(Color.WHITE);
+		loginarea.setFill(Color.RED);
 		loginarea.resize(250, 30);
 		loginarea.setLayoutY((primaryStage.getHeight() * 0.15) + 30);
-		loginarea.setLayoutX(15);
+		loginarea.setLayoutX(45);
 
 		Text namearea = new Text(Static.user.getName());
 		namearea.setStyle("-fx-font-size: 22pt;");
-		namearea.setFill(Color.WHITE);
+		namearea.setFill(Color.RED);
 		namearea.resize(250, 30);
 		namearea.setLayoutY((primaryStage.getHeight() * 0.35) + 30);
-		namearea.setLayoutX(15);
+		namearea.setLayoutX(45);
 
 		Text mailarea = new Text(Static.user.getEmail());
-		mailarea.setFill(Color.WHITE);
+		mailarea.setFill(Color.RED);
 		mailarea.setStyle("-fx-font-size: 22pt;");
 		mailarea.resize(250, 30);
 		mailarea.setLayoutY((primaryStage.getHeight() * 0.25) + 30);
-		mailarea.setLayoutX(15);
+		mailarea.setLayoutX(45);
 
 		Text sexarea = new Text(Static.user.getSex()==1?"men":Static.user.getSex()==2?"women":"none");
 		sexarea.setStyle("-fx-font-size: 22pt;");
-		sexarea.setFill(Color.WHITE);
+		sexarea.setFill(Color.RED);
 		sexarea.resize(250, 30);
 		sexarea.setLayoutY((primaryStage.getHeight() * 0.45) + 30);
-		sexarea.setLayoutX(15);
+		sexarea.setLayoutX(45);
 		///////////// Wykonanie
 
 		Back.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
