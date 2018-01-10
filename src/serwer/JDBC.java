@@ -583,7 +583,7 @@ public class JDBC {
 		ArrayList<Picture> c = new ArrayList<Picture>();
 		try {
 			Statement st = createStatement(con);
-			ResultSet r = executeQuery(st, "SELECT id,title,description,author,type,date,COUNT(favorites.id_p) AS favorites FROM `pictures` LEFT JOIN favorites ON (pictures.id = favorites.id_p) GROUP BY id ORDER BY "+order+" LIMIT "+offset+","+howMany+";");
+			ResultSet r = executeQuery(st, "SELECT id,title,description,author,type,pictures.date,COUNT(favorites.id_p) AS favorites FROM `pictures` LEFT JOIN favorites ON (pictures.id = favorites.id_p) GROUP BY id ORDER BY "+order+" LIMIT "+offset+","+howMany+";");
 			while(r.next())
 			{
 				c.add(new Picture(

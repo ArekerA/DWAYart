@@ -105,17 +105,53 @@ public abstract class MainMenu {
 		home1.setGraphic(home);
 		home1.setLayoutY(36);
 		home1.setLayoutX(primaryStage.getWidth());
+		home1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					root.getChildren().clear();
+					Rzad.wyczyœæ(vb);
+					Rzad.wyczyœæ(vb1);
+					Rzad.wyczyœæ(vb2);
+					Pomocnicza.dodajobrazy(0);
+					Rzad.przypiszzdjecia();
+					MainMenu.wyswietlmenu(root, primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 		Button fav1 = new Button();
 		fav1.setGraphic(fav);
 		fav1.setLayoutY(36);
 		fav1.setLayoutX(primaryStage.getWidth());
+		
 
 		Button best1 = new Button();
 		best1.setGraphic(best);
 		best1.setLayoutY(36);
 		best1.setLayoutX(primaryStage.getWidth());
+		best1.setOnAction(new EventHandler<ActionEvent>() {
 
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					root.getChildren().clear();
+					Rzad.wyczyœæ(vb);
+					Rzad.wyczyœæ(vb1);
+					Rzad.wyczyœæ(vb2);
+					Pomocnicza.dodajobrazy(1);
+					Rzad.przypiszzdjecia();
+					MainMenu.wyswietlmenu(root, primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 		Button profile1 = new Button();
 		profile1.setGraphic(profile);
 		profile1.setLayoutY(36);

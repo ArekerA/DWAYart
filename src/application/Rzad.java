@@ -56,8 +56,10 @@ public abstract class Rzad {
 		}
 	}
 	public static void przypiszzdjecia() {
+		ivy.clear();
+		skalowaneivy.clear();
+		
 		for (int i = 0; i < Pomocnicza.getObrazy().size(); i++) {
-			int k=i;
 			Image iv = Pomocnicza.getObrazy().get(i);
 			
 			ivy.add(iv);
@@ -71,6 +73,10 @@ public abstract class Rzad {
 		root.getChildren().add(iv);
 	}
 	
+	public static void wyczyœæ(VBox root)
+	{
+		root.getChildren().clear();
+	}
 
 	public static ArrayList<Image> getIvy() {
 		return ivy;

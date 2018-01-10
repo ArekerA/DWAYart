@@ -21,7 +21,7 @@ public class Main extends Application implements Runnable {
 			primaryStage.show();
 			primaryStage.setTitle("DWAY");
 			primaryStage.setResizable(false);
-			Pomocnicza.dodajobrazy();
+			Pomocnicza.dodajobrazy(0);
 			Rzad.przypiszzdjecia();
 			OknoLogowania.oknologowania(primaryStage, root);
 
