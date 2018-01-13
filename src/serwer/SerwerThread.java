@@ -15,11 +15,11 @@ import java.net.Socket;
 public class SerwerThread extends Thread {
 	Socket mySocket;
 	public SerwerThread(Socket socket){
-		super(); // konstruktor klasy Thread
+		super();
 		mySocket = socket;
 	}
 
-	public void run() // program wï¿½tku
+	public void run()
 	{
 		try {
 			BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
@@ -34,37 +34,37 @@ public class SerwerThread extends Thread {
 					System.out.println("zaczynam getPictures");
 			        objOutputStream.writeObject(JDBC.getPictures(Integer.parseInt(data[1]), Integer.parseInt(data[2]), data[3]));
 		            objOutputStream.flush();
-					System.out.println("koÅ„czÄ™ getPictures");
+					System.out.println("koñczê getPictures");
 					break;
 				case "login":
 					System.out.println("zaczynam login");
 			        objOutputStream.writeObject(JDBC.login(data[1], data[2]));
 		            objOutputStream.flush();
-					System.out.println("koÅ„czÄ™ login");
+					System.out.println("koñczê login");
 					break;
 				case "getUser":
 					System.out.println("zaczynam getUser");
 			        objOutputStream.writeObject(JDBC.getUser(Integer.parseInt(data[1])));
 		            objOutputStream.flush();
-					System.out.println("koÅ„czÄ™ getUser");
+					System.out.println("koñczê getUser");
 					break;
 				case "getPicture":
 					System.out.println("zaczynam getPicture");
 			        objOutputStream.writeObject(JDBC.getPicture(Integer.parseInt(data[1])));
 		            objOutputStream.flush();
-					System.out.println("koÅ„czÄ™ getPicture");
+					System.out.println("koñczê getPicture");
 					break;
 				case "getComents":
 					System.out.println("zaczynam getComents");
 			        objOutputStream.writeObject(JDBC.getComents(Integer.parseInt(data[1])));
 		            objOutputStream.flush();
-					System.out.println("koÅ„czÄ™ getComents");
+					System.out.println("koñczê getComents");
 					break;
 				case "getTags":
 					System.out.println("zaczynam getTags");
 			        objOutputStream.writeObject(JDBC.getTags(Integer.parseInt(data[1])));
 		            objOutputStream.flush();
-					System.out.println("koÅ„czÄ™ getTags");
+					System.out.println("koñczê getTags");
 					break;
 
 				default:

@@ -29,7 +29,7 @@ public class TestClient {
 			out.println(str);
 			out.flush();
 			
-			System.out.println("rozpoczynam odbiÃ³r");
+			System.out.println("rozpoczynam odbiór");
 			InputStream inputStream = socket.getInputStream();
 			ObjectInputStream objInputStream = null;
 			objInputStream = new ObjectInputStream(inputStream);
@@ -37,7 +37,7 @@ public class TestClient {
             ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
             System.out.println(p.get(0).getDate());
             
-			System.out.println("koÅ„czÄ™ odbiÃ³r");
+			System.out.println("koñczê odbiór");
 			
 			socket.close();
 		} catch (Exception e) {

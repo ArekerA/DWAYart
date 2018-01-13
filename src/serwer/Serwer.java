@@ -12,7 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class Serwer extends Application implements Runnable  {
+public class Serwer extends Application{
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = new BorderPane();
@@ -33,12 +33,9 @@ public class Serwer extends Application implements Runnable  {
 		JDBC.initTest();
 		ServerSocket serverSocket = null;
 		try {
-			// tworzymy socket
 			serverSocket = new ServerSocket(port);
 			while (true) {
-				// czekamy na zg�oszenie klienta ...
 				Socket socket = serverSocket.accept();
-				// tworzymy w�tek dla danego po��czenia i uruchamiamy go
 				(new SerwerThread(socket)).start();
 			}
 		} catch (Exception e) {
@@ -52,10 +49,5 @@ public class Serwer extends Application implements Runnable  {
 				}
 			}
 		}
-	}
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
 	}
 }
