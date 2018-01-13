@@ -7,11 +7,13 @@ public class Coment implements Serializable{
 	private User author;
 	private String text;
 	private Date date;
-	public Coment(User author, String text, Date date) {
+	private int picture;
+	public Coment(User author, String text, Date date, int picture) {
 		super();
 		this.author = author;
 		this.text = text;
 		this.date = date;
+		this.picture=picture;
 	}
 	public User getAuthor() {
 		return author;
@@ -21,6 +23,9 @@ public class Coment implements Serializable{
 	}
 	public Date getDate() {
 		return date;
+	}
+	public int getPicture() {
+		return picture;
 	}
 	@Override
 	public String toString() {

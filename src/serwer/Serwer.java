@@ -10,23 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-public class Serwer extends Application{
-	public void start(Stage primaryStage) {
-		try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root, 1200, 600);
-			primaryStage.setScene(scene);
-			primaryStage.show();
-			primaryStage.setTitle("DWAY");
-			primaryStage.setResizable(false);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+public class Serwer extends Thread{
+	int port;
+	public Serwer(int port){
+		super();
+		this.port = port;
 	}
-	public static void main(String[] args) {
-		launch(args);
-		int port = 752;
+
+	public void run() {
 		JDBC.init();
 		JDBC.initTest();
 		ServerSocket serverSocket = null;

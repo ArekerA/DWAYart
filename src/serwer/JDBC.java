@@ -464,7 +464,7 @@ public class JDBC {
 			Statement st = createStatement(con);
 			ResultSet r = executeQuery(st, "Select id,name,email,sex,login,type from users where login='"+user+"' and pass='"+pass+"';");
 			r.next();
-			SuperUser u = new SuperUser(r.getInt(1), r.getString(2), r.getString(3), r.getInt(4), r.getString(5), r.getShort(6));
+			SuperUser u = new SuperUser(r.getInt(1), r.getString(2), r.getString(3), r.getInt(4), r.getString(5), r.getShort(6), pass);
 			st.close();
 			return u;
 		} catch (SQLException e) {
@@ -493,7 +493,7 @@ public class JDBC {
 			Statement st = createStatement(con);
 			ResultSet r = executeQuery(st, "Select text,author,date from comments where picture="+picture+";");
 			while (r.next())
-				c.add(new Coment(getUser((int)r.getObject(2)),r.getObject(1).toString(),r.getDate(3)));
+				c.add(new Coment(getUser((int)r.getObject(2)),r.getObject(1).toString(),r.getDate(3),picture));
 			st.close();
 		} catch (SQLException e) {
 			System.out.println("====\nBl¹d komentarzy do obrazu " + picture + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
