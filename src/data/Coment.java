@@ -24,7 +24,7 @@ public class Coment implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "" + date+ " "+ author + ": " + text +"\n";
+		return  date+ " "+ author + ": " + text +"\n";
 	}
 
 }

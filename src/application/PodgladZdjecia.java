@@ -28,15 +28,16 @@ public class PodgladZdjecia {
 		ImageView iv = new ImageView(Rzad.ivy.get(i));
 		iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight());
 		iv.setFitWidth(Pomocnicza.getObrazy().get(i).getWidth());
-		if (iv.getFitHeight() >= iv.getFitWidth()) // Sprawdzamy czy zdjêcie jest szersze czy wy¿sze i w
+	
+		if (iv.getFitHeight() > iv.getFitWidth()) // Sprawdzamy czy zdjêcie jest szersze czy wy¿sze i w
 													// zale¿noœci od tego ustawiamy i przystosowujemy
 		{
 			double k;
 			if (iv.getFitHeight() > 650) {
 				iv.setFitHeight(650);
 			}
-			if (iv.getFitHeight() < 250) {
-				iv.setFitHeight(250);
+			if (iv.getFitHeight() < 350) {
+				iv.setFitHeight(350);
 			}
 			k = Pomocnicza.getObrazy().get(i).getHeight() / iv.getFitHeight();
 			iv.setFitWidth(Pomocnicza.getObrazy().get(i).getWidth() / k);
@@ -47,8 +48,8 @@ public class PodgladZdjecia {
 			if (iv.getFitWidth() > 800) {
 				iv.setFitWidth(800);
 			}
-			if (iv.getFitWidth() < 200) {
-				iv.setFitWidth(200);
+			if (iv.getFitWidth() < 400) {
+				iv.setFitWidth(400);
 			}
 			k = Pomocnicza.getObrazy().get(i).getWidth() / iv.getFitWidth();
 			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight() / k);
@@ -57,13 +58,13 @@ public class PodgladZdjecia {
 		}
 		///////// TEXT
 		System.out.println(Pomocnicza.p.get(i).getFavorites());
-		
+
 		Text title = new Text("Title");
-		title.setText("Title: " + Pomocnicza.p.get(i).getTitle());
+		title.setText("" + Pomocnicza.p.get(i).getTitle());
 		title.setVisible(true);
 		title.setLayoutX(30);
 		title.setLayoutY(50);
-		title.setStyle("-fx-font-size: 30pt;");
+		title.setStyle("-fx-font-size: 25pt;");
 		title.setFill(Color.WHITE);
 		title.toFront();
 		Reflection r = new Reflection();
@@ -72,12 +73,12 @@ public class PodgladZdjecia {
 		title.setVisible(false);
 
 		Text desc = new Text("Desc");
-		desc.setText("Description: " + Pomocnicza.p.get(i).getDescription());
+		desc.setText("" + Pomocnicza.p.get(i).getDescription());
 		desc.setVisible(true);
 		desc.setStrokeWidth(iv.getImage().getWidth());
 		desc.setLayoutX(30);
 		desc.setLayoutY(150);
-		desc.setStyle("-fx-font-size: 20pt;");
+		desc.setStyle("-fx-font-size: 15pt;");
 		desc.setFill(Color.WHITE);
 		desc.toFront();
 		desc.setTextAlignment(TextAlignment.JUSTIFY);
@@ -91,8 +92,8 @@ public class PodgladZdjecia {
 		size.setVisible(true);
 		size.setStrokeWidth(iv.getImage().getWidth());
 		size.setLayoutX(30);
-		size.setLayoutY(iv.getFitHeight() - 40);
-		size.setStyle("-fx-font-size: 20pt;");
+		size.setLayoutY(iv.getFitHeight() - 20);
+		size.setStyle("-fx-font-size: 10pt;");
 		size.setFill(Color.WHITE);
 		size.toFront();
 		size.setTextAlignment(TextAlignment.JUSTIFY);
@@ -108,24 +109,24 @@ public class PodgladZdjecia {
 		kom.setFill(Color.WHITE);
 
 		///// SCROLL PANEL KOMENTARZE
-		
+
 		ArrayList<Coment> c = new ArrayList<Coment>(0);
 		c = Pomocnicza.p.get(i).getComents();
-		
+
 		Text cc = new Text(c.toString());
-		if( c.size()!= 0)
-		{
-		cc.setText(c.toString());
+		if (c.size() != 0) {
+			String z = "";
+			for (int i1 = 0; i1 < c.size(); i1++) {
+				z = z + c.get(i1).getDate() + " " + c.get(i1).getAuthor() + ":\n" + c.get(i1).getText() + "\n\n";
+			}
+			cc.setText(z);
+		} else {
+			cc.setText("Jeszcze nie ma komentarzy, Twój mo¿e byæ pierwszy.");
 		}
-		else
-		{
-		cc.setText("Jeszcze nie ma komentarzy, Twój mo¿e byæ pierwszy.");
-		}
-		cc.setStyle("-fx-font-size: 20pt;");
+		cc.setStyle("-fx-font-size: 15pt;");
 		cc.setFill(Color.BLACK);
 		cc.setWrappingWidth(295);
-		
-		
+
 		final ScrollPane sp = new ScrollPane();
 		sp.setVmax(440);
 		sp.setLayoutX(iv.getFitWidth() + 30);
@@ -134,7 +135,7 @@ public class PodgladZdjecia {
 		sp.resize(300, iv.getFitHeight() - 135);
 		sp.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
 		sp.setContent(cc);
-		
+
 		/*
 		 * sp.vvalueProperty().addListener(new ChangeListener<Number>() { public void
 		 * changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val)

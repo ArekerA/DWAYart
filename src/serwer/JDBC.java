@@ -249,11 +249,11 @@ public class JDBC {
 		executeUpdate(st, sql);
 		sql = "INSERT INTO comments VALUES(0, 'Great gif', 6, 3, '2017-12-31 12:20:48'),"
 				+ "(1, 'Amazing animation', 14, 3, '2017-12-31 12:24:21'),"
-				+ "(2, 'Bardzo ³adne zdjêcie', 16, 0, '2017-12-31 13:12:55'),"
+				+ "(2, 'Bardzo ³adne zdjêcie', 16, 1, '2017-12-31 13:12:55'),"
 				+ "(3, 'Dziêkujê', 16, 0, '2017-12-31 14:54:27'),"
-				+ "(4, 'Thanks', 14, 0, '2017-12-31 15:42:38'),"
-				+ "(5, 'Wspania³e', 16, 0, '2017-12-31 16:22:49'),"
-				+ "(6, 'Great', 16, 0, '2017-12-31 17:38:11');";
+				+ "(4, 'Thanks', 14, 2, '2017-12-31 15:42:38'),"
+				+ "(5, 'Wspania³e', 16, 2, '2017-12-31 16:22:49'),"
+				+ "(6, 'Great', 16, 3, '2017-12-31 17:38:11');";
 		executeUpdate(st, sql);
 		sql = "INSERT INTO tags VALUES(0, 'krajobraz'),"
 				+ "(1, 'landscape'),"
