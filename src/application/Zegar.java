@@ -28,11 +28,11 @@ public class Zegar {
 			}
 		}));
 		timeline.setCycleCount(Animation.INDEFINITE);
-		timeLabel.resize(200, 200);
+		timeLabel.resize(100,75);
 		timeLabel.setTextFill(Color.WHITE);
 		timeLabel.setStyle("-fx-font-size: 20pt;");
-		timeLabel.setLayoutX(primaryStage.getWidth() - 160);
-		timeLabel.setLayoutY(-70);
+		timeLabel.setLayoutX(primaryStage.getWidth() - 150);
+		timeLabel.setLayoutY(0);
 
 		timeline.play();
 		root.getChildren().add(timeLabel);

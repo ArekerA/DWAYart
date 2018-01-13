@@ -85,7 +85,7 @@ public class dodajzdjecie {
 		t3.setLayoutY(310);
 		t3.setLayoutX(15);
 
-		Text t4 = new Text("Tu imie ownera");
+		Text t4 = new Text(Static.user.getName());
 		t4.setStyle("-fx-font-size: 25pt;");
 		t4.setFill(Color.WHITE);
 		t4.setLayoutY(355);

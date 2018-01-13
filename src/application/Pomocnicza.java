@@ -1,29 +1,49 @@
 package application;
 
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 
+import data.Picture;
 import javafx.scene.image.Image;
+
 
 public abstract class Pomocnicza {
 
 	static public ArrayList<Image> obrazy = new ArrayList<Image>(0);
-
-	public static void dodajobrazy() {   /// To trzeba czytaæ automatycznie z katalogu a nie tak rêcznie
-		obrazy.add(new Image("https://orig00.deviantart.net/78a0/f/2017/309/7/9/19s_by_wlop-dbsw09i.jpg"));
-		obrazy.add(new Image("img/2.jpg"));
-		obrazy.add(new Image("img/3.jpg"));
-		obrazy.add(new Image("img/4.jpg"));
-		obrazy.add(new Image("img/5.jpg"));
-		obrazy.add(new Image("img/6.jpg"));
-		obrazy.add(new Image("img/7.jpg"));
-		obrazy.add(new Image("img/8.jpg"));
-		obrazy.add(new Image("img/9.jpg"));
-		obrazy.add(new Image("img/10.jpg"));
-		obrazy.add(new Image("img/11.jpg"));
-		obrazy.add(new Image("img/12.jpg"));
-		obrazy.add(new Image("img/13.jpg"));
-		obrazy.add(new Image("img/14.jpg"));
-		obrazy.add(new Image("img/15.jpg"));
+	static public ArrayList<Picture> p = new ArrayList<Picture>(0);
+	public static void dodajobrazy(int k) {   
+		obrazy.clear();
+		p.clear();
+		if(k==0)	// G³ówna
+		{
+			p = getPictures(0, 100, "date DESC");	
+			for(int i=0;i<p.size();i++)
+			{
+			obrazy.add(new Image(p.get(i).getUrl()));
+			}
+		}
+		if(k==1)	// TOPKA 
+		{
+			p = getPictures(0, 100, "favorites DESC");	
+			for(int i=0;i<p.size();i++)
+			{
+				if(p.get(i).getFavorites()>0)
+			obrazy.add(new Image(p.get(i).getUrl()));
+			}
+		}
+		if(k==2)	// Ulubione Nie dzia³a jeszcze
+		{
+			p = getPictures(0, 100, "favorites DESC");	
+			for(int i=0;i<p.size();i++)
+			{
+				if(p.get(i).getFavorites()>0)
+			obrazy.add(new Image(p.get(i).getUrl()));
+			}
+		}
 		/*
 		obrazy.add(new Image("http://localhost/img/0.jpg"));
 		obrazy.add(new Image("http://localhost/img/6.gif"));
@@ -38,4 +58,31 @@ public abstract class Pomocnicza {
 	public static void setObrazy(ArrayList<Image> obrazy) {
 		Pomocnicza.obrazy = obrazy;
 	}
+
+public static ArrayList<Picture> getPictures(int ofs, int il, String sort) {
+	try {
+		int port = 752;
+		System.out.println("Pobieranie Startv2");
+		Socket socket = new Socket("127.0.0.1", port);
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+		String str = "getPictures,"+ofs+","+il+","+sort;		// Do serwera  Switch; getPictures,0,20,date DESC
+
+		socket.setTcpNoDelay(true);
+		out.println(str);
+		out.flush();
+
+		System.out.println("Pobieranie Start");
+		InputStream inputStream = socket.getInputStream();
+		ObjectInputStream objInputStream = null;
+		objInputStream = new ObjectInputStream(inputStream);
+		ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
+		System.out.println("Pobieranie Koniec");
+		socket.close();
+		return p;
+	} catch (Exception e) {
+		System.err.println(e);
+		return null;
+	}
+}
 }
