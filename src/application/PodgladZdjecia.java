@@ -3,12 +3,15 @@ package application;
 import java.util.ArrayList;
 
 import data.Coment;
-import data.Picture;
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.effect.Reflection;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -16,10 +19,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PodgladZdjecia {
 
 	public static void pokliku(int i) {
+		int pom;
 
 		Stage primaryStage = new Stage();
 		BorderPane root = new BorderPane();
@@ -107,6 +112,65 @@ public class PodgladZdjecia {
 		kom.setLayoutY(50);
 		kom.setStyle("-fx-font-size: 30pt;");
 		kom.setFill(Color.WHITE);
+		
+		ImageView likeiv=new ImageView();
+		likeiv.setImage(new Image("img/serce.png"));
+		Button like=new Button();
+		like.setGraphic(likeiv);
+		like.setLayoutX(iv.getFitWidth()*0.5);
+		like.setLayoutY(iv.getFitHeight()*0.5);
+		like.setOpacity(0.3);
+		like.setVisible(false);
+		like.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					if(like.getOpacity()==1) {
+					FadeTransition ft = new FadeTransition(new Duration(300), like);
+					ft.setFromValue(like.getOpacity());
+					ft.setToValue(0);
+					ft.setAutoReverse(false);
+					ft.play();
+					ft.setOnFinished(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+							FadeTransition ft1 = new FadeTransition(new Duration(300), like);
+						
+								ft1.setFromValue(like.getOpacity());
+								ft1.setToValue(0.3);
+								ft1.setAutoReverse(true);
+								ft1.play();
+							
+						}
+					});
+					}
+					else
+					{
+						FadeTransition ft = new FadeTransition(new Duration(300), like);
+						ft.setFromValue(like.getOpacity());
+						ft.setToValue(0);
+						ft.setAutoReverse(false);
+						ft.play();
+						ft.setOnFinished(new EventHandler<ActionEvent>() {
+
+							@Override
+							public void handle(ActionEvent event) {
+								FadeTransition ft1 = new FadeTransition(new Duration(300), like);
+								ft1.setFromValue(iv.getOpacity());
+								ft1.setToValue(1);
+								ft1.setAutoReverse(false);
+								ft1.play();					}
+						});
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		root.getChildren().add(like);
 
 		///// SCROLL PANEL KOMENTARZE
 
@@ -143,23 +207,80 @@ public class PodgladZdjecia {
 		 */
 
 		//// WYKONANIE
+		
+		like.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			
+			@Override
+			public void handle(MouseEvent event) {
+				// TODO Auto-generated method stub
+				try {
+					//iv.setOpacity(iv.getOpacity());
+					like.setVisible(true);
+					if(like.getOpacity()==0.3)
+					like.setOpacity(like.getOpacity()+0.3);
+					FadeTransition ft = new FadeTransition(new Duration(300), iv);
+					//ft.setFromValue(iv.getOpacity());
+					ft.setToValue(0.15);
+					ft.setAutoReverse(true);
+					ft.play();
+					ft.setOnFinished(new EventHandler<ActionEvent>() {
+
+						@Override
+						public void handle(ActionEvent event) {
+						}
+					});
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+
+		like.setOnMouseExited(new EventHandler<MouseEvent>() {
+			
+			@Override
+			public void handle(MouseEvent arg0) {
+				try {
+					if(like.getOpacity()==0.6)
+						like.setOpacity(0.3);
+					iv.setOpacity(iv.getOpacity());
+					iv.setVisible(true);
+					FadeTransition ft = new FadeTransition(new Duration(300), iv);
+					ft.setFromValue(iv.getOpacity());
+					ft.setToValue(0.3);
+					ft.setAutoReverse(true);
+					ft.play();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}		});
+
+		
+
+		
 		iv.setOnMouseEntered(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
 				iv.setOpacity(0.3);
 				title.setVisible(true);
 				desc.setVisible(true);
 				size.setVisible(true);
-				iv.toBack();
+				like.setVisible(true);
+				like.toFront();
 			}
 		});
 
 		iv.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
-				iv.setOpacity(1);
+				if(like.getOpacity()==0.3 && iv.getOpacity()==0.15)
+					iv.setOpacity(iv.getOpacity());
+				else
+					iv.setOpacity(1);
 				title.setVisible(false);
 				desc.setVisible(false);
 				size.setVisible(false);
-				iv.toFront();
+				like.setVisible(false);
 			}
 		});
 
@@ -175,7 +296,7 @@ public class PodgladZdjecia {
 
 		title.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
-				iv.setOpacity(1);
+				iv.setOpacity(0.3);
 				title.setVisible(false);
 				desc.setVisible(false);
 				size.setVisible(false);
@@ -195,7 +316,7 @@ public class PodgladZdjecia {
 
 		desc.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
-				iv.setOpacity(1);
+				iv.setOpacity(0.3);
 				title.setVisible(false);
 				desc.setVisible(false);
 				size.setVisible(false);
@@ -215,7 +336,7 @@ public class PodgladZdjecia {
 
 		size.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
-				iv.setOpacity(1);
+				iv.setOpacity(0.3);
 				title.setVisible(false);
 				desc.setVisible(false);
 				size.setVisible(false);
