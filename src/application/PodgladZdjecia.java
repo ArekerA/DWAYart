@@ -1,6 +1,14 @@
 package application;
 
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 
 import data.Coment;
 import javafx.animation.FadeTransition;
@@ -10,9 +18,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.Reflection;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -21,10 +31,37 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class PodgladZdjecia {
 
+public class PodgladZdjecia {
+	
+	public static Coment komentarz(TextField addComent , int i)
+	{
+		 Coment c1 = new Coment(Static.user, addComent.getText(), new Date() ,i);
+		 return c1;
+	}
+	public static Text inicjalkomentow(int i)
+	{
+		ArrayList<Coment> c = new ArrayList<Coment>(0);
+		c = getComents(i);
+
+		Text cc = new Text(c.toString());
+		if (c.size() != 0) {
+			String z = "";
+			for (int i1 = 0; i1 < c.size(); i1++) {
+				z = z + c.get(i1).getDate() + " " + c.get(i1).getAuthor() + ":\n" + c.get(i1).getText() + "\n\n";
+				
+			}
+			cc.setWrappingWidth(250);
+			cc.setText(z);
+		} else {
+			cc.setText("Jeszcze nie ma komentarzy, Twój mo¿e byæ pierwszy.");
+		}
+		cc.setStyle("-fx-font-size: 15pt;");
+		cc.setFill(Color.BLACK);
+		cc.setWrappingWidth(295);
+		return cc;
+	}
 	public static void pokliku(int i) {
-		int pom;
 
 		Stage primaryStage = new Stage();
 		BorderPane root = new BorderPane();
@@ -33,7 +70,6 @@ public class PodgladZdjecia {
 		ImageView iv = new ImageView(Rzad.ivy.get(i));
 		iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight());
 		iv.setFitWidth(Pomocnicza.getObrazy().get(i).getWidth());
-	
 		if (iv.getFitHeight() > iv.getFitWidth()) // Sprawdzamy czy zdjêcie jest szersze czy wy¿sze i w
 													// zale¿noœci od tego ustawiamy i przystosowujemy
 		{
@@ -174,38 +210,54 @@ public class PodgladZdjecia {
 
 		///// SCROLL PANEL KOMENTARZE
 
-		ArrayList<Coment> c = new ArrayList<Coment>(0);
-		c = Pomocnicza.p.get(i).getComents();
-
-		Text cc = new Text(c.toString());
-		if (c.size() != 0) {
-			String z = "";
-			for (int i1 = 0; i1 < c.size(); i1++) {
-				z = z + c.get(i1).getDate() + " " + c.get(i1).getAuthor() + ":\n" + c.get(i1).getText() + "\n\n";
-			}
-			cc.setText(z);
-		} else {
-			cc.setText("Jeszcze nie ma komentarzy, Twój mo¿e byæ pierwszy.");
-		}
-		cc.setStyle("-fx-font-size: 15pt;");
-		cc.setFill(Color.BLACK);
-		cc.setWrappingWidth(295);
+		
 
 		final ScrollPane sp = new ScrollPane();
 		sp.setVmax(440);
-		sp.setLayoutX(iv.getFitWidth() + 30);
+		sp.setLayoutX(iv.getFitWidth() + 35);
 		sp.setLayoutY(65);
 		sp.setVisible(true);
 		sp.resize(300, iv.getFitHeight() - 135);
 		sp.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-		sp.setContent(cc);
+		sp.setContent(inicjalkomentow(i));
+		
+		
+		TextField AddComent = new TextField();
+		AddComent.setPromptText("Po napisaniu komentarza wciœnij ENTER");
+		AddComent.resize(300, iv.getFitHeight() - sp.getHeight()-50);
+		AddComent.setLayoutX(iv.getFitWidth() + 30);
+		AddComent.setLayoutY(sp.getHeight()+70);
+		
+		
+		AddComent.setOnKeyPressed(e -> {
+		    if (e.getCode() == KeyCode.ENTER && !AddComent.getText().equals(new String(""))) {
+		      try {
+			      System.out.print("Dziala \n");
+			 
+		      int port = 754;
+				Socket socket = new Socket("127.0.0.1", port);
+				System.out.println("Dodaje Komentarz");
+				socket.setTcpNoDelay(true);
+				OutputStream outputStream = socket.getOutputStream();
+				ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+				objOutputStream.writeObject(komentarz(AddComent,i));  // NIE BB tylko co innego 
+				objOutputStream.flush();
+				socket.close();
+		    }
+		      catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+		   
+				sp.setContent(inicjalkomentow(i));
+			     AddComent.clear();
+		      
+		    }
+		}
+		  );
 
-		/*
-		 * sp.vvalueProperty().addListener(new ChangeListener<Number>() { public void
-		 * changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val)
-		 * { fileName.setText(imageNames[(new_val.intValue() - 1)/100]); } });
-		 */
-
+	
+// Static.user.getId() , AddComent.getText(), i
 		//// WYKONANIE
 		
 		like.setOnMouseEntered(new EventHandler<MouseEvent>() {
@@ -357,5 +409,32 @@ public class PodgladZdjecia {
 		root.getChildren().add(size);
 		root.getChildren().add(kom);
 		root.getChildren().add(sp);
+		root.getChildren().add(AddComent);
+	}
+	public static ArrayList<Coment> getComents(int z) {
+		try {
+			int port = 752;
+			System.out.println("Pobieranie Startv2");
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+			String str = "getComents,"+z;		// Do serwera  Switch; getComents,2
+
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+
+			System.out.println("Pobieranie Start");
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			ArrayList<Coment> p = (ArrayList<Coment>) objInputStream.readObject();
+			System.out.println("Pobieranie Koniec");
+			socket.close();
+			return p;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
 	}
 }

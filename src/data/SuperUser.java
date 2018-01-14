@@ -10,6 +10,7 @@ public class SuperUser extends User implements Serializable{
 		this.login = login;
 		this.password = password;
 	}
+	
 	public String getPassword() {
 		return password;
 	}

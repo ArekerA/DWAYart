@@ -9,6 +9,9 @@ public class SerwerApp extends Application {
 
 	public void start(Stage primaryStage) {
 		(new Serwer(752)).start();
+		(new Serwer(753)).start();
+		(new Serwer(754)).start();
+		(new Serwer(755)).start();
 		BorderPane root = new BorderPane();
 		Scene scene = new Scene(root, 1200, 600);
 		primaryStage.setScene(scene);

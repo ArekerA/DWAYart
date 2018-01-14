@@ -11,10 +11,11 @@ public class Coment implements Serializable{
 	public Coment(User author, String text, Date date, int picture) {
 		super();
 		this.author = author;
-		this.text = text;
 		this.date = date;
+		this.text = text;
 		this.picture=picture;
 	}
+	
 	public User getAuthor() {
 		return author;
 	}
@@ -26,6 +27,15 @@ public class Coment implements Serializable{
 	}
 	public int getPicture() {
 		return picture;
+	}
+	public void setAuthor(User author) {
+		this.author = author;
+	}
+	public void setText(String text) {
+		this.text = text;
+	}
+	public void setPicture(int picture) {
+		this.picture = picture;
 	}
 	@Override
 	public String toString() {
