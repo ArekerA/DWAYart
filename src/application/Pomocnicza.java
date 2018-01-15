@@ -6,14 +6,15 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
-
+import data.Favorite;
 import data.Picture;
-import javafx.scene.image.Image;
+import data.SuperPicture;
+
 
 
 public abstract class Pomocnicza {
 
-	static public ArrayList<Image> obrazy = new ArrayList<Image>(0);
+	static public ArrayList<SuperPicture> obrazy = new ArrayList<SuperPicture>(0);
 	static public ArrayList<Picture> p = new ArrayList<Picture>(0);
 	public static void dodajobrazy(int k) {   
 		obrazy.clear();
@@ -23,7 +24,7 @@ public abstract class Pomocnicza {
 			p = getPictures(0, 100, "date DESC");	
 			for(int i=0;i<p.size();i++)
 			{
-			obrazy.add(new Image(p.get(i).getUrl()));
+			obrazy.add(new SuperPicture(p.get(i)));
 			}
 		}
 		if(k==1)	// TOPKA 
@@ -32,16 +33,26 @@ public abstract class Pomocnicza {
 			for(int i=0;i<p.size();i++)
 			{
 				if(p.get(i).getFavorites()>0)
-			obrazy.add(new Image(p.get(i).getUrl()));
+			obrazy.add(new SuperPicture(p.get(i)));
 			}
 		}
 		if(k==2)	// Ulubione Nie dzia³a jeszcze
 		{
-			p = getPictures(0, 100, "favorites DESC");	
+			p = getPictures(0, 100, "date DESC");
+			
+			ArrayList<Favorite> f = new ArrayList<Favorite>(0);
+			f.clear();
 			for(int i=0;i<p.size();i++)
-			{
-				if(p.get(i).getFavorites()>0)
-			obrazy.add(new Image(p.get(i).getUrl()));
+			{	
+				f.clear();
+				f = getFavorites(i);
+				System.out.println(f);
+				for(int j=0;j<f.size();j++)
+				{	
+				if(f.get(j).getId_u()==Static.user.getId()){
+			obrazy.add(new SuperPicture(p.get(i)));
+				}
+				}
 			}
 		}
 		/*
@@ -51,11 +62,11 @@ public abstract class Pomocnicza {
 		*/
 	}
 
-	public static ArrayList<Image> getObrazy() {
+	public static ArrayList<SuperPicture> getObrazy() {
 		return obrazy;
 	}
 
-	public static void setObrazy(ArrayList<Image> obrazy) {
+	public static void setObrazy(ArrayList<SuperPicture> obrazy) {
 		Pomocnicza.obrazy = obrazy;
 	}
 
@@ -77,6 +88,32 @@ public static ArrayList<Picture> getPictures(int ofs, int il, String sort) {
 		ObjectInputStream objInputStream = null;
 		objInputStream = new ObjectInputStream(inputStream);
 		ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
+		System.out.println("Pobieranie Koniec");
+		socket.close();
+		return p;
+	} catch (Exception e) {
+		System.err.println(e);
+		return null;
+	}
+}
+public static ArrayList<Favorite> getFavorites(int z) {
+	try {
+		int port = 752;
+		System.out.println("Pobieranie Startv2");
+		Socket socket = new Socket("127.0.0.1", port);
+		PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+		String str = "getFavorites,"+z;		// Do serwera  Switch; getFavorites,2
+
+		socket.setTcpNoDelay(true);
+		out.println(str);
+		out.flush();
+
+		System.out.println("Pobieranie Start");
+		InputStream inputStream = socket.getInputStream();
+		ObjectInputStream objInputStream = null;
+		objInputStream = new ObjectInputStream(inputStream);
+		ArrayList<Favorite> p = (ArrayList<Favorite>) objInputStream.readObject();
 		System.out.println("Pobieranie Koniec");
 		socket.close();
 		return p;

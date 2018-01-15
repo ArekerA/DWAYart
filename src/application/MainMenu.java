@@ -128,7 +128,24 @@ public abstract class MainMenu {
 		fav1.setGraphic(fav);
 		fav1.setLayoutY(36);
 		fav1.setLayoutX(primaryStage.getWidth());
-		
+		fav1.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					root.getChildren().clear();
+					Rzad.wyczyœæ(vb);
+					Rzad.wyczyœæ(vb1);
+					Rzad.wyczyœæ(vb2);
+					Pomocnicza.dodajobrazy(2);
+					Rzad.przypiszzdjecia();
+					MainMenu.wyswietlmenu(root, primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
 
 		Button best1 = new Button();
 		best1.setGraphic(best);

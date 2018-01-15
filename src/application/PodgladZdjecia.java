@@ -40,6 +40,7 @@ public class PodgladZdjecia {
 		 Coment c1 = new Coment(Static.user, addComent.getText(), new Date() ,i);
 		 return c1;
 	}
+	
 	public static Text inicjalkomentow(int i)
 	{
 		ArrayList<Coment> c = new ArrayList<Coment>(0);
@@ -67,10 +68,12 @@ public class PodgladZdjecia {
 		Stage primaryStage = new Stage();
 		BorderPane root = new BorderPane();
 		primaryStage.setResizable(false);
+	
 		/// SKALOWANIE OBRAZU
 		ImageView iv = new ImageView(Rzad.ivy.get(i));
-		iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight());
-		iv.setFitWidth(Pomocnicza.getObrazy().get(i).getWidth());
+	
+		iv.setFitHeight(Pomocnicza.getObrazy().get(i).getImage().getHeight());
+		iv.setFitWidth(Pomocnicza.getObrazy().get(i).getImage().getWidth());
 		if (iv.getFitHeight() > iv.getFitWidth()) // Sprawdzamy czy zdjêcie jest szersze czy wy¿sze i w
 													// zale¿noœci od tego ustawiamy i przystosowujemy
 		{
@@ -81,8 +84,8 @@ public class PodgladZdjecia {
 			if (iv.getFitHeight() < 350) {
 				iv.setFitHeight(350);
 			}
-			k = Pomocnicza.getObrazy().get(i).getHeight() / iv.getFitHeight();
-			iv.setFitWidth(Pomocnicza.getObrazy().get(i).getWidth() / k);
+			k = Pomocnicza.getObrazy().get(i).getImage().getHeight() / iv.getFitHeight();
+			iv.setFitWidth(Pomocnicza.getObrazy().get(i).getImage().getWidth() / k);
 			iv.setLayoutY(20);
 			iv.setLayoutX(20);
 		} else {
@@ -93,8 +96,8 @@ public class PodgladZdjecia {
 			if (iv.getFitWidth() < 400) {
 				iv.setFitWidth(400);
 			}
-			k = Pomocnicza.getObrazy().get(i).getWidth() / iv.getFitWidth();
-			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight() / k);
+			k = Pomocnicza.getObrazy().get(i).getImage().getWidth() / iv.getFitWidth();
+			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getImage().getHeight() / k);
 			iv.setLayoutX(20);
 			iv.setLayoutY(20);
 		}
@@ -161,8 +164,9 @@ public class PodgladZdjecia {
 		like.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
-			public void handle(ActionEvent event) {
+			public void handle(ActionEvent event) { // LIKE
 				try {
+					
 					if(like.getOpacity()==1) {
 					FadeTransition ft = new FadeTransition(new Duration(300), like);
 					ft.setFromValue(like.getOpacity());
@@ -174,7 +178,7 @@ public class PodgladZdjecia {
 						@Override
 						public void handle(ActionEvent event) {
 							FadeTransition ft1 = new FadeTransition(new Duration(300), like);
-						
+							System.out.println("UNLIKE");
 								ft1.setFromValue(like.getOpacity());
 								ft1.setToValue(0.3);
 								ft1.setAutoReverse(true);
@@ -183,8 +187,9 @@ public class PodgladZdjecia {
 						}
 					});
 					}
-					else
+					else   // UNlike
 					{
+						
 						FadeTransition ft = new FadeTransition(new Duration(300), like);
 						ft.setFromValue(like.getOpacity());
 						ft.setToValue(0);
@@ -194,6 +199,7 @@ public class PodgladZdjecia {
 
 							@Override
 							public void handle(ActionEvent event) {
+								System.out.println("LIKE");
 								FadeTransition ft1 = new FadeTransition(new Duration(300), like);
 								ft1.setFromValue(iv.getOpacity());
 								ft1.setToValue(1);
@@ -220,7 +226,7 @@ public class PodgladZdjecia {
 		sp.setVisible(true);
 		sp.resize(300, iv.getFitHeight() - 135);
 		sp.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-		sp.setContent(inicjalkomentow(i));
+		sp.setContent(inicjalkomentow(Pomocnicza.getObrazy().get(i).getId()));
 		
 		
 		TextField AddComent = new TextField();
@@ -241,7 +247,7 @@ public class PodgladZdjecia {
 				socket.setTcpNoDelay(true);
 				OutputStream outputStream = socket.getOutputStream();
 				ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-				objOutputStream.writeObject(komentarz(AddComent,i));  // NIE BB tylko co innego 
+				objOutputStream.writeObject(komentarz(AddComent,Pomocnicza.getObrazy().get(i).getId()));  // NIE i tylko co innego 
 				objOutputStream.flush();
 				socket.close();
 		    }
@@ -250,7 +256,7 @@ public class PodgladZdjecia {
 					e1.printStackTrace();
 				}
 		      AddComent.clear();
-				sp.setContent(inicjalkomentow(i));
+				sp.setContent(inicjalkomentow(Pomocnicza.getObrazy().get(i).getId()));
 			   
 		      
 		    }

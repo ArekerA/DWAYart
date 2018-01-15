@@ -73,6 +73,12 @@ public class SerwerThread extends Thread {
 		            objOutputStream.flush();
 					System.out.println("koñczê getComents");
 					break;
+				case "getFavorites":
+					System.out.println("zaczynam getFavorites");
+			        objOutputStream.writeObject(JDBC.getFavorites(Integer.parseInt(data[1])));
+		            objOutputStream.flush();
+					System.out.println("koñczê getFavorites");
+					break;
 				case "getTags":
 					System.out.println("zaczynam getTags");
 			        objOutputStream.writeObject(JDBC.getTags(Integer.parseInt(data[1])));

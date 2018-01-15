@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.Properties;
 
 import data.Coment;
+import data.Favorite;
 import data.Picture;
 import data.SuperUser;
 import data.Tag;
@@ -500,6 +501,22 @@ public class JDBC {
 		}
 		finally {
 			return c;
+		}
+	}
+	public static ArrayList<Favorite> getFavorites(int id_p)
+	{
+		ArrayList<Favorite> f = new ArrayList<Favorite>();
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select id_p,id_u,date from favorites where id_p="+id_p+";");
+			while (r.next())
+				f.add(new Favorite((int)r.getObject(2),r.getDate(3),id_p));
+			st.close();
+		} catch (SQLException e) {
+			System.out.println("====\nBl¹d Polaikowan do obrazu " + id_p + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
+		}
+		finally {
+			return f;
 		}
 	}
 	public static ArrayList<Tag> getTags(int picture)

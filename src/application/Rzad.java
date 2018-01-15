@@ -48,10 +48,10 @@ public abstract class Rzad {
 		double skala;
 		for (int i = 0; i < Pomocnicza.getObrazy().size(); i++) {
 			ImageView iv = new ImageView();
-			iv.setImage(Pomocnicza.getObrazy().get(i));
+			iv.setImage(Pomocnicza.getObrazy().get(i).getImage());
 			iv.setFitWidth(330);
-			skala=Pomocnicza.getObrazy().get(i).getWidth()/330;
-			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getHeight()/skala);			
+			skala=Pomocnicza.getObrazy().get(i).getImage().getWidth()/330;
+			iv.setFitHeight(Pomocnicza.getObrazy().get(i).getImage().getHeight()/skala);			
 			dodajdoskalowanych(iv, i);
 		}
 	}
@@ -60,7 +60,7 @@ public abstract class Rzad {
 		skalowaneivy.clear();
 		
 		for (int i = 0; i < Pomocnicza.getObrazy().size(); i++) {
-			Image iv = Pomocnicza.getObrazy().get(i);
+			Image iv = Pomocnicza.getObrazy().get(i).getImage();
 			
 			ivy.add(iv);
 			
