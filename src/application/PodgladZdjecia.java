@@ -1,5 +1,6 @@
 package application;
 
+import java.awt.MouseInfo;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -248,9 +249,9 @@ public class PodgladZdjecia {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-		   
+		      AddComent.clear();
 				sp.setContent(inicjalkomentow(i));
-			     AddComent.clear();
+			   
 		      
 		    }
 		}
@@ -267,6 +268,7 @@ public class PodgladZdjecia {
 				// TODO Auto-generated method stub
 				try {
 					//iv.setOpacity(iv.getOpacity());
+					iv.setVisible(true);
 					like.setVisible(true);
 					if(like.getOpacity()==0.3)
 					like.setOpacity(like.getOpacity()+0.3);
@@ -325,10 +327,11 @@ public class PodgladZdjecia {
 
 		iv.setOnMouseExited(new EventHandler<MouseEvent>() {
 			public void handle(MouseEvent me) {
-				if(like.getOpacity()==0.3 && iv.getOpacity()==0.15)
-					iv.setOpacity(iv.getOpacity());
-				else
+				iv.setVisible(true);
+				if(MouseInfo.getPointerInfo().getLocation().getX()>iv.getFitWidth()+primaryStage.getX())
 					iv.setOpacity(1);
+				else
+					iv.setOpacity(iv.getOpacity());
 				title.setVisible(false);
 				desc.setVisible(false);
 				size.setVisible(false);
@@ -402,7 +405,8 @@ public class PodgladZdjecia {
 		scene.getStylesheets().add("application/window.css");
 		primaryStage.setScene(scene);
 		primaryStage.show();
-
+		
+		
 		root.getChildren().add(iv);
 		root.getChildren().add(title);
 		root.getChildren().add(desc);

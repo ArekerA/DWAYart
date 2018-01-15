@@ -160,7 +160,7 @@ public class OknoLogowania {
 	sig_in.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
 		try {
 			try {
-				int port = 752;
+				int port = 1324;
 				
 				Socket socket = new Socket("127.0.0.1", port);
 				PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
