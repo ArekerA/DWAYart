@@ -11,6 +11,13 @@ public class SuperUser extends User implements Serializable{
 		this.password = password;
 	}
 	
+	public SuperUser(String name, String email, int sex, String login,String password) {
+		super(name, email, sex);
+		this.login=login;
+		this.password=password;
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getPassword() {
 		return password;
 	}

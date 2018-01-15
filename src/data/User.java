@@ -22,6 +22,12 @@ public class User implements Serializable{
 	public String getName() {
 		return name;
 	}
+	public User(String name, String email, int sex) {
+		super();
+		this.name = name;
+		this.email = email;
+		this.sex = sex;
+	}
 	public String getEmail() {
 		return email;
 	}

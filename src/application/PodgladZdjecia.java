@@ -245,7 +245,6 @@ public class PodgladZdjecia {
 				objOutputStream.flush();
 				socket.close();
 		    }
-		      
 		      catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

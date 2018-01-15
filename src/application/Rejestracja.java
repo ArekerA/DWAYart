@@ -3,11 +3,14 @@ package application;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
+import data.SuperUser;
 import javafx.animation.FadeTransition;
 import javafx.animation.TranslateTransition;
 import javafx.collections.FXCollections;
@@ -26,6 +29,11 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public abstract class Rejestracja {
+	static SuperUser zwrocSU(String name, String email, String sex, String login, String password)
+	{
+		SuperUser su=new SuperUser(name, email, 1, login, password);
+		return su;
+	}
 
 	static void wyswietlmenu(BorderPane root, Stage primaryStage) {
 		root.getChildren().clear();
@@ -241,8 +249,8 @@ public abstract class Rejestracja {
 					&& mailarea.getText().trim().isEmpty() == false && cb.getValue() != null
 					&& password.getText().equals(passwordc.getText())) {
 				
-				Socket socket=new Socket();
-				InetSocketAddress sa=new InetSocketAddress("127.0.0.1", 1324);
+			/*	Socket socket=new Socket();
+				InetSocketAddress sa=new InetSocketAddress("127.0.0.1", 753);
 				BufferedReader Input = null;
 				PrintStream Output = null;
 				try {
@@ -283,9 +291,26 @@ public abstract class Rejestracja {
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
-		        System.out.println("Klient - Od³¹czony");
-			  
+				}*/
+				
+		        System.out.println("Rejse sie reje sie, reeeje sie");
+		        try {
+				      System.out.print("Dziala reje\n");
+				 
+			      int port = 753;
+					Socket socket = new Socket("127.0.0.1", port);
+					System.out.println("Rejestruje");
+					socket.setTcpNoDelay(true);
+					OutputStream outputStream = socket.getOutputStream();
+					ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+					objOutputStream.writeObject(zwrocSU(namearea.getText(), mailarea.getText(), cb.getId(), loginarea.getText(), passwordc.getText()));  // NIE BB tylko co innego 
+					objOutputStream.flush();
+					socket.close();
+			    }
+			      catch (Exception e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				
 				
 				/// Przekazanie danych do serwera Czarodzieja
