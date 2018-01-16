@@ -21,40 +21,7 @@ public class TestClient {
 			int port = 752;
 			
 			Socket socket = new Socket("127.0.0.1", port);
-			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
-			BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-			/*
-			String str = "getPictures,0,20,date DESC";
 			
-			socket.setTcpNoDelay(true);
-			out.println(str);
-			out.flush();
-			
-			System.out.println("rozpoczynam odbiór");
-			InputStream inputStream = socket.getInputStream();
-			ObjectInputStream objInputStream = null;
-			objInputStream = new ObjectInputStream(inputStream);
-			
-            ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
-            System.out.println(p.get(0).getDate());
-            
-			System.out.println("koñczê odbiór");
-			*/
-			String str = "login,superadam,"+sha256("adam123");
-			
-			socket.setTcpNoDelay(true);
-			out.println(str);
-			out.flush();
-			
-			System.out.println("rozpoczynam odbiÃ³r");
-			InputStream inputStream = socket.getInputStream();
-			ObjectInputStream objInputStream = null;
-			objInputStream = new ObjectInputStream(inputStream);
-			
-            SuperUser p = (SuperUser) objInputStream.readObject();
-            System.out.println(p.getEmail());
-            
-			System.out.println("koÅ„czÄ™ odbiÃ³r");
 			socket.close();
 		} catch (Exception e) {
 			System.err.println(e);

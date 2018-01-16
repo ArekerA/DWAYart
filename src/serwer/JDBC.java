@@ -519,6 +519,34 @@ public class JDBC {
 			return f;
 		}
 	}
+	public static Boolean isFavorite(int id_p, int id_u)
+	{
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select id_p,id_u,date from favorites where id_p="+id_p+" and id_u ="+id_u+";");
+			while (r.next())
+				return new Boolean(true);
+			st.close();
+			return new Boolean(false);
+		} catch (SQLException e) {
+			System.out.println("====\nBl¹d Polaikowan do obrazu " + id_p + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
+			return new Boolean(false);
+		}
+	}
+	public static Integer countFavorites(int id_p)
+	{
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select COUNT(id_p) from favorites where id_p="+id_p+";");
+			while (r.next())
+				return new Integer(r.getInt(1));
+			st.close();
+			return new Integer(0);
+		} catch (SQLException e) {
+			System.out.println("====\nBl¹d Polaikowan do obrazu " + id_p + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
+			return new Integer(0);
+		}
+	}
 	public static ArrayList<Tag> getTags(int picture)
 	{
 		ArrayList<Tag> c = new ArrayList<Tag>();

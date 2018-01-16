@@ -1,9 +1,12 @@
 package serwer;
 
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
@@ -29,68 +32,79 @@ public class SerwerThread extends Thread {
 		try {
 			if(mySocket.getLocalPort() == 752)
 			{
-			BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
-			String str;
-			while (!(str = in.readLine()).equals("exit")) {
-				System.out.println(mySocket.getInetAddress() + " : " + str);
-				String[] data = str.split(",");
-				OutputStream outputStream = mySocket.getOutputStream();
-		        ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-				switch (data[0]) {
-				case "getPictures":
-					System.out.println("zaczynam getPictures");
-			        objOutputStream.writeObject(JDBC.getPictures(Integer.parseInt(data[1]), Integer.parseInt(data[2]), data[3]));
-		            objOutputStream.flush();
-					System.out.println("koñczê getPictures");
-					break;
-				case "login":
-					System.out.println("zaczynam login");
-			        objOutputStream.writeObject(JDBC.login(data[1], data[2]));
-		            objOutputStream.flush();
-					System.out.println("koñczê login");
-					break;
-				case "getUser":
-					System.out.println("zaczynam getUser");
-			        objOutputStream.writeObject(JDBC.getUser(Integer.parseInt(data[1])));
-		            objOutputStream.flush();
-					System.out.println("koñczê getUser");
-					break;
-				case "getPicture":
-					System.out.println("zaczynam getPicture");
-			        objOutputStream.writeObject(JDBC.getPicture(Integer.parseInt(data[1])));
-		            objOutputStream.flush();
-					System.out.println("koñczê getPicture");
-					break;
-				case "getPicturesFav":
-					System.out.println("zaczynam getPicture");
-			        objOutputStream.writeObject(JDBC.getPictures(Integer.parseInt(data[1]),Integer.parseInt(data[2]),Integer.parseInt(data[3])));
-		            objOutputStream.flush();
-					System.out.println("koÅ„czÄ™ getPicture");
-					break;
-				case "getComents":
-					System.out.println("zaczynam getComents");
-			        objOutputStream.writeObject(JDBC.getComents(Integer.parseInt(data[1])));
-		            objOutputStream.flush();
-					System.out.println("koñczê getComents");
-					break;
-				case "getFavorites":
-					System.out.println("zaczynam getFavorites");
-			        objOutputStream.writeObject(JDBC.getFavorites(Integer.parseInt(data[1])));
-		            objOutputStream.flush();
-					System.out.println("koñczê getFavorites");
-					break;
-				case "getTags":
-					System.out.println("zaczynam getTags");
-			        objOutputStream.writeObject(JDBC.getTags(Integer.parseInt(data[1])));
-		            objOutputStream.flush();
-					System.out.println("koñczê getTags");
-					break;
-
-				default:
-					break;
+				BufferedReader in = new BufferedReader(new InputStreamReader(mySocket.getInputStream()));
+				String str;
+				while (!(str = in.readLine()).equals("exit")) {
+					System.out.println(mySocket.getInetAddress() + " : " + str);
+					String[] data = str.split(",");
+					OutputStream outputStream = mySocket.getOutputStream();
+			        ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+					switch (data[0]) {
+					case "getPictures":
+						System.out.println("zaczynam getPictures");
+				        objOutputStream.writeObject(JDBC.getPictures(Integer.parseInt(data[1]), Integer.parseInt(data[2]), data[3]));
+			            objOutputStream.flush();
+						System.out.println("koñczê getPictures");
+						break;
+					case "login":
+						System.out.println("zaczynam login");
+				        objOutputStream.writeObject(JDBC.login(data[1], data[2]));
+			            objOutputStream.flush();
+						System.out.println("koñczê login");
+						break;
+					case "getUser":
+						System.out.println("zaczynam getUser");
+				        objOutputStream.writeObject(JDBC.getUser(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê getUser");
+						break;
+					case "getPicture":
+						System.out.println("zaczynam getPicture");
+				        objOutputStream.writeObject(JDBC.getPicture(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê getPicture");
+						break;
+					case "getPicturesFav":
+						System.out.println("zaczynam getPicture");
+				        objOutputStream.writeObject(JDBC.getPictures(Integer.parseInt(data[1]),Integer.parseInt(data[2]),Integer.parseInt(data[3])));
+			            objOutputStream.flush();
+						System.out.println("koÅ„czÄ™ getPicture");
+						break;
+					case "getComents":
+						System.out.println("zaczynam getComents");
+				        objOutputStream.writeObject(JDBC.getComents(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê getComents");
+						break;
+					case "getFavorites":
+						System.out.println("zaczynam getFavorites");
+				        objOutputStream.writeObject(JDBC.getFavorites(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê getFavorites");
+						break;
+					case "isFavorite":
+						System.out.println("zaczynam isFavorite");
+				        objOutputStream.writeObject(JDBC.isFavorite(Integer.parseInt(data[1]),Integer.parseInt(data[2])));
+			            objOutputStream.flush();
+						System.out.println("koñczê isFavorite");
+						break;
+					case "countFavorites":
+						System.out.println("zaczynam countFavorites");
+				        objOutputStream.writeObject(JDBC.countFavorites(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê countFavorites");
+						break;
+					case "getTags":
+						System.out.println("zaczynam getTags");
+				        objOutputStream.writeObject(JDBC.getTags(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê getTags");
+						break;
+	
+					default:
+						break;
+					}
 				}
-			}
-			mySocket.close();
 			}
 			else if(mySocket.getLocalPort() == 753)
 			{
@@ -122,8 +136,33 @@ public class SerwerThread extends Thread {
 				out.flush();
 				System.out.println("Koñczê dodawanie komentarzy");
 			}
+			else if(mySocket.getLocalPort() == 755)
+			{
+				byte[] contents = new byte[10000];
+		        FileOutputStream fos = new FileOutputStream("E:\\xampp\\htdocs\\img\\data2.bin");
+		        BufferedOutputStream bos = new BufferedOutputStream(fos);
+		        InputStream is = mySocket.getInputStream();
+		        
+		        //No of bytes read in one read() call
+		        int bytesRead = 0; 
+		        
+		        while((bytesRead=is.read(contents))!=-1)
+		            bos.write(contents, 0, bytesRead); 
+		        bos.flush(); 
+			}
+	        
+	        System.out.println("File saved successfully!");
 		} catch (Exception e) {
 			System.err.println(e);
+		}
+		finally
+		{
+			try {
+				mySocket.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 }
