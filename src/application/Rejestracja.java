@@ -1,14 +1,8 @@
 package application;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.PrintStream;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.util.Scanner;
 
 import data.SuperUser;
 import javafx.animation.FadeTransition;
@@ -303,7 +297,7 @@ public abstract class Rejestracja {
 					socket.setTcpNoDelay(true);
 					OutputStream outputStream = socket.getOutputStream();
 					ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-					objOutputStream.writeObject(zwrocSU(namearea.getText(), mailarea.getText(), cb.getId(), loginarea.getText(), passwordc.getText()));  // NIE BB tylko co innego 
+					objOutputStream.writeObject(zwrocSU(namearea.getText(), mailarea.getText(), cb.getId(), loginarea.getText(), OknoLogowania.sha256(passwordc.getText())));  // NIE BB tylko co innego 
 					objOutputStream.flush();
 					socket.close();
 			    }

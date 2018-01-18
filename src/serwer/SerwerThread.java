@@ -108,6 +108,7 @@ public class SerwerThread extends Thread {
 			}
 			else if(mySocket.getLocalPort() == 753)
 			{
+				
 				mySocket.setTcpNoDelay(true);
 				System.out.println("Rozpoczynam tworzenie u¿ytkownika");
 				InputStream inputStream = mySocket.getInputStream();
