@@ -38,21 +38,12 @@ public abstract class Pomocnicza {
 		}
 		if(k==2)	// Ulubione Nie dzia³a jeszcze
 		{
-			p = getPictures(0, 100, "date DESC");
+			p = getUserFavorites(Static.user.getId());
 			
-			ArrayList<Favorite> f = new ArrayList<Favorite>(0);
-			f.clear();
+			
 			for(int i=0;i<p.size();i++)
-			{	
-				f.clear();
-				f = getFavorites(i);
-				System.out.println(f);
-				for(int j=0;j<f.size();j++)
-				{	
-				if(f.get(j).getId_u()==Static.user.getId()){
+			{
 			obrazy.add(new SuperPicture(p.get(i)));
-				}
-				}
 			}
 		}
 		/*
@@ -70,32 +61,57 @@ public abstract class Pomocnicza {
 		Pomocnicza.obrazy = obrazy;
 	}
 
-public static ArrayList<Picture> getPictures(int ofs, int il, String sort) {
-	try {
-		int port = 752;
-		System.out.println("Pobieranie Startv2");
-		Socket socket = new Socket("127.0.0.1", port);
-		PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+	public static ArrayList<Picture> getPictures(int ofs, int il, String sort) {
+		try {
+			int port = 752;
+			System.out.println("Pobieranie Startv2");
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-		String str = "getPictures,"+ofs+","+il+","+sort;		// Do serwera  Switch; getPictures,0,20,date DESC
+			String str = "getPictures,"+ofs+","+il+","+sort;		// Do serwera  Switch; getPictures,0,20,date DESC
 
-		socket.setTcpNoDelay(true);
-		out.println(str);
-		out.flush();
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
 
-		System.out.println("Pobieranie Start");
-		InputStream inputStream = socket.getInputStream();
-		ObjectInputStream objInputStream = null;
-		objInputStream = new ObjectInputStream(inputStream);
-		ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
-		System.out.println("Pobieranie Koniec");
-		socket.close();
-		return p;
-	} catch (Exception e) {
-		System.err.println(e);
-		return null;
+			System.out.println("Pobieranie Start");
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
+			System.out.println("Pobieranie Koniec");
+			socket.close();
+			return p;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}public static ArrayList<Picture> getUserFavorites(int i) {
+		try {
+			int port = 752;
+			System.out.println("Pobieranie Startv2");
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+			String str = "getUserFavorites,"+i;		// Do serwera  Switch; getPictures,0,20,date DESC
+
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+
+			System.out.println("Pobieranie Start");
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
+			System.out.println("Pobieranie Koniec");
+			socket.close();
+			return p;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
 	}
-}
 public static ArrayList<Favorite> getFavorites(int z) {
 	try {
 		int port = 752;

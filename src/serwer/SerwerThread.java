@@ -82,6 +82,12 @@ public class SerwerThread extends Thread {
 			            objOutputStream.flush();
 						System.out.println("koñczê getFavorites");
 						break;
+					case "getUserFavorites":
+						System.out.println("zaczynam getUserFavorites");
+				        objOutputStream.writeObject(JDBC.getUserFavorites(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê getUserFavorites");
+						break;
 					case "isFavorite":
 						System.out.println("zaczynam isFavorite");
 				        objOutputStream.writeObject(JDBC.isFavorite(Integer.parseInt(data[1]),Integer.parseInt(data[2])));
@@ -140,7 +146,7 @@ public class SerwerThread extends Thread {
 			else if(mySocket.getLocalPort() == 755)
 			{
 				byte[] contents = new byte[10000];
-		        FileOutputStream fos = new FileOutputStream("E:\\xampp\\htdocs\\img\\data2.bin");
+		        FileOutputStream fos = new FileOutputStream("E:\\xampp\\htdocs\\img\\tescik.png");
 		        BufferedOutputStream bos = new BufferedOutputStream(fos);
 		        InputStream is = mySocket.getInputStream();
 		        

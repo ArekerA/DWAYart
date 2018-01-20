@@ -239,29 +239,28 @@ public class PodgladZdjecia {
 		AddComent.setOnKeyPressed(e -> {
 		    if (e.getCode() == KeyCode.ENTER && !AddComent.getText().equals(new String(""))) {
 		      try {
-			      System.out.print("Dziala \n");
+			      
 			 
-		      int port = 754;
+		    	  int port = 754;
 				Socket socket = new Socket("127.0.0.1", port);
 				System.out.println("Dodaje Komentarz");
 				socket.setTcpNoDelay(true);
 				OutputStream outputStream = socket.getOutputStream();
 				ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-				objOutputStream.writeObject(komentarz(AddComent,Pomocnicza.getObrazy().get(i).getId()));  // NIE i tylko co innego 
+				objOutputStream.writeObject(komentarz(AddComent,Pomocnicza.getObrazy().get(i).getId()));
 				objOutputStream.flush();
 				socket.close();
-		    }
+		      }
 		      catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
-				}
+		      }
 		      AddComent.clear();
-				sp.setContent(inicjalkomentow(Pomocnicza.getObrazy().get(i).getId()));
+		      sp.setContent(inicjalkomentow(Pomocnicza.getObrazy().get(i).getId()));
 			   
 		      
-		    }
-		}
-		  );
+		   }
+		});
 
 	
 // Static.user.getId() , AddComent.getText(), i
