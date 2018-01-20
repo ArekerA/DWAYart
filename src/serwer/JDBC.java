@@ -623,6 +623,29 @@ public class JDBC {
 			return null;
 		}
 	}
+	public static ArrayList<Picture> getPictures(int u)
+	{
+		ArrayList<Picture> c = new ArrayList<Picture>();
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "SELECT id,title,description,author,type,pictures.date,COUNT(favorites.id_p) AS favorites FROM `pictures` LEFT JOIN favorites ON (pictures.id = favorites.id_p) WHERE author = '"+u+"' GROUP BY id;");
+			while(r.next())
+				c.add(new Picture("http://127.0.0.1/img/"+(int)r.getObject(1)+"."+(((int)r.getObject(5))==1?"jpg":(((int)r.getObject(5))==2?"bmp":(((int)r.getObject(5))==3?"gif":(((int)r.getObject(5))==4?"png":(((int)r.getObject(5))==5?"wbmp":"jpeg"))))),
+						(int)r.getObject(1),
+						r.getObject(2).toString(),
+						r.getObject(3).toString(), 
+						getUser((int)r.getObject(4)), 
+						getComents((int)r.getObject(1)), 
+						getTags((int)r.getObject(1)), 
+						(Date)r.getDate(6), 
+						(long)r.getObject(7)));
+			st.close();
+			return c;
+		} catch (SQLException e) {
+			System.out.println("====\nBl¹d obrazów dla u¿ytkownika " + u + "\n" + e.getMessage() + ": " + e.getErrorCode() + "\n=====");
+			return null;
+		}
+	}
 	public static ArrayList<Picture> getUserFavorites(int i)
 	{
 		ArrayList<Picture> c = new ArrayList<Picture>();

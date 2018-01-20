@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 
 import client.Client;
@@ -36,8 +37,9 @@ public class Main extends Application implements Runnable {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//Server.main(args);
-		Client.main(args);
-		launch(args);
+		//Client.main(args);
+		//launch(args);
+		test();
 		
 	}
 
@@ -47,37 +49,31 @@ public class Main extends Application implements Runnable {
 			System.out.println("dziala");
 		}
 	}
-	public void test()
-	{int port = 752;
-	System.out.println("Pobieranie Startv2");
-	
-	Socket socket = new Socket("127.0.0.1", port);
-	System.out.println("Accepted connection from : " + socket);
-    FileInputStream fis = new FileInputStream(myFile);
-    BufferedInputStream in = new BufferedInputStream(fis);
-    in.read(buffer,0,buffer.length);
-    out = socket.getOutputStream();
-    System.out.println("Sending files");
-    out.write(buffer,0, buffer.length);
-    out.flush();
-    /*while ((count = in.read(buffer)) > 0){
-        out.write(buffer,0,count);
-        out.flush();
-    }*/
-    out.close();
-    in.close();
-    socket.close();
-    System.out.println("Finished sending");
+	public static void test()
+	{
+		int port = 755;
+		System.out.println("Pobieranie Startv2");
 
-		 File myFile = new File (FILE_TO_SEND);
-         byte [] mybytearray  = new byte [(int)myFile.length()];
-         FileInputStream fis = new FileInputStream(myFile);
-         BufferedInputStream bis = new BufferedInputStream(fis);
-         bis.read(mybytearray,0,mybytearray.length);
-         Object os = socket.getOutputStream();
-         System.out.println("Sending " + FILE_TO_SEND + "(" + mybytearray.length + " bytes)");
-         os.write(mybytearray,0,mybytearray.length);
-         os.flush();
-         System.out.println("Done.");
+	    try {
+			Socket socket = new Socket("127.0.0.1", port);
+		    File myFile = new File("C:\\Koala.jpg");
+		    /*static int count;*/
+		    byte[] buffer = new byte[(int) myFile.length()];
+		    FileInputStream fis = new FileInputStream(myFile);
+		    BufferedInputStream in = new BufferedInputStream(fis);
+		    OutputStream out = null;
+				in.read(buffer,0,buffer.length);
+		    out = socket.getOutputStream();
+		    System.out.println("Sending files");
+		    out.write(buffer,0, buffer.length);
+		    out.flush();
+		    out.close();
+		    in.close();
+		    socket.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    System.out.println("Finished sending");
 	}
 }

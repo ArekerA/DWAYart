@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,6 +64,12 @@ public class SerwerThread extends Thread {
 				        objOutputStream.writeObject(JDBC.getPicture(Integer.parseInt(data[1])));
 			            objOutputStream.flush();
 						System.out.println("koñczê getPicture");
+						break;
+					case "getUserPictures":
+						System.out.println("zaczynam getPictures");
+				        objOutputStream.writeObject(JDBC.getPictures(Integer.parseInt(data[1])));
+			            objOutputStream.flush();
+						System.out.println("koñczê getPictures");
 						break;
 					case "getPicturesFav":
 						System.out.println("zaczynam getPicture");
@@ -145,17 +152,27 @@ public class SerwerThread extends Thread {
 			}
 			else if(mySocket.getLocalPort() == 755)
 			{
-				byte[] contents = new byte[10000];
-		        FileOutputStream fos = new FileOutputStream("E:\\xampp\\htdocs\\img\\tescik.png");
-		        BufferedOutputStream bos = new BufferedOutputStream(fos);
-		        InputStream is = mySocket.getInputStream();
-		        
-		        //No of bytes read in one read() call
-		        int bytesRead = 0; 
-		        
-		        while((bytesRead=is.read(contents))!=-1)
-		            bos.write(contents, 0, bytesRead); 
-		        bos.flush(); 
+				int maxsize = 1024;
+				byte[] buffer = new byte[maxsize ];
+		        Socket socket = new Socket("localhost", 9099);
+		        InputStream is = socket.getInputStream();
+		        File test = new File("C:\\xampp\\htdocs\\img\\test.jpg");
+		        test.createNewFile();
+		        FileOutputStream fos = new FileOutputStream(test);
+		        BufferedOutputStream out = new BufferedOutputStream(fos);
+		        int byteread = is.read(buffer, 0, buffer.length);
+		        int current = byteread;
+
+		        do{
+		            byteread = is.read(buffer, 0, buffer.length - current);
+		            if (byteread >= 0) current += byteread;
+		        } while (byteread > -1);
+		        out.write(buffer, 0, current);
+		        out.flush();
+
+		        socket.close();
+		        fos.close();
+		        is.close();
 			}
 	        
 	        System.out.println("File saved successfully!");
