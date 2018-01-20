@@ -51,24 +51,36 @@ public class Main extends Application implements Runnable {
 	}
 	public static void test()
 	{
+		FileInputStream fis = null;
+    BufferedInputStream bis = null;
+    OutputStream os = null;
 		int port = 755;
 		System.out.println("Pobieranie Startv2");
 
 	    try {
 			Socket socket = new Socket("127.0.0.1", port);
-		    File myFile = new File("C:\\Koala.jpg");
+		    File myFile = new File("C:\\Users\\Marlena\\Pictures\\LG x-power\\20161014_114457.jpg");
 		    /*static int count;*/
-		    byte[] buffer = new byte[(int) myFile.length()];
-		    FileInputStream fis = new FileInputStream(myFile);
-		    BufferedInputStream in = new BufferedInputStream(fis);
-		    OutputStream out = null;
-				in.read(buffer,0,buffer.length);
-		    out = socket.getOutputStream();
-		    System.out.println("Sending files");
-		    out.write(buffer,0, buffer.length);
-		    out.flush();
-		    out.close();
-		    in.close();
+	          byte [] mybytearray  = new byte [(int)myFile.length()];
+	          byte [] mybytearray2  = new byte [5];
+	          
+	          int i = 2045;
+	          //===============
+	          mybytearray2[0] = (byte) (i&0xFF);
+	          mybytearray2[1] = (byte) ((i>>8)&0xFF);
+	          mybytearray2[2] = (byte) ((i>>16)&0xFF);
+	          mybytearray2[3] = (byte) ((i>>24)&0xFF);
+	          //==============
+	          mybytearray2[4] = 1;
+	          
+	          fis = new FileInputStream(myFile);
+	          bis = new BufferedInputStream(fis);
+	          bis.read(mybytearray,0,mybytearray.length);
+	          os = socket.getOutputStream();
+	          System.out.println("Sending C:\\Koala.jpg(" + mybytearray.length + " bytes)");
+	          os.write(mybytearray2,0,mybytearray2.length);
+	          os.write(mybytearray,0,mybytearray.length);
+	          os.flush();
 		    socket.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
