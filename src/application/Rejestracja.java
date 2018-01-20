@@ -1,5 +1,10 @@
 package application;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
@@ -24,6 +29,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public abstract class Rejestracja {
+	static File file;
 	static SuperUser zwrocSU(String name, String email, String sex, String login, String password)
 	{
 		SuperUser su=new SuperUser(name, email, 1, login, password);
@@ -177,7 +183,8 @@ public abstract class Rejestracja {
 			@Override
 			public void handle(MouseEvent event) {
 				try {
-					Image temp = Wyborzdjecia.wyborzdysku(primaryStage);
+					file = Wyborzdjecia.wyborzdysku(primaryStage);
+					Image temp = new Image("file:///" + file.getPath());
 					if (temp != null) {
 						iv2.setImage(temp);
 						root.getChildren().remove(iv2);
@@ -291,17 +298,49 @@ public abstract class Rejestracja {
 		        System.out.println("Rejse sie reje sie, reeeje sie");
 		        try {
 				      System.out.print("Dziala reje\n");
-				 
-			      int port = 753;
-					Socket socket = new Socket("127.0.0.1", port);
-					System.out.println("Rejestruje");
-					socket.setTcpNoDelay(true);
-					OutputStream outputStream = socket.getOutputStream();
-					ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-					objOutputStream.writeObject(zwrocSU(namearea.getText(), mailarea.getText(), cb.getId(), loginarea.getText(), OknoLogowania.sha256(passwordc.getText())));  // NIE BB tylko co innego 
-					objOutputStream.flush();
-					socket.close();
-			    }
+						String id;
+				 if(true)
+				 {
+				      int port = 753;
+						Socket socket = new Socket("127.0.0.1", port);
+						System.out.println("Rejestruje");
+						socket.setTcpNoDelay(true);
+						OutputStream outputStream = socket.getOutputStream();
+						ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+						objOutputStream.writeObject(zwrocSU(namearea.getText(), mailarea.getText(), cb.getId(), loginarea.getText(), OknoLogowania.sha256(passwordc.getText())));  // NIE BB tylko co innego 
+						objOutputStream.flush();
+						BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+						id = in.readLine();
+						socket.close();
+				 }
+				 if(true)
+				 {
+						int port = 758;
+						Socket socket = new Socket("127.0.0.1", port);
+					    /*static int count;*/
+				        byte [] mybytearray  = new byte [(int)file.length()];
+				        byte [] mybytearray2  = new byte [5];
+			          	
+			          	int i = Integer.parseInt(id);
+			          	//===============
+			          	mybytearray2[0] = (byte) (i&0xFF);
+			          	mybytearray2[1] = (byte) ((i>>8)&0xFF);
+			          	mybytearray2[2] = (byte) ((i>>16)&0xFF);
+			          	mybytearray2[3] = (byte) ((i>>24)&0xFF);
+			          	//==============
+			          	mybytearray2[4] = 1;
+			          	
+			          	FileInputStream fis = new FileInputStream(file);
+			          	BufferedInputStream bis = new BufferedInputStream(fis);
+			          	bis.read(mybytearray,0,mybytearray.length);
+			          	OutputStream os = socket.getOutputStream();
+			          	System.out.println("Sending C:\\Koala.jpg(" + mybytearray.length + " bytes)");
+			          	os.write(mybytearray2,0,mybytearray2.length);
+			          	os.write(mybytearray,0,mybytearray.length);
+			          	os.flush();
+						socket.close();
+				 }
+				    }
 			      catch (Exception e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

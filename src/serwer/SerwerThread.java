@@ -25,7 +25,7 @@ import data.SuperUser;
 
 public class SerwerThread extends Thread {
 	Socket mySocket;
-	String sciezka = "C:\\xampp\\htdocs\\img\\";
+	String sciezka = "E:\\xampp\\htdocs\\img\\";
 	public SerwerThread(Socket socket){
 		super();
 		mySocket = socket;
@@ -131,9 +131,8 @@ public class SerwerThread extends Thread {
 				ObjectInputStream objInputStream = null;
 				objInputStream = new ObjectInputStream(inputStream);
 	            SuperUser p = (SuperUser) objInputStream.readObject();
-	            JDBC.addUser(p.getLogin(), p.getName(), p.getEmail(), p.getPassword(), p.getSex(), p.getType());
 	            PrintWriter out = new PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
-				String str = "true";
+				String str = ""+JDBC.addUser(p.getLogin(), p.getName(), p.getEmail(), p.getPassword(), p.getSex(), p.getType());
 				out.println(str);
 				out.flush();
 				System.out.println("Koñczê resjestracje");
@@ -229,6 +228,50 @@ public class SerwerThread extends Thread {
 				out.flush();
 				System.out.println("Koñczê dodawanie obrazu");
 				
+			}
+			else if(mySocket.getLocalPort() == 758)
+			{
+		        int bytesRead;
+		        int current = 0;
+		        FileOutputStream fos = null;
+		        BufferedOutputStream bos = null;
+		        Socket sock = null;
+		        try {
+		        	System.out.println("Rozpoczynam odbieranie obrazu usera");
+
+					int FILE_SIZE = 1024*1024*500;
+					byte [] mybytearray  = new byte [FILE_SIZE ];
+					byte [] mybytearray2  = new byte [5 ];
+					InputStream is = mySocket.getInputStream();
+					bytesRead = is.read(mybytearray2,0,mybytearray2.length);
+					bytesRead = is.read(mybytearray,0,mybytearray.length);
+					int i = 0;
+					i = (int)(mybytearray2[3]& 0xFF);
+					i <<=8;
+					i += (int)(mybytearray2[2]& 0xFF);
+					i <<=8;
+					i += (int)(mybytearray2[1]& 0xFF);
+					i <<=8;
+					i += (int)(mybytearray2[0]& 0xFF);
+					current = bytesRead;
+
+					do {
+						bytesRead = is.read(mybytearray, current, (mybytearray.length-current));
+						if(bytesRead >= 0) current += bytesRead;
+					} while(bytesRead > -1);
+					String s = "";
+					s = ((mybytearray2[4])==1?"jpg":((mybytearray2[4])==2?"bmp":((mybytearray2[4])==3?"gif":((mybytearray2[4])==4?"png":((mybytearray2[4])==5?"wbmp":"jpeg")))));
+					fos = new FileOutputStream(sciezka+"avatars\\"+i+"."+s);
+					bos = new BufferedOutputStream(fos);
+					bos.write(mybytearray, 0 , current);
+					bos.flush();
+		        }
+		        finally {
+		        	if (fos != null) fos.close();
+		        	if (bos != null) bos.close();
+		        	if (sock != null) sock.close();
+		        }
+	        	System.out.println("Koñczê odbieranie obrazu usera");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

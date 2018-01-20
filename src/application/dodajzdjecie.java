@@ -159,7 +159,7 @@ public class dodajzdjecie {
 		
 		iv3.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
 			Image temp = null;
-			temp = Wyborzdjecia.wyborzdysku(primaryStage);
+			temp = new Image("file:///" + Wyborzdjecia.wyborzdysku(primaryStage).getPath());
 			iv3.setPickOnBounds(true);
 			if (temp != null) {
 				root.getChildren().remove(iv2);
