@@ -18,6 +18,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import data.Coment;
+import data.Favorite;
 import data.SuperUser;
 
 
@@ -150,7 +151,25 @@ public class SerwerThread extends Thread {
 				out.println(str);
 				out.flush();
 				System.out.println("Koñczê dodawanie komentarzy");
+				
 			}
+		
+		else if(mySocket.getLocalPort() == 756)
+		{
+			mySocket.setTcpNoDelay(true);
+			System.out.println("Rozpoczynam dodawanie Like");
+			InputStream inputStream = mySocket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+            Favorite p = (Favorite) objInputStream.readObject();
+            JDBC.addLike(p.getId_u(), p.getId_p());
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
+			String str = "true";
+			out.println(str);
+			out.flush();
+			System.out.println("Koñczê dodawanie Like");
+			
+		}
 			else if(mySocket.getLocalPort() == 755)
 			{
 		        int bytesRead;
@@ -196,7 +215,7 @@ public class SerwerThread extends Thread {
 	        	System.out.println("Koñczê odbieranie obrazu");
 			}
 		} catch (Exception e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}
 		finally
 		{

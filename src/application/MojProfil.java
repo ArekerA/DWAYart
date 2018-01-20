@@ -83,7 +83,7 @@ public class MojProfil {
 		name.setLayoutY(primaryStage.getHeight() * 0.35);
 		name.setLayoutX(15);
 
-		Text sex = new Text("sex:");
+		Text sex = new Text("gender:");
 		sex.setStyle("-fx-font-size: 20pt;");
 		sex.setFill(Color.WHITE);
 		// name.resize(iv1.getFitWidth() - iv2.getFitWidth() - 25, iv2.getFitHeight());

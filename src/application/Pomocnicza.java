@@ -36,11 +36,19 @@ public abstract class Pomocnicza {
 			obrazy.add(new SuperPicture(p.get(i)));
 			}
 		}
-		if(k==2)	// Ulubione Nie dzia³a jeszcze
+		if(k==2)	// Ulubione
 		{
 			p = getUserFavorites(Static.user.getId());
 			
 			
+			for(int i=0;i<p.size();i++)
+			{
+			obrazy.add(new SuperPicture(p.get(i)));
+			}
+		}
+		if(k==3)	// Moje foty
+		{
+			p = getUserPictures(Static.user.getId());				
 			for(int i=0;i<p.size();i++)
 			{
 			obrazy.add(new SuperPicture(p.get(i)));
@@ -112,6 +120,33 @@ public abstract class Pomocnicza {
 			return null;
 		}
 	}
+	public static ArrayList<Picture> getUserPictures(int i) {
+		try {
+			int port = 752;
+			System.out.println("Pobieranie Startv2");
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+			String str = "getUserPictures,"+i;		// Do serwera  Switch; getPictures,0,20,date DESC
+
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+
+			System.out.println("Pobieranie Start");
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			ArrayList<Picture> p = (ArrayList<Picture>) objInputStream.readObject();
+			System.out.println("Pobieranie Koniec");
+			socket.close();
+			return p;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
+	
 public static ArrayList<Favorite> getFavorites(int z) {
 	try {
 		int port = 752;
