@@ -448,6 +448,22 @@ public class JDBC {
 		}
 		return -1;
 	}
+	public static int delLike(int id_u, int id_p)
+	{
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select MAX(id) from comments;");
+			r.next();
+	
+			executeUpdate(st, "DELETE FROM favorites WHERE id_u="+id_u+" AND id_p="+id_p+";");
+			st.close();
+			return 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
 	public static int addTag(String text)
 	{
 		try {

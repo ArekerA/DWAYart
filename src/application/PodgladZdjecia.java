@@ -13,6 +13,7 @@ import java.util.Date;
 
 import data.Coment;
 import data.Favorite;
+import data.Picture;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -33,22 +34,19 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-
 public class PodgladZdjecia {
-	
-	public static Coment komentarz(TextField addComent , int i)
-	{
-		 Coment c1 = new Coment(Static.user, addComent.getText(), new Date() ,i);
-		 return c1;
+
+	public static Coment komentarz(TextField addComent, int i) {
+		Coment c1 = new Coment(Static.user, addComent.getText(), new Date(), i);
+		return c1;
 	}
-	public static Favorite like(int i)
-	{
+
+	public static Favorite like(int i) {
 		Favorite c1 = new Favorite(Static.user.getId(), new Date(), i);
-		 return c1;
+		return c1;
 	}
-	
-	public static Text inicjalkomentow(int i)
-	{
+
+	public static Text inicjalkomentow(int i) {
 		ArrayList<Coment> c = new ArrayList<Coment>(0);
 		c = getComents(i);
 
@@ -57,7 +55,7 @@ public class PodgladZdjecia {
 			String z = "";
 			for (int i1 = 0; i1 < c.size(); i1++) {
 				z = z + c.get(i1).getDate() + " " + c.get(i1).getAuthor() + ":\n" + c.get(i1).getText() + "\n\n";
-				
+
 			}
 			cc.setWrappingWidth(250);
 			cc.setText(z);
@@ -69,6 +67,7 @@ public class PodgladZdjecia {
 		cc.setWrappingWidth(295);
 		return cc;
 	}
+
 	public static void pokliku(int i) {
 
 		Stage primaryStage = new Stage();
@@ -165,7 +164,14 @@ public class PodgladZdjecia {
 		like.setGraphic(likeiv);
 		like.setLayoutX(iv.getFitWidth()*0.5);
 		like.setLayoutY(iv.getFitHeight()*0.5);
-		like.setOpacity(0.3);
+		if(!isFavorite(Pomocnicza.p.get(i).getId(), Static.user.getId()))
+		{
+			like.setOpacity(0.3);
+		}
+		else
+		{
+			like.setOpacity(1);
+		}
 		like.setVisible(false);
 		like.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -189,10 +195,36 @@ public class PodgladZdjecia {
 								ft1.setToValue(0.3);
 								ft1.setAutoReverse(true);
 								ft1.play();
+								ft1.setOnFinished(new EventHandler<ActionEvent>() {
+
+									@Override
+									public void handle(ActionEvent event) {
+										
+											try {								      
+												 
+										    	 int port = 759;
+												Socket socket = new Socket("127.0.0.1", port);
+												System.out.println("Del Like");
+												socket.setTcpNoDelay(true);
+												OutputStream outputStream = socket.getOutputStream();
+												ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+												objOutputStream.writeObject(like(Pomocnicza.getObrazy().get(i).getId()));
+												objOutputStream.flush();
+												socket.close();
+										      }
+										      catch (Exception e1) {
+													// TODO Auto-generated catch block
+													e1.printStackTrace();
+										      }
+									}});
+								}
+									}
+								);
+								
+								
+								
 								
 						}
-					});
-					}
 					else   // UNlike
 					{
 						
@@ -211,46 +243,42 @@ public class PodgladZdjecia {
 								ft1.setFromValue(iv.getOpacity());
 								ft1.setToValue(1);
 								ft1.setAutoReverse(false);
-								ft1.play();			
-								try {
-								      
-									 
-							    	 int port = 756;
-									Socket socket = new Socket("127.0.0.1", port);
-									System.out.println("Dodaje Like");
-									socket.setTcpNoDelay(true);
-									OutputStream outputStream = socket.getOutputStream();
-									ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-									objOutputStream.writeObject(like(Pomocnicza.getObrazy().get(i).getId()));
-									objOutputStream.flush();
-									socket.close();
-							      }
-							      catch (Exception e1) {
-										// TODO Auto-generated catch block
-										e1.printStackTrace();
-							      }}
-						});
-					}
-				} catch (Exception e) {
+								ft1.play();	
+								ft1.setOnFinished(new EventHandler<ActionEvent>() {
+
+									@Override
+									public void handle(ActionEvent event) {
+										
+											try {								      
+												  
+												 
+										    	 int port = 756;
+												Socket socket = new Socket("127.0.0.1", port);
+												System.out.println("Dodaje Like");
+												socket.setTcpNoDelay(true);
+												OutputStream outputStream = socket.getOutputStream();
+												ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+												objOutputStream.writeObject(like(Pomocnicza.getObrazy().get(i).getId()));
+												objOutputStream.flush();
+												socket.close();
+										      }
+										      catch (Exception e1) {
+													// TODO Auto-generated catch block
+													e1.printStackTrace();
+										      }
+									}});
+								}
+									}
+								);
+					}}catch(Exception e)
+	{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-			}
-		});
-		root.getChildren().add(like);
+				}}});root.getChildren().add(like);
 
-		///// SCROLL PANEL KOMENTARZE
+	///// SCROLL PANEL KOMENTARZE
 
-		
-
-		final ScrollPane sp = new ScrollPane();
-		sp.setVmax(440);
-		sp.setLayoutX(iv.getFitWidth() + 35);
-		sp.setLayoutY(65);
-		sp.setVisible(true);
-		sp.resize(300, iv.getFitHeight() - 135);
-		sp.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);
-		sp.setContent(inicjalkomentow(Pomocnicza.getObrazy().get(i).getId()));
+	final ScrollPane sp = new ScrollPane();sp.setVmax(440);sp.setLayoutX(iv.getFitWidth()+35);sp.setLayoutY(65);sp.setVisible(true);sp.resize(300,iv.getFitHeight()-135);sp.setVbarPolicy(ScrollBarPolicy.AS_NEEDED);sp.setContent(inicjalkomentow(Pomocnicza.getObrazy().get(i).getId()));
 		
 		
 		TextField AddComent = new TextField();
@@ -444,6 +472,7 @@ public class PodgladZdjecia {
 		root.getChildren().add(sp);
 		root.getChildren().add(AddComent);
 	}
+
 	public static ArrayList<Coment> getComents(int z) {
 		try {
 			int port = 752;
@@ -451,7 +480,7 @@ public class PodgladZdjecia {
 			Socket socket = new Socket("127.0.0.1", port);
 			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
 
-			String str = "getComents,"+z;		// Do serwera  Switch; getComents,2
+			String str = "getComents," + z; // Do serwera Switch; getComents,2
 
 			socket.setTcpNoDelay(true);
 			out.println(str);
@@ -462,6 +491,33 @@ public class PodgladZdjecia {
 			ObjectInputStream objInputStream = null;
 			objInputStream = new ObjectInputStream(inputStream);
 			ArrayList<Coment> p = (ArrayList<Coment>) objInputStream.readObject();
+			System.out.println("Pobieranie Koniec");
+			socket.close();
+			return p;
+		} catch (Exception e) {
+			System.err.println(e);
+			return null;
+		}
+	}
+
+	public static Boolean isFavorite(int id_p, int id_u) {
+		try {
+			int port = 752;
+			System.out.println("czy polubione");
+			Socket socket = new Socket("127.0.0.1", port);
+			PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+
+			String str = "isFavorite," + id_p + "," + id_u;
+
+			socket.setTcpNoDelay(true);
+			out.println(str);
+			out.flush();
+
+			System.out.println("Pobieranie Start");
+			InputStream inputStream = socket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+			Boolean p = (Boolean) objInputStream.readObject();
 			System.out.println("Pobieranie Koniec");
 			socket.close();
 			return p;

@@ -171,6 +171,22 @@ public class SerwerThread extends Thread {
 			System.out.println("Koñczê dodawanie Like");
 			
 		}
+		else if(mySocket.getLocalPort() == 759)
+		{
+			mySocket.setTcpNoDelay(true);
+			System.out.println("DELETE Start Like");
+			InputStream inputStream = mySocket.getInputStream();
+			ObjectInputStream objInputStream = null;
+			objInputStream = new ObjectInputStream(inputStream);
+            Favorite p = (Favorite) objInputStream.readObject();
+            JDBC.delLike(p.getId_u(), p.getId_p());
+            PrintWriter out = new PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
+			String str = "true";
+			out.println(str);
+			out.flush();
+			System.out.println("DELETE END Like");
+			
+		}
 			else if(mySocket.getLocalPort() == 755)
 			{
 		        int bytesRead;
