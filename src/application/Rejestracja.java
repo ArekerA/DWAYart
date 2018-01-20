@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -113,7 +114,7 @@ public abstract class Rejestracja {
 		name.setLayoutY(primaryStage.getHeight() * 0.55);
 		name.setLayoutX(15);
 
-		Text sex = new Text("sex:");
+		Text sex = new Text("gender:");
 		sex.setStyle("-fx-font-size: 20pt;");
 		sex.setFill(Color.WHITE);
 		sex.setLayoutY(primaryStage.getHeight() * 0.65);
@@ -138,13 +139,13 @@ public abstract class Rejestracja {
 		confirm.setLayoutX(15);
 
 		//////////// POLA
-		TextArea loginarea = new TextArea();
+		TextField loginarea = new TextField();
 		loginarea.setPromptText("l0gin");
 		loginarea.resize(250, 30);
 		loginarea.setLayoutY((primaryStage.getHeight() * 0.15) + 10);
 		loginarea.setLayoutX(15);
 
-		TextArea namearea = new TextArea();
+		TextField namearea = new TextField();
 		namearea.setPromptText("nam3");
 		namearea.resize(250, 30);
 		namearea.setLayoutY((primaryStage.getHeight() * 0.55) + 10);
@@ -162,7 +163,7 @@ public abstract class Rejestracja {
 		passwordc.setLayoutY((primaryStage.getHeight() * 0.35) + 10);
 		passwordc.setLayoutX(15);
 
-		TextArea mailarea = new TextArea();
+		TextField mailarea = new TextField();
 		mailarea.setPromptText("emai1@address.com");
 		mailarea.resize(250, 30);
 		mailarea.setLayoutY((primaryStage.getHeight() * 0.45) + 10);
@@ -340,10 +341,10 @@ public abstract class Rejestracja {
 		root.getChildren().add(email);
 		root.getChildren().add(name);
 		root.getChildren().add(loginarea);
-		root.getChildren().add(namearea);
 		root.getChildren().add(password);
 		root.getChildren().add(passwordc);
 		root.getChildren().add(mailarea);
+		root.getChildren().add(namearea);
 		root.getChildren().add(rejestracja);
 		root.getChildren().add(iv2);
 		root.getChildren().add(wybierzplik);

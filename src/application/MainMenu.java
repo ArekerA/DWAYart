@@ -30,6 +30,7 @@ public abstract class MainMenu {
 		Image addbtt = new Image("img/add.png");
 		Image logoutbtt = new Image("img/logout.png");
 		Image menu = new Image("img/menu2.png");
+		Image my=new Image("img/my.png");
 
 		final VBox vb = new VBox();
 		vb.setVisible(true);
@@ -98,6 +99,12 @@ public abstract class MainMenu {
 		iv6.setLayoutY(-25);
 		iv6.setLayoutX(0);
 		iv6.setImage(menu);
+		
+		ImageView myp = new ImageView();
+		myp.setImage(my);
+		myp.setFitWidth(64);
+		myp.setFitHeight(64);
+
 
 		//
 
@@ -207,6 +214,29 @@ public abstract class MainMenu {
 			}
 		});
 
+		Button myph = new Button();
+		myph.setGraphic(myp);
+		myph.setLayoutY(36);
+		myph.setLayoutX(primaryStage.getWidth());
+		myph.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					root.getChildren().clear();
+					Rzad.wyczyœæ(vb);
+					Rzad.wyczyœæ(vb1);
+					Rzad.wyczyœæ(vb2);
+					Pomocnicza.dodajobrazy(3);
+					Rzad.przypiszzdjecia();
+					MainMenu.wyswietlmenu(root, primaryStage);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		Button logout1 = new Button();
 		logout1.setGraphic(logout);
 		logout1.setLayoutY(36);
@@ -284,13 +314,29 @@ public abstract class MainMenu {
 											public void handle(ActionEvent event) {
 
 												TranslateTransition translateTransition4 = new TranslateTransition(czas,
-														logout1);
+														myph);
 												translateTransition4.setByX(-primaryStage.getWidth() + iv1.getFitWidth()
-														+ home.getFitWidth() + best.getFitWidth() + 10
-														+ profile.getFitWidth() + add.getFitWidth() - 10
-														+ logout.getFitWidth());
+												+ home.getFitWidth() + best.getFitWidth() + 10
+												+ profile.getFitWidth() + add.getFitWidth() - 10
+												+ logout.getFitWidth());
 												translateTransition4.setAutoReverse(false);
 												translateTransition4.play();
+												translateTransition4.setOnFinished(new EventHandler<ActionEvent>() {
+
+													@Override
+													public void handle(ActionEvent event) {
+
+														TranslateTransition translateTransition5 = new TranslateTransition(czas,
+																logout1);
+														translateTransition5.setByX(-primaryStage.getWidth() + iv1.getFitWidth()
+																+ home.getFitWidth() + best.getFitWidth() + 10
+																+ profile.getFitWidth() + add.getFitWidth() - 10
+																+ logout.getFitWidth()+50);
+														translateTransition5.setAutoReverse(false);
+														translateTransition5.play();
+
+													}
+												});
 
 											}
 										});
@@ -378,6 +424,8 @@ public abstract class MainMenu {
 		root.getChildren().add(best1);
 		root.getChildren().add(profile1);
 		root.getChildren().add(add1);
+		root.getChildren().add(myph);
+
 		root.getChildren().add(logout1);
 		root.getChildren().add(sc);
 

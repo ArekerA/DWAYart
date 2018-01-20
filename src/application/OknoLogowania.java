@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -20,6 +22,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
@@ -90,13 +93,14 @@ public class OknoLogowania {
 		login.resize(iv1.getFitWidth(), 30);
 		login.setLayoutY(((primaryStage.getHeight() - iv1.getFitHeight()) / 2));
 		login.setLayoutX(0 - login.getWidth());
+		
 
 		PasswordField password = new PasswordField();
 		password.setPromptText("pa55word");
 		password.setLayoutY(((primaryStage.getHeight() - iv1.getFitHeight()) / 2) + 50);
 		password.setLayoutX(primaryStage.getWidth());
 		password.resize(iv1.getFitWidth(), 30);
-
+		
 		/////////// BUTTONY
 		Button zalogujsie = new Button();
 		zalogujsie.setGraphic(iv2);
@@ -217,6 +221,98 @@ public class OknoLogowania {
 			root.getChildren().clear();
 			Rejestracja.wyswietlmenu(root, primaryStage);
 		});
+		
+		
+		login.setOnKeyPressed(f -> {
+		    if (f.getCode() == KeyCode.ENTER ) {
+		    	try {
+		    		try {
+					int port = 752;
+					
+					Socket socket = new Socket("127.0.0.1", port);
+					PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					
+					String str = "login,"+login.getText()+","+sha256(password.getText());
+					
+					socket.setTcpNoDelay(true);
+					out.println(str);
+					out.flush();
+					
+					System.out.println("rozpoczynam odbiór");
+					InputStream inputStream = socket.getInputStream();
+					ObjectInputStream objInputStream = null;
+					objInputStream = new ObjectInputStream(inputStream);
+					
+		            Static.user = (SuperUser) objInputStream.readObject();
+		            
+					System.out.println("kończę odbiór");
+					socket.close();
+				} catch (Exception f1) {
+					System.err.println(f1);
+				}
+				if(Static.user != null)		///// ZMIANA NA CZAS PRAC BO LOGOWANIE DENERWUJE
+				{
+					error.setVisible(false);
+					root.getChildren().clear();
+					MainMenu.wyswietlmenu(root, primaryStage);
+				}
+				else
+				{
+					error.setVisible(true);
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}}}
+		    );
+		
+		
+		password.setOnKeyPressed(f -> {
+		    if (f.getCode() == KeyCode.ENTER ) {
+		    	try {
+		    		try {
+					int port = 752;
+					
+					Socket socket = new Socket("127.0.0.1", port);
+					PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
+					BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+					
+					String str = "login,"+login.getText()+","+sha256(password.getText());
+					
+					socket.setTcpNoDelay(true);
+					out.println(str);
+					out.flush();
+					
+					System.out.println("rozpoczynam odbiór");
+					InputStream inputStream = socket.getInputStream();
+					ObjectInputStream objInputStream = null;
+					objInputStream = new ObjectInputStream(inputStream);
+					
+		            Static.user = (SuperUser) objInputStream.readObject();
+		            
+					System.out.println("kończę odbiór");
+					socket.close();
+				} catch (Exception f1) {
+					System.err.println(f1);
+				}
+				if(Static.user != null)		///// ZMIANA NA CZAS PRAC BO LOGOWANIE DENERWUJE
+				{
+					error.setVisible(false);
+					root.getChildren().clear();
+					MainMenu.wyswietlmenu(root, primaryStage);
+				}
+				else
+				{
+					error.setVisible(true);
+				}
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}}}
+		    );
+
+
 
 		////////// ANIMACJE
 		Duration czas = new Duration(2000);

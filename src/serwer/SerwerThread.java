@@ -177,7 +177,7 @@ public class SerwerThread extends Thread {
 	        
 	        System.out.println("File saved successfully!");
 		} catch (Exception e) {
-			System.err.println(e);
+			e.printStackTrace();
 		}
 		finally
 		{

@@ -37,9 +37,9 @@ public class Main extends Application implements Runnable {
 
 	public static void main(String[] args) throws IOException, InterruptedException {
 		//Server.main(args);
-		//Client.main(args);
-		//launch(args);
-		test();
+		Client.main(args);
+		launch(args);
+		//test();
 		
 	}
 
