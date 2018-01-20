@@ -432,6 +432,22 @@ public class JDBC {
 		}
 		return -1;
 	}
+	public static int addLike(int id_u, int id_p)
+	{
+		try {
+			Statement st = createStatement(con);
+			ResultSet r = executeQuery(st, "Select MAX(id) from comments;");
+			r.next();
+	
+			executeUpdate(st, "INSERT INTO favorites VALUES("+id_u+", '"+id_p+"', NOW());");
+			st.close();
+			return 1;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return -1;
+	}
 	public static int addTag(String text)
 	{
 		try {

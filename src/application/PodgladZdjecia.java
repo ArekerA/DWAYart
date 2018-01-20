@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import data.Coment;
+import data.Favorite;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -38,6 +39,11 @@ public class PodgladZdjecia {
 	public static Coment komentarz(TextField addComent , int i)
 	{
 		 Coment c1 = new Coment(Static.user, addComent.getText(), new Date() ,i);
+		 return c1;
+	}
+	public static Favorite like(int i)
+	{
+		Favorite c1 = new Favorite(Static.user.getId(), new Date(), i);
 		 return c1;
 	}
 	
@@ -183,7 +189,7 @@ public class PodgladZdjecia {
 								ft1.setToValue(0.3);
 								ft1.setAutoReverse(true);
 								ft1.play();
-							
+								
 						}
 					});
 					}
@@ -200,11 +206,29 @@ public class PodgladZdjecia {
 							@Override
 							public void handle(ActionEvent event) {
 								System.out.println("LIKE");
+								
 								FadeTransition ft1 = new FadeTransition(new Duration(300), like);
 								ft1.setFromValue(iv.getOpacity());
 								ft1.setToValue(1);
 								ft1.setAutoReverse(false);
-								ft1.play();					}
+								ft1.play();			
+								try {
+								      
+									 
+							    	 int port = 756;
+									Socket socket = new Socket("127.0.0.1", port);
+									System.out.println("Dodaje Like");
+									socket.setTcpNoDelay(true);
+									OutputStream outputStream = socket.getOutputStream();
+									ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+									objOutputStream.writeObject(like(Pomocnicza.getObrazy().get(i).getId()));
+									objOutputStream.flush();
+									socket.close();
+							      }
+							      catch (Exception e1) {
+										// TODO Auto-generated catch block
+										e1.printStackTrace();
+							      }}
 						});
 					}
 				} catch (Exception e) {
