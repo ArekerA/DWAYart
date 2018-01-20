@@ -1,0 +1,13 @@
+/* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+.root
+{
+	
+	-fx-font-family: "Berlin Sans FB";
+	-fx-base: lightgray;
+	-fx-text-fill: white ;
+	-fx-background-color: linear-gradient(#383838, #000000);
+}
+.sc
+{
+	-fx-base: gray;
+}

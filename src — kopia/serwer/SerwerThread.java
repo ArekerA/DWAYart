@@ -19,13 +19,11 @@ import java.net.Socket;
 
 import data.Coment;
 import data.Favorite;
-import data.Picture;
 import data.SuperUser;
 
 
 public class SerwerThread extends Thread {
 	Socket mySocket;
-	String sciezka = "C:\\xampp\\htdocs\\img\\";
 	public SerwerThread(Socket socket){
 		super();
 		mySocket = socket;
@@ -173,63 +171,30 @@ public class SerwerThread extends Thread {
 		}
 			else if(mySocket.getLocalPort() == 755)
 			{
-		        int bytesRead;
-		        int current = 0;
-		        FileOutputStream fos = null;
-		        BufferedOutputStream bos = null;
-		        Socket sock = null;
-		        try {
-		        	System.out.println("Rozpoczynam odbieranie obrazu");
+				int maxsize = 1024;
+				byte[] buffer = new byte[maxsize ];
+		        Socket socket = new Socket("localhost", 9099);
+		        InputStream is = socket.getInputStream();
+		        File test = new File("C:\\xampp\\htdocs\\img\\test.jpg");
+		        test.createNewFile();
+		        FileOutputStream fos = new FileOutputStream(test);
+		        BufferedOutputStream out = new BufferedOutputStream(fos);
+		        int byteread = is.read(buffer, 0, buffer.length);
+		        int current = byteread;
 
-					int FILE_SIZE = 1024*1024*500;
-					byte [] mybytearray  = new byte [FILE_SIZE ];
-					byte [] mybytearray2  = new byte [5 ];
-					InputStream is = mySocket.getInputStream();
-					bytesRead = is.read(mybytearray2,0,mybytearray2.length);
-					bytesRead = is.read(mybytearray,0,mybytearray.length);
-					int i = 0;
-					i = (int)(mybytearray2[3]& 0xFF);
-					i <<=8;
-					i += (int)(mybytearray2[2]& 0xFF);
-					i <<=8;
-					i += (int)(mybytearray2[1]& 0xFF);
-					i <<=8;
-					i += (int)(mybytearray2[0]& 0xFF);
-					current = bytesRead;
+		        do{
+		            byteread = is.read(buffer, 0, buffer.length - current);
+		            if (byteread >= 0) current += byteread;
+		        } while (byteread > -1);
+		        out.write(buffer, 0, current);
+		        out.flush();
 
-					do {
-						bytesRead = is.read(mybytearray, current, (mybytearray.length-current));
-						if(bytesRead >= 0) current += bytesRead;
-					} while(bytesRead > -1);
-					String s = "";
-					s = ((mybytearray2[4])==1?"jpg":((mybytearray2[4])==2?"bmp":((mybytearray2[4])==3?"gif":((mybytearray2[4])==4?"png":((mybytearray2[4])==5?"wbmp":"jpeg")))));
-					fos = new FileOutputStream(sciezka+i+"."+s);
-					bos = new BufferedOutputStream(fos);
-					bos.write(mybytearray, 0 , current);
-					bos.flush();
-		        }
-		        finally {
-		        	if (fos != null) fos.close();
-		        	if (bos != null) bos.close();
-		        	if (sock != null) sock.close();
-		        }
-	        	System.out.println("Koñczê odbieranie obrazu");
+		        socket.close();
+		        fos.close();
+		        is.close();
 			}
-			else if(mySocket.getLocalPort() == 757)
-			{
-				mySocket.setTcpNoDelay(true);
-				System.out.println("Rozpoczynam dodawanie obrazu");
-				InputStream inputStream = mySocket.getInputStream();
-				ObjectInputStream objInputStream = null;
-				objInputStream = new ObjectInputStream(inputStream);
-	            Picture p = (Picture) objInputStream.readObject();
-	            PrintWriter out = new PrintWriter(new OutputStreamWriter(mySocket.getOutputStream()));
-				String str = ""+JDBC.addPictures(p.getTitle(),p.getDescription(), Integer.parseInt(p.getUrl()), p.getAuthor().getId());
-				out.println(str);
-				out.flush();
-				System.out.println("Koñczê dodawanie obrazu");
-				
-			}
+	        
+	        System.out.println("File saved successfully!");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

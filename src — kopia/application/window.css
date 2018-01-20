@@ -1,0 +1,9 @@
+.root
+{
+	
+	-fx-font-family: "Arial";
+	-fx-stroke: black;
+	-fx-base: lightgray;
+	-fx-text-fill: white ;
+	-fx-background-color: linear-gradient(#383838, #000000);
+}
