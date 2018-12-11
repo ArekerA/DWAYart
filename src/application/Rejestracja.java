@@ -30,9 +30,9 @@ import javafx.util.Duration;
 
 public abstract class Rejestracja {
 	static File file;
-	static SuperUser zwrocSU(String name, String email, String sex, String login, String password)
+	static SuperUser zwrocSU(String name, String email, String sex, String login, short type, String password)
 	{
-		SuperUser su=new SuperUser(name, email, 1, login, password);
+		SuperUser su=new SuperUser(0, name, email, 1, login, type, password);
 		return su;
 	}
 
@@ -299,6 +299,7 @@ public abstract class Rejestracja {
 		        try {
 				      System.out.print("Dziala reje\n");
 						String id;
+						short xx = 0;
 				 if(true)
 				 {
 				      int port = 753;
@@ -307,7 +308,23 @@ public abstract class Rejestracja {
 						socket.setTcpNoDelay(true);
 						OutputStream outputStream = socket.getOutputStream();
 						ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
-						objOutputStream.writeObject(zwrocSU(namearea.getText(), mailarea.getText(), cb.getId(), loginarea.getText(), OknoLogowania.sha256(passwordc.getText())));  // NIE BB tylko co innego 
+						
+
+						String x = file.getPath().substring(file.getPath().length() - 4);
+						if(x.equals(".jpg"))
+							xx=1;
+						if(x.equals(".bmp"))
+							xx=2;
+						if(x.equals(".gif"))
+							xx=3;
+						if(x.equals(".png"))
+							xx=4;
+						if(x.equals("wbmp"))
+							xx=5;
+						if(x.equals("jpeg"))
+							xx=6;
+						
+						objOutputStream.writeObject(zwrocSU(namearea.getText(), mailarea.getText(), cb.getId(), loginarea.getText(),xx, OknoLogowania.sha256(passwordc.getText())));  // NIE BB tylko co innego 
 						objOutputStream.flush();
 						BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 						id = in.readLine();
@@ -328,7 +345,7 @@ public abstract class Rejestracja {
 			          	mybytearray2[2] = (byte) ((i>>16)&0xFF);
 			          	mybytearray2[3] = (byte) ((i>>24)&0xFF);
 			          	//==============
-			          	mybytearray2[4] = 1;
+			          	mybytearray2[4] = (byte) (xx&0xFF);
 			          	
 			          	FileInputStream fis = new FileInputStream(file);
 			          	BufferedInputStream bis = new BufferedInputStream(fis);

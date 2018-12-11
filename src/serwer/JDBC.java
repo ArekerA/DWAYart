@@ -407,7 +407,7 @@ public class JDBC {
 			ResultSet r = executeQuery(st, "Select MAX(id) from pictures;");
 			r.next();
 			int id = ((int)r.getObject(1)+1);
-			executeUpdate(st, "INSERT INTO pictures VALUES("+id+", '"+title+"', '"+description+"', "+type+", "+author+", NOW());");
+			executeUpdate(st, "INSERT INTO pictures VALUES("+id+", '"+title+"', '"+description+"', "+author+", "+type+", NOW());");
 			st.close();
 			return id;
 		} catch (SQLException e) {

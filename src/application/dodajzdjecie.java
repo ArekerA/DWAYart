@@ -1,11 +1,20 @@
 package application;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.net.SocketException;
 
 import javax.imageio.ImageIO;
 
+import data.Picture;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -17,6 +26,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class dodajzdjecie {
+	static File file;
 	static void menudodawania(BorderPane root, Stage primaryStage) {
 
 		Zegar.dodajzegar(primaryStage, root);
@@ -159,7 +169,8 @@ public class dodajzdjecie {
 		
 		iv3.setOnMouseClicked((MouseEvent e) -> { // Po kliknieciu wykonaj
 			Image temp = null;
-			temp = new Image("file:///" + Wyborzdjecia.wyborzdysku(primaryStage).getPath());
+			file = Wyborzdjecia.wyborzdysku(primaryStage);
+			temp = new Image("file:///" + file.getPath());
 			iv3.setPickOnBounds(true);
 			if (temp != null) {
 				root.getChildren().remove(iv2);
@@ -210,8 +221,68 @@ public class dodajzdjecie {
 			if (tt2.getText().trim().isEmpty() == false && tt1.getText().trim().isEmpty() == false
 					&& tt3.getText().trim().isEmpty() == false && iv2.getImage() != unknow) {
 				
-				
-				////// Tu Zapis zdjêcia bedzie potrzebny + info z textarea
+
+				try {
+				String id;
+				String xx = "";
+				 if(true)
+				 {
+				      int port = 757;
+						Socket socket = new Socket("127.0.0.1", port);
+						System.out.println("Rejestruje");
+							socket.setTcpNoDelay(true);
+						OutputStream outputStream = socket.getOutputStream();
+						ObjectOutputStream objOutputStream = new ObjectOutputStream(outputStream);
+						String x = file.getPath().substring(file.getPath().length() - 4);
+						if(x.equals(".jpg"))
+							xx="1";
+						if(x.equals(".bmp"))
+							xx="2";
+						if(x.equals(".gif"))
+							xx="3";
+						if(x.equals(".png"))
+							xx="4";
+						if(x.equals("wbmp"))
+							xx="5";
+						if(x.equals("jpeg"))
+							xx="6";
+						objOutputStream.writeObject(new Picture(xx, 0, tt1.getText(), tt3.getText(), Static.user, null, null, null, 0));  
+						objOutputStream.flush();
+						BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+						id = in.readLine();
+						socket.close();
+				 }
+				 if(true)
+				 {
+						int port = 755;
+						Socket socket = new Socket("127.0.0.1", port);
+					    /*static int count;*/
+				        byte [] mybytearray  = new byte [(int)file.length()];
+				        byte [] mybytearray2  = new byte [5];
+			          	
+			          	int i = Integer.parseInt(id);
+			          	//===============
+			          	mybytearray2[0] = (byte) (i&0xFF);
+			          	mybytearray2[1] = (byte) ((i>>8)&0xFF);
+			          	mybytearray2[2] = (byte) ((i>>16)&0xFF);
+			          	mybytearray2[3] = (byte) ((i>>24)&0xFF);
+			          	//==============
+			          	mybytearray2[4] = (byte) (Integer.parseInt(xx)&0xFF);
+			          	
+			          	FileInputStream fis = new FileInputStream(file);
+			          	BufferedInputStream bis = new BufferedInputStream(fis);
+			          	bis.read(mybytearray,0,mybytearray.length);
+			          	OutputStream os = socket.getOutputStream();
+			          	System.out.println("Sending C:\\Koala.jpg(" + mybytearray.length + " bytes)");
+			          	os.write(mybytearray2,0,mybytearray2.length);
+			          	os.write(mybytearray,0,mybytearray.length);
+			          	os.flush();
+						socket.close();
+				 }
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 
 				root.getChildren().clear();
 				MainMenu.wyswietlmenu(root, primaryStage);
