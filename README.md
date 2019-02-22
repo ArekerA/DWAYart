@@ -6,7 +6,7 @@
 # English
 Student's project. A client-server application for sharing photos and their rating. Written in Java using the MySQL database. User passwords are encrypted using the SHA256 algorithm.
 
-### Customer
+### Client
 Application functions:
 * User login
 * New user registration
