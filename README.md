@@ -7,6 +7,7 @@
 Student's project. A client-server application for sharing photos and their rating. Written in Java using the MySQL database. User passwords are encrypted using the SHA256 algorithm.
 
 ### Client
+The application uses JavaFX for interface presentation.
 Application functions:
 * User login
 * New user registration
@@ -41,6 +42,7 @@ Used ports:
 Projekt studencki. Aplikacja typu klient-serwer do dzielenia się zdjęciami oraz ich oceny. Napisana w języku Java z wykorzystaniem bazy MySQL. Hasła użytkowników są szyfrowane przy pomocy algorytmu SHA256.
 
 ### Klient
+Do prezentacji interfejsu aplikacja wykorzystuje JavaFX.
 Funkcje aplikacji:
 * Logowanie użytkownika
 * Rejestracja nowego użytkownika
